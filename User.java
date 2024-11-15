@@ -40,10 +40,4 @@ public abstract class User
         displayMenu();
     }
 
-
-    public void displayMessage()
-    {
-        System.out.println("Welcome to the BrainRot Hospital!");
-        System.out.println("Welcome And Glad To See You " + getUserRole() + " " + getName() + "!");
-    }
 }
