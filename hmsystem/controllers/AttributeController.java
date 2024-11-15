@@ -5,9 +5,17 @@ import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AttributeController {
+private Scanner sc;
+private static final AttributeController attributeController = new AttributeController();
+
+protected class AttributeController {
     public AttributeController(){
+        sc = new Scanner(System.in);
     }
+
+public static class getInstance() {
+    return attributeController;
+}
 
     public void displayMessage(String message){
         System.out.println(message);
@@ -28,7 +36,7 @@ public class AttributeController {
         return value;
     }
 
-    public String inputString(Scanner sc, String message){
+    public String inputString(String message){
         String value = "";
         while (true) {
             displayMessage(message);
@@ -43,7 +51,7 @@ public class AttributeController {
         return value;
     }
 
-    public Calendar inputDate(Scanner sc, String message){
+    public Calendar inputDate(String message){
         Calendar date = null;
         System.out.println(message);
         int year, month, day;
@@ -66,7 +74,7 @@ public class AttributeController {
         return date;
     }
 
-    public Calendar inputDateTime(Scanner sc, String message){
+    public Calendar inputDateTime(String message){
         Calendar date = null;
         System.out.println(message);
         int year, month, day, hour, minute;
@@ -94,7 +102,7 @@ public class AttributeController {
         return date;
     }
     
-    public String inputNote(Scanner sc, String message){
+    public String inputNote(String message){
         System.out.println(message);
 
         String input = sc.nextLine();
