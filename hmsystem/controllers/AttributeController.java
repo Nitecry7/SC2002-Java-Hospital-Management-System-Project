@@ -5,17 +5,19 @@ import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-private Scanner sc;
-private static final AttributeController attributeController = new AttributeController();
 
-protected class AttributeController {
-    public AttributeController(){
+public class AttributeController {
+    
+    private final Scanner sc;
+    private static final AttributeController attributeController = new AttributeController();
+    
+    protected AttributeController(){
         sc = new Scanner(System.in);
     }
 
-public static class getInstance() {
-    return attributeController;
-}
+    public static AttributeController getInstance() {
+        return attributeController;
+    }
 
     public void displayMessage(String message){
         System.out.println(message);
