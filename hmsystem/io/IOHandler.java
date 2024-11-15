@@ -53,6 +53,25 @@ public class IOHandler {
         }
     }
 
+    // Read CSV
+    public Map<String, String[]> readCsv() {
+        return new HashMap<>(data); // Return a copy of the data to prevent external modification
+    }
+
+    // Update CSV
+    public void updateCsv(Map<String, String[]> newData) throws IOException {
+        for (String key : newData.keySet()) {
+            String[] values = newData.get(key);
+            if (values.length != headers.length) {
+                throw new IllegalArgumentException("Mismatch in column count for key: " + key);
+            }
+        }
+
+        data.clear();
+        data.putAll(newData);
+        saveCsv();
+    }
+
     // Get a field value for a given staff ID and column name
     public String getField(String staffId, String columnName) {
         Integer column = columnIndex.get(columnName); // Get column index
