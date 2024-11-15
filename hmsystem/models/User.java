@@ -11,9 +11,20 @@ public abstract class User
     protected String password;
     protected String role;
     protected List<Method> menuMethods;
+    private String name;
+    private int age;
+    private String gender;
+    private String email;
+    private int contactNumber;
 
-    public User(String hospitalID)
+
+    public User(String hospitalID, String name, int age, String gender, String email, int contactNumber)
     {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.email = email;
+        this.contactNumber = contactNumber;
         this.hospitalID = hospitalID;
         this.password = "password";
         this.menuMethods = new ArrayList<>();
