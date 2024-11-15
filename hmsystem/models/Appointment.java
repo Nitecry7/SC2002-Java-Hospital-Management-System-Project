@@ -1,51 +1,81 @@
 package hmsystem.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import hmsystem.models.enums.AppointmentStatus;
-
-public class Appointment {
-    private String doctorID;
+public class Appointment 
+{
+    
+    private String appointmentID;
     private String patientID;
-    private Date timeSlot;
+    private String doctorID;
     private AppointmentStatus status;
+    private LocalDate date;
+    private LocalTime time;
 
-    public Appointment(String doctorID, String patientID, Date timeSlot) {
-        this.doctorID = doctorID;
+    public enum AppointmentStatus {
+        PENDING,
+        CONFIRMED,
+        CANCELED,
+        COMPLETED
+    }
+
+    // Constructor
+    public Appointment(String appointmentID, String patientID, String doctorID, LocalDate date, LocalTime time) {
+        this.appointmentID = appointmentID;
         this.patientID = patientID;
-        this.timeSlot = timeSlot;
+        this.doctorID = doctorID;
+        this.date = date;
+        this.time = time;
         this.status = AppointmentStatus.PENDING;
     }
 
-    public String getDoctorID() {
-        return doctorID;
-    }
-
-    public void setDoctorID(String doctorID) {
-        this.doctorID = doctorID;
+    // Getters
+    public String getAppointmentID() {
+        return appointmentID;
     }
 
     public String getPatientID() {
         return patientID;
     }
 
-    public void setPatientID(String patientID) {
-        this.patientID = patientID;
-    }
-
-    public Date getTimeSlot() {
-        return timeSlot;
-    }
-
-    public void setTimeSlot(Date timeSlot) {
-        this.timeSlot = timeSlot;
+    public String getDoctorID() {
+        return doctorID;
     }
 
     public AppointmentStatus getStatus() {
         return status;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    // Setters
     public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment ID: " + appointmentID +
+                "\nPatient ID: " + patientID +
+                "\nDoctor ID: " + doctorID +
+                "\nStatus: " + status +
+                "\nDate" + date +
+                "\nTime" + time;
+    }
+
 }

@@ -1,9 +1,10 @@
 Staff ID,Name,Role,Gender,Age
-D003,Jane Doe,Senior Doctor,Female,40
+D003,James Bond,Doctor,Male,50
+N0003,Alice Johnson,Nurse,Female,30
 D002,Emily Clarke,Doctor,Female,38
-D001,John Smith,Senior Doctor,Male,45
+N0002,Alice Johnson,Nurse,Female,30
+D001,John Smith,Doctor,Male,45
 P001,Mark Lee,Pharmacist,Male,29
-P002,David Kim,Pharmacist,Male,35
-S12345,Jane Doe,Nurse,Female,30
+D0004,Mark Lee,Doctor,Male,29
 A001,Sarah Lee,Administrator,Female,40
-A002,Anna Lee,Administrator,Female,28
+N0001,Alice Johnson,Nurse,Female,30
