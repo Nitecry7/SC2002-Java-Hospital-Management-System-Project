@@ -4,13 +4,13 @@ import java.util.List;
 
 public class AppointmentList {
 
-    private List<Appointment2> appointments;
+    private List<Appointment> appointments;
 
     public AppointmentList() {
         this.appointments = new ArrayList<>();
     }
 
-    public void addAppointment(Appointment2 appointment) {
+    public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
     }
 
@@ -18,8 +18,8 @@ public class AppointmentList {
         appointments.removeIf(appointment -> appointment.getAppointmentID().equals(appointmentID));
     }
 
-    public Appointment2 findAppointmentByID(String appointmentID) {
-        for (Appointment2 appointment : appointments) {
+    public Appointment findAppointmentByID(String appointmentID) {
+        for (Appointment appointment : appointments) {
             if (appointment.getAppointmentID().equals(appointmentID)) {
                 return appointment;
             }
@@ -27,9 +27,9 @@ public class AppointmentList {
         return null;
     }
 
-    public List<Appointment2> getAppointmentsForPatient(String patientID) {
-        List<Appointment2> result = new ArrayList<>();
-        for (Appointment2 appointment : appointments) {
+    public List<Appointment> getAppointmentsForPatient(String patientID) {
+        List<Appointment> result = new ArrayList<>();
+        for (Appointment appointment : appointments) {
             if (appointment.getPatientID().equals(patientID)) {
                 result.add(appointment);
             }
@@ -37,9 +37,9 @@ public class AppointmentList {
         return result;
     }
 
-    public List<Appointment2> getAppointmentsForDoctor(String doctorID) {
-        List<Appointment2> result = new ArrayList<>();
-        for (Appointment2 appointment : appointments) {
+    public List<Appointment> getAppointmentsForDoctor(String doctorID) {
+        List<Appointment> result = new ArrayList<>();
+        for (Appointment appointment : appointments) {
             if (appointment.getDoctorID().equals(doctorID)) {
                 result.add(appointment);
             }
@@ -47,7 +47,7 @@ public class AppointmentList {
         return result;
     }
 
-    public List<Appointment2> getAllAppointments() {
+    public List<Appointment> getAllAppointments() {
         return appointments;
     }
 }

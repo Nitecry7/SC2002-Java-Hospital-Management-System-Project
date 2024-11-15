@@ -41,6 +41,22 @@ public class Prescription implements Serializable{
         sc.close();
     }
 
+    public void display() {
+        System.out.println("Medicine Name: " + medicineName);
+        System.out.println("Start Date: " + formatDate(startDate));
+        System.out.println("End Date: " + formatDate(endDate));
+        System.out.println("Frequency: " + frequency);
+        System.out.println("Notes: " + note);
+        System.out.println("Dispensed: " + (dispensed ? "Yes" : "No"));
+    }
+
+    private String formatDate(Calendar date) {
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int month = date.get(Calendar.MONTH) + 1;
+        int year = date.get(Calendar.YEAR);
+        return String.format("%02d/%02d/%04d", day, month, year);
+    }
+
     private String inputMedicineName(Scanner sc, String message){
         // yet to be implemented
         // use medicineModel to fetch data

@@ -3,7 +3,7 @@ import java.util.*;
 
 import User;
 
-public class Doctor extends User
+public class Doctor extends Staff
 {
     public Doctor(String hospitalID, String name, String emailAddress, String userRole) 
     {
