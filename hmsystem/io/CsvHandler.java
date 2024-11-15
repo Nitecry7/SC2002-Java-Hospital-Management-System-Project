@@ -6,7 +6,6 @@ import java.util.*;
 public class CsvHandler implements IOHandler {
 
     public Map<String, String[]> data; // Stores data rows, keyed by staff ID
-    private Map<String, Integer> columnIndex; // Maps column names to indices
     private String filePath; // Path to the CSV file
     private String[] headers; // CSV headers
 
@@ -19,15 +18,11 @@ public class CsvHandler implements IOHandler {
     // Load the CSV into memory
     private void loadCsv() throws IOException {
         data = new HashMap<>();
-        columnIndex = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             // Read and parse headers
             String headerLine = reader.readLine();
             headers = headerLine.split(",");
-            for (int i = 0; i < headers.length; i++) {
-                columnIndex.put(headers[i], i);
-            }
 
             // Read and parse data rows
             String line;
@@ -72,51 +67,50 @@ public class CsvHandler implements IOHandler {
         saveCsv();
     }
 
-    // Get a field value for a given columnToFindRow, valueToFindRow and columnTarget
-    public String getField(String columnToFindRow, String valueToFindRow, String columnToGet) {
-        Integer columnIndexToFind = columnIndex.get(columnToFindRow); // Get column index for the search column
-        if (columnIndexToFind == null) {
-            throw new IllegalArgumentException("Column name '" + columnToFindRow + "' not found.");
-        }
-        Integer columnToChangeIndex = columnIndex.get(columnToGet); // Get column index for the field to change
-        if (columnToChangeIndex == null) {
-            throw new IllegalArgumentException("Column name '" + columnToGet + "' not found.");
-        }
+    // Get all rows where a given column matches a specified value
+    public List<String[]> getRows(int columnToSearch, String valueToFind) {
+        List<String[]> matchingRows = new ArrayList<>();
 
-        // Search through the rows to find the matching value
+        // Search through the rows to find the matching value in the specified column
         for (String[] row : data.values()) {
-            if (row[columnIndexToFind].equals(valueToFindRow)) {
-                return row[columnToChangeIndex]; // Return the value in the specified column
+            if (row[columnToSearch].equals(valueToFind)) {
+                matchingRows.add(row);
             }
         }
 
-        throw new IllegalArgumentException("No row found with " + columnToFindRow + "='" + valueToFindRow + "'");
+        return matchingRows;
     }
 
-    // Set a field value for a given columnToFindRow, valueToFindRow,
-    // columnToChange, and newValue
-    public void setField(String columnToFindRow, String valueToFindRow, String columnToChange, String newValue)
-            throws IOException {
-        Integer columnIndexToFind = columnIndex.get(columnToFindRow); // Get column index for the search column
-        if (columnIndexToFind == null) {
-            throw new IllegalArgumentException("Column name '" + columnToFindRow + "' not found.");
-        }
-        Integer columnToChangeIndex = columnIndex.get(columnToChange); // Get column index for the field to change
-        if (columnToChangeIndex == null) {
-            throw new IllegalArgumentException("Column name '" + columnToChange + "' not found.");
+    // Get a field value for a given column index (instead of column name), value to
+    // search for, and column to get
+    public String getField(int columnToSearch, String valueToFindRow, int columnToGet) {
+        // Search through the rows to find the matching value
+        for (String[] row : data.values()) {
+            if (row[columnToSearch].equals(valueToFindRow)) {
+                return row[columnToGet]; // Return the value in the specified column
+            }
         }
 
+        throw new IllegalArgumentException(
+                "No row found with column index " + columnToSearch + "='" + valueToFindRow + "'");
+    }
+
+    // Set a field value for a given column index to search for, value to find,
+    // column to change, and new value
+    public void setField(int columnToSearch, String valueToFindRow, int columnToChange, String newValue)
+            throws IOException {
         // Search through the rows to find the matching value
         for (Map.Entry<String, String[]> entry : data.entrySet()) {
             String[] row = entry.getValue();
-            if (row[columnIndexToFind].equals(valueToFindRow)) {
-                row[columnToChangeIndex] = newValue; // Update the field value
+            if (row[columnToSearch].equals(valueToFindRow)) {
+                row[columnToChange] = newValue; // Update the field value
                 saveCsv(); // Save changes back to the CSV
                 return;
             }
         }
 
-        throw new IllegalArgumentException("No row found with " + columnToFindRow + "='" + valueToFindRow + "'");
+        throw new IllegalArgumentException(
+                "No row found with column index " + columnToSearch + "='" + valueToFindRow + "'");
     }
 
     // Get next bigger ID
