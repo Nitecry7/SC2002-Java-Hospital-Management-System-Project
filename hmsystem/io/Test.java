@@ -1,6 +1,6 @@
 package hmsystem.io;
 
-import hmsystem.io.IOHandler;
+import hmsystem.io.CsvHandler;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,28 +10,31 @@ public class Test {
     public static void main(String[] args) {
         try {
             // Initialize IOHandler for staff and patient data
-            IOHandler staffHandler = new IOHandler("hmsystem\\data\\staff.csv");
-            IOHandler patientHandler = new IOHandler("hmsystem\\data\\patient.csv");
-            IOHandler medicineHandler = new IOHandler("hmsystem\\data\\medicine.csv");
+            CsvHandler staffHandler = new CsvHandler("hmsystem\\data\\staff.csv");
+            CsvHandler patientHandler = new CsvHandler("hmsystem\\data\\patient.csv");
+            CsvHandler medicineHandler = new CsvHandler("hmsystem\\data\\medicine.csv");
 
-            // Display patient details given patient ID
+            // Display patient details given patient ID using the new getField method
             String patientId = "P1001";
+            String columnToFindRow = "Patient ID"; // Column to search
+            String valueToFindRow = patientId; // Value to search for in the column
+            String columnToChange = "Email"; // Column to retrieve the value from
+
             System.out.println("Displaying patient details for ID: " + patientId);
             try {
-                String[] patientHeaders = { "Patient ID", "Name", "Date of Birth", "Gender", "Blood Type", "Email" };
-                for (String header : patientHeaders) {
-                    System.out.println(header + ": " + patientHandler.getField(patientId, header));
-                }
+                String patientEmail = patientHandler.getField(columnToFindRow, valueToFindRow, columnToGet);
+                System.out.println("Patient Email: " + patientEmail);
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
 
-            // Update patient email given patient ID
+            // Update patient email given patient ID using the new setField method
             String newEmail = "updated.email@example.com";
             System.out.println("\nUpdating email for patient ID: " + patientId + " to " + newEmail);
             try {
-                patientHandler.setField(patientId, "Email", newEmail);
-                System.out.println("Updated email: " + patientHandler.getField(patientId, "Email"));
+                patientHandler.setField(columnToFindRow, valueToFindRow, columnToChange, newEmail);
+                String updatedEmail = patientHandler.getField(columnToFindRow, valueToFindRow, columnToChange);
+                System.out.println("Updated email: " + updatedEmail);
             } catch (IllegalArgumentException | IOException e) {
                 System.out.println("Error: " + e.getMessage());
             }
