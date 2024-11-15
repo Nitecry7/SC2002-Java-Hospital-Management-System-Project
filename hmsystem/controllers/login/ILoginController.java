@@ -1,4 +1,4 @@
-package hmsystem.controllers;
+package hmsystem.controllers.login;
 public interface ILoginController{
 
 
