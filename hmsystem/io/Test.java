@@ -18,8 +18,9 @@ public class Test {
             String patientId = "P1001";
             String columnToFindRow = "Patient ID"; // Column to search
             String valueToFindRow = patientId; // Value to search for in the column
-            String columnToChange = "Email"; // Column to retrieve the value from
-
+            String columnToGet = "Email"; // Column to retrieve the value from
+            String columnToChange = "Email";
+            
             System.out.println("Displaying patient details for ID: " + patientId);
             try {
                 String patientEmail = patientHandler.getField(columnToFindRow, valueToFindRow, columnToGet);
