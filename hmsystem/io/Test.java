@@ -3,6 +3,7 @@ package hmsystem.io;
 import hmsystem.data.Consts;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
@@ -106,5 +107,44 @@ public class Test {
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
         }
-    }
+        try {
+            // Initialize the CsvHandler with the file path
+            IOHandler csvhandler = new CsvHandler(Consts.Medicine.FILE_NAME);
+        
+            // Read the CSV data
+            Collection<String[]> rows = csvhandler.readCsvValues();
+        
+            // Initialise ArrayLists to store medications and their quantities
+            ArrayList<String> medications = new ArrayList<>();
+            ArrayList<String> quantities = new ArrayList<>();
+            ArrayList<String> topup = new ArrayList<>();
+        
+            // Iterate through rows to extract medication names and quantities
+            for (String[] row : rows) {
+                if (row.length >= 3) { // Ensure the row has at least two columns
+                    medications.add(row[0]); // First column: Medication name
+                    quantities.add(row[1]);  // Second column: Quantity
+                    topup.add(row[2]);
+                }
+            }
+        
+            // Print the medications and quantities
+            System.out.println("Medication Inventory:");
+            for (int i = 0; i < medications.size(); i++) {
+                System.out.print(medications.get(i) + " : " + quantities.get(i));
+                if (Integer.parseInt(quantities.get(i)) <= Integer.parseInt(topup.get(i)))
+                {
+                    System.out.println(" Alert: below " + topup.get(i));
+                } 
+                else
+                {
+                    System.out.println();
+                }
+            }
+        
+        } catch (IOException e) {
+            System.err.println("Error reading the CSV file: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for debugging
+        }
+   }
 }
