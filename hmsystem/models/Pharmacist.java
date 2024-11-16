@@ -1,4 +1,5 @@
 package hmsystem.models;
+import hmsystem.controllers.InventoryController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
 import java.util.List;
@@ -37,7 +38,8 @@ class Pharmacist extends Staff {
     }
     
     public void _View_Medication_Inventory() {
-
+        InventoryController ic = InventoryController.getInstance();
+        ic.viewMedicationInventory();
     }
     public void _Submit_Replenishment_Request() {
 

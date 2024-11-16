@@ -9,7 +9,6 @@ import java.util.List;
 import hmsystem.data.Consts;
 import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
-import hmsystem.models.Inventory;
 
 import java.util.Scanner;  
 
