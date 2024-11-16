@@ -35,31 +35,38 @@ public final class Consts {
         public static final int ALERT_COLUMN = 2;
     }
 
-    // appointmentID,patientName,doctorName,serviceType,dateObject,prescription[],notes
-    public static final class AOR {
+    public static final class AORList {
+        public static final String FILE_NAME = "hmsystem\\data\\AOR_List.csv";
+        public static final int ID_COLUMN = 0;
+        public static final int DATE_COLUMN = 1;
+        public static final int SERVICE_COLUMN = 2;
+        public static final int PRESCRIPTION_COLUMN = 3;
+        public static final int NOTES_COLUMN = 4;
+    }
+
+    public static final class AppointmentList {
         public static final String FILE_NAME = "hmsystem\\data\\Appointment_List.csv";
         public static final int ID_COLUMN = 0;
-        public static final int PATIENT_COLUMN = 1;
-        public static final int DOCTOR_COLUMN = 2;
-        public static final int SERVICETYPE_COLUMN = 3;
-        public static final int DATE_COLUMN = 4;
-        public static final int PRESCRIPTIONS_COLUMN = 5;
-        public static final int NOTES_COLUMN = 6;
+        public static final int PATIENT_ID_COLUMN = 1;
+        public static final int DOCTOR_ID_COLUMN = 2;
+        public static final int DATE_COLUMN = 3;
+        public static final int TIME_COLUMN = 4;
+        public static final int APPOINTMENT_STATUS_COLUMN = 5;
     }
 
-    public static final class Service {
-        public static final String FILE_NAME = "hmsystem\\data\\Service_List.csv";
+    public static final class AppointmentAORList {
+        public static final String FILE_NAME = "hmsystem\\data\\AppointmentAOR_List.csv";
         public static final int ID_COLUMN = 0;
-        public static final int NAME_COLUMN = 1;
-
-    }
-
-    public static final class Prescription {
-        public static final String FILE_NAME = "hmsystem\\data\\Prescription_List.csv";
-        public static final int ID_COLUMN = 0;
-        public static final int NAME_COLUMN = 1;
-        public static final int STATUS_COLUMN = 2;
-
+        public static final int PATIENT_ID_COLUMN = 1;
+        public static final int PATIENT_NAME_COLUMN = 2;
+        public static final int DOCTOR_ID_COLUMN = 3;
+        public static final int DOCTOR_NAME_COLUMN = 4;
+        public static final int DATE_COLUMN = 5;
+        public static final int TIME_COLUMN = 6;
+        public static final int SERVICE_COLUMN = 7;
+        public static final int PRESCRIPTION_COLUMN = 8;
+        public static final int NOTES_COLUMN = 9;
+        public static final int APPOINTMENT_STATUS_COLUMN = 10;
     }
 
     private Consts() {

@@ -113,6 +113,23 @@ public class CsvHandler implements IOHandler {
                 "No row found with column index " + columnToSearch + "='" + valueToFindRow + "'");
     }
 
+    // Add a new row (no ID to automate)
+    public void addRow(String[] rowDetails) throws IOException {
+        if (rowDetails.length != headers.length) {
+            throw new IllegalArgumentException("Row details must match the number of columns in the CSV.");
+        }
+
+        // Add the new row to the data map. The first column is assumed to be the unique
+        // key.
+        String uniqueKey = rowDetails[0];
+        if (data.containsKey(uniqueKey)) {
+            throw new IllegalArgumentException("A row with the given key already exists: " + uniqueKey);
+        }
+
+        data.put(uniqueKey, rowDetails);
+        saveCsv();
+    }
+
     // Get next bigger ID
     private static String getNextId(Set<String> existingIds, String prefix) {
         int maxId = 0;

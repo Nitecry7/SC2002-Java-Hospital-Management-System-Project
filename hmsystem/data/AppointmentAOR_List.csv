@@ -1,0 +1,5 @@
+Appointment ID,Patient ID,Patient Name,Doctor ID,Doctor Name,Date,Time,Service,Prescription,Notes,Appointment Status
+A001,P1007,Charlie White,D003,James Bond,2024-11-16,09:00,General Consultation,"Paracetamol, Start Date: 2024-11-16, End Date: 2024-11-30, Frequency: PRN, Dispensed: false","Follow-up needed for blood pressure monitoring",Confirmed
+A002,P1005,Tom Green,D002,Emily Clarke,2024-11-16,10:30,Blood Test,"Amoxicillin, Start Date: 2024-11-16, End Date: 2024-11-20, Frequency: TDS, Dispensed: true","Check-up for cavity",Confirmed
+A003,P1004,Jane Doe,D001,John Smith,2024-11-16,13:00,Routine Checkup,"Ibuprofen, Start Date: 2024-11-16, End Date: 2024-11-23, Frequency: BD, Dispensed: false","Annual checkup",Pending
+A004,P1001,Alice Brown,D003,James Bond,2024-11-16,14:00,X-Ray,"Lisinopril, Start Date: 2024-11-16, End Date: 2024-11-30, Frequency: QDS, Dispensed: true","Review of previous prescription",Cancelled
