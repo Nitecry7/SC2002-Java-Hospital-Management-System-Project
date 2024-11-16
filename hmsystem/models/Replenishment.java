@@ -1,23 +1,39 @@
 package hmsystem.models;
 
+import java.io.IOException;
 import java.util.*;
+import hmsystem.io.*;
 
 public class Replenishment {
+    private CsvHandler medicineCsvHandler;
     private enum Status{
         PENDING,
         APPROVED,
-        REJECTED
+        REJECTED,
+        FAILED
     }
-    List<String> medicineNames;
-    Status status = Status.PENDING;
+    private List<String> medicineNames;
+    private Status status = Status.PENDING;
 
-    public Replenishment(){
+    public Replenishment(CsvHandler csvHandler){
         medicineNames = getLowMedicine();
+        this.medicineCsvHandler = csvHandler;
+    }
+
+    public void submitRequest(){
+        medicineNames = getLowMedicine();
+        status = Status.PENDING;
     }
 
     public List<String> getLowMedicine(){
         List<String> ret = new ArrayList<String>();
         // Use CSV Handler to get all low level medicine
+        Collection<String[]> data = medicineCsvHandler.readCsvValues();
+        for(String[] row:data){
+            int amount = Integer.valueOf(row[1]);
+            int alertLine = Integer.valueOf(row[2]);
+            if(amount <= alertLine) ret.add(row[0]);
+        }
         return ret;
     }
 
@@ -28,6 +44,15 @@ public class Replenishment {
     public void approveRequest(){
         status = Status.APPROVED;
         // Call Medicine Controller or sth and change the amount to 3x alert line.
+        for(String medicineName:medicineNames){
+            try{
+                medicineCsvHandler.setField(0, medicineName, 1, "250");
+            }catch (IOException e){
+                System.out.println("Error occured during setting value!");
+                status = Status.FAILED;
+                break;
+            }
+        }
     }
 
     public void viewRequest(){
