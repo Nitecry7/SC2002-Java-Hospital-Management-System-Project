@@ -11,7 +11,7 @@ public class Medicine {
     private int alertLine, stock, request = 0;
 
     // Static final file path for the CSV file
-    private static final String FILE_PATH = "hmsystem\\data\\Medicine_List.csv";
+    private static final String FILE_PATH = "hmsystem/data/Medicine_List.csv";
     private static CsvHandler csvHandler;
 
     // Constructor
