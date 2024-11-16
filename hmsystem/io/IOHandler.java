@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface IOHandler {
+    // Method to get headers
+    public String[] getHeaders();
 
     // Method to read CSV data into memory
     Map<String, String[]> readCsv();
