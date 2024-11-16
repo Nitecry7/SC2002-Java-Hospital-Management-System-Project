@@ -3,6 +3,7 @@ package hmsystem.controllers;
 //Singleton
 import hmsystem.io.CsvHandler;
 import hmsystem.utils.TablePrinter;
+import hmsystem.models.Staff;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +16,7 @@ public class StaffController {
 
     private StaffController() {
         try {
-            csvHandler = new CsvHandler("hmsystem\\data\\Staff_List.csv"); // Replace with actual file path
+            csvHandler = new CsvHandler("hmsystem\\data\\Staff_List.csv");
         } catch (IOException e) {
             throw new RuntimeException("Failed to initialize StaffController: " + e.getMessage());
         }
@@ -44,18 +45,18 @@ public class StaffController {
         }
     }
 
-    public void removeStaff(String staffID) {
+    public void removeStaff(Staff staff) {
         try {
-            csvHandler.removeRows(0, staffID);
+            csvHandler.removeRows(0, staff.getUserID());
             System.out.println("Staff removed successfully.");
         } catch (IOException e) {
             System.err.println("Error removing staff: " + e.getMessage());
         }
     }
 
-    public void updateStaff(String staffID, int columnToChange, String newValue) {
+    public void updateStaff(Staff staff, int columnToChange, String newValue) {
         try {
-            csvHandler.setField(0, staffID, columnToChange, newValue); // Assuming column 0 is staffID
+            csvHandler.setField(0, staff.getUserID(), columnToChange, newValue); // Assuming column 0 is staffID
             System.out.println("Staff updated successfully.");
         } catch (IOException e) {
             System.err.println("Error updating staff: " + e.getMessage());
