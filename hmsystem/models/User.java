@@ -55,4 +55,42 @@ public abstract class User
     {
         return userRole;
     }
+    
+    // setters 
+    public void setUserID(String userID) 
+    {
+        // do we need this function?
+        this.userID = userID;
+    }
+
+    public void setName(String name) 
+    {
+        this.name = name;
+    }
+
+    public void setAge(int age) 
+    {
+        this.age = age;
+    }
+
+    public void setGender(String gender) 
+    {
+        this.gender = gender;
+    }
+
+    public void setEmail(String email) 
+    {
+        this.email = email;
+    }
+
+    public void setContactNumber(int contactNumber) 
+    {
+        this.contactNumber = contactNumber;
+    }
+
+    public void setUserRole(String userRole) 
+    {
+        this.userRole = userRole;
+    }
+
 }
