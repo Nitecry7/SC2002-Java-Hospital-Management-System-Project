@@ -6,16 +6,12 @@ import hmsystem.models.*;
 
 public class LoginHandler implements ILoginHandler {
 
-    private static final LoginHandler loginHandler = LoginHandler.getInstance();
+
     private ILoginController loginController;
     private final AttributeController attributeController;
 
-    protected LoginHandler() {
+    public LoginHandler() {
         this.attributeController = AttributeController.getInstance();
-    }
-
-    public static LoginHandler getInstance() {
-        return loginHandler;
     }
 
     

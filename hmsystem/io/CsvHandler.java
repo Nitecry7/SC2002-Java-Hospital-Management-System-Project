@@ -48,9 +48,19 @@ public class CsvHandler implements IOHandler {
         }
     }
 
+    // Get Headers
+    public String[] getHeaders() {
+        return headers; // This assumes headers are loaded in the CsvHandler when the CSV is read
+    }
+
     // Read CSV
     public Map<String, String[]> readCsv() {
         return new HashMap<>(data); // Return a copy of the data to prevent external modification
+    }
+
+    // Read CSV values (rows only, without headers)
+    public Collection<String[]> readCsvValues() {
+        return new ArrayList<>(data.values()); // Return only the rows (values), excluding headers
     }
 
     // Update CSV
@@ -79,6 +89,64 @@ public class CsvHandler implements IOHandler {
         }
 
         return matchingRows;
+    }
+
+    // Add a new row (no ID to automate)
+    public void addRow(String[] rowDetails) throws IOException {
+        if (rowDetails.length != headers.length) {
+            throw new IllegalArgumentException("Row details must match the number of columns in the CSV.");
+        }
+
+        // Add the new row to the data map. The first column is assumed to be the unique
+        // key.
+        String uniqueKey = rowDetails[0];
+        if (data.containsKey(uniqueKey)) {
+            throw new IllegalArgumentException("A row with the given key already exists: " + uniqueKey);
+        }
+
+        data.put(uniqueKey, rowDetails);
+        saveCsv();
+    }
+
+    // Update a row where a given column matches a specified value
+    public void updateRow(int columnToSearch, String valueToFind, String[] rowData) throws IOException {
+        boolean found = false;
+
+        // Iterate over all rows to find the matching row by column value
+        for (Map.Entry<String, String[]> entry : data.entrySet()) {
+            String[] row = entry.getValue();
+
+            // Check if the specified column matches the valueToFind
+            if (row[columnToSearch].equals(valueToFind)) {
+                // If the row is found, replace the old row with the new data
+                data.put(entry.getKey(), rowData);
+                found = true;
+                break;
+            }
+        }
+
+        // If no matching row was found, throw an exception
+        if (!found) {
+            throw new IllegalArgumentException(
+                    "No row found with " + headers[columnToSearch] + "='" + valueToFind + "'");
+        }
+
+        // After updating the row, save the changes back to the CSV file
+        saveCsv();
+    }
+
+    // Remove rows where a given column matches a specified value
+    public void removeRows(int columnToSearch, String valueToFind) throws IOException {
+        Iterator<Map.Entry<String, String[]>> iterator = data.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<String, String[]> entry = iterator.next();
+            String[] row = entry.getValue();
+            if (row[columnToSearch].equals(valueToFind)) {
+                iterator.remove();
+            }
+        }
+        saveCsv();
     }
 
     // Get a field value for a given column index (instead of column name), value to

@@ -1,0 +1,6 @@
+Appointment ID,Date,Service,Prescription,Notes
+A001,2024-11-16,General Consultation,"Paracetamol, Start Date: 2024-11-16, End Date: 2024-11-30, Frequency: PRN, Dispensed: false","Follow-up needed for blood pressure monitoring"
+A002,2024-11-16,Blood Test,"Amoxicillin, Start Date: 2024-11-16, End Date: 2024-11-20, Frequency: TDS, Dispensed: true","Check-up for cavity"
+A003,2024-11-16,Routine Checkup,"Ibuprofen, Start Date: 2024-11-16, End Date: 2024-11-23, Frequency: BD, Dispensed: false","Annual checkup"
+A004,2024-11-16,X-Ray,"Lisinopril, Start Date: 2024-11-16, End Date: 2024-11-30, Frequency: QDS, Dispensed: true","Review of previous prescription"
+A005,2024-11-16,Physical Therapy,"No prescription, Start Date: N/A, End Date: N/A, Frequency: N/A, Dispensed: false","Follow-up for knee injury"

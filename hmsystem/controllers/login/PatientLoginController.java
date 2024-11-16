@@ -34,7 +34,8 @@ public class PatientLoginController implements ILoginController {
 
             if ((actualPassword.equals("") && password.equals("password")) || password.equals(actualPassword)) {
 
-                user = (User) new Patient(userID);
+            user = Patient.getPatient(userID, new CsvHandler(Consts.Patient.FILE_NAME));
+
             }
             else {
                 System.out.println("Wrong password");

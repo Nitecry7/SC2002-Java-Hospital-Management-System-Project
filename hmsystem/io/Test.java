@@ -1,64 +1,72 @@
 package hmsystem.io;
 
-import hmsystem.io.CsvHandler;
+import hmsystem.data.Consts;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collection;
 
 public class Test {
 
     public static void main(String[] args) {
         try {
-            // Initialize IOHandler for staff and patient data
-            CsvHandler staffHandler = new CsvHandler("hmsystem\\data\\staff.csv");
-            CsvHandler patientHandler = new CsvHandler("hmsystem\\data\\patient.csv");
-            CsvHandler medicineHandler = new CsvHandler("hmsystem\\data\\medicine.csv");
+            // Initialize IOHandler for staff, patient, appointment, and appointmentAOR data
+            IOHandler staffHandler = new CsvHandler(Consts.Staff.FILE_NAME);
+            IOHandler patientHandler = new CsvHandler(Consts.Patient.FILE_NAME);
+            IOHandler appointmentAORHandler = new CsvHandler(Consts.AppointmentAORList.FILE_NAME);
 
-            // Indices based on the CSV headers
-            int patientIdColumn = 0; // "Patient ID" column
-            int emailColumn = 5; // "Email" column (assuming "Email" is column 5)
-            int staffIdColumn = 0; // "Staff ID" column
-            int staffNameColumn = 1; // "Name" column
-            int staffRoleColumn = 2; // "Role" column
-
-            // Display patient details given patient ID using the new getField method
-            String patientId = "P1001";
-            System.out.println("Displaying patient details for ID: " + patientId);
+            // Test readCsvValues() for staff data (just rows, excluding headers)
+            System.out.println("\nReading all staff data (excluding headers):");
             try {
-                String patientEmail = patientHandler.getField(patientIdColumn, patientId, emailColumn);
-                System.out.println("Patient Email: " + patientEmail);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-
-            // Update patient email given patient ID using the new setField method
-            String newEmail = "updated.email@example.com";
-            System.out.println("\nUpdating email for patient ID: " + patientId + " to " + newEmail);
-            try {
-                patientHandler.setField(patientIdColumn, patientId, emailColumn, newEmail);
-                String updatedEmail = patientHandler.getField(patientIdColumn, patientId, emailColumn);
-                System.out.println("Updated email: " + updatedEmail);
-            } catch (IllegalArgumentException | IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-
-            // View all staff details
-            System.out.println("\nViewing staff details:");
-            try {
-                for (String staffId : staffHandler.data.keySet()) {
-                    String[] staffDetails = staffHandler.data.get(staffId);
-                    System.out.println("Staff ID: " + staffDetails[staffIdColumn] + " - " 
-                            + "Name: " + staffDetails[staffNameColumn] + ", " 
-                            + "Role: " + staffDetails[staffRoleColumn]);
+                Collection<String[]> staffRows = staffHandler.readCsvValues(); // Fetch rows excluding headers
+                for (String[] staffDetails : staffRows) {
+                    System.out.println("Staff ID: " + staffDetails[Consts.Staff.ID_COLUMN] + " - "
+                            + "Name: " + staffDetails[Consts.Staff.NAME_COLUMN] + ", "
+                            + "Role: " + staffDetails[Consts.Staff.ROLE_COLUMN]);
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
 
-            // Add a new staff member
-            System.out.println("\nAdding new staff member...");
-            String[] newStaffDetails = { null, "Alice Johnson", "Nurse", "Female", "30" };
+            // Patient Example: Retrieve and Update Email
+            String patientId = "P1001";
+            System.out.println("\nFetching details for Patient ID: " + patientId);
+            try {
+                String patientEmail = patientHandler.getField(Consts.Patient.ID_COLUMN, patientId,
+                        Consts.Patient.EMAIL_COLUMN);
+                System.out.println("Patient Email: " + patientEmail);
+
+                String newEmail = "updated.email@example.com";
+                System.out.println("\nUpdating email to: " + newEmail);
+                patientHandler.setField(Consts.Patient.ID_COLUMN, patientId, Consts.Patient.EMAIL_COLUMN, newEmail);
+
+                String updatedEmail = patientHandler.getField(Consts.Patient.ID_COLUMN, patientId,
+                        Consts.Patient.EMAIL_COLUMN);
+                System.out.println("Updated Email: " + updatedEmail);
+            } catch (IllegalArgumentException | IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            // Display All Staff Details
+            System.out.println("\nViewing all staff details:");
+            try {
+                // Instead of accessing 'data' directly from CsvHandler, use the method provided
+                // by IOHandler
+                for (String staffId : staffHandler.readCsv().keySet()) {
+                    String[] staffDetails = staffHandler.readCsv().get(staffId);
+                    System.out.println("Staff ID: " + staffDetails[Consts.Staff.ID_COLUMN] + " - "
+                            + "Name: " + staffDetails[Consts.Staff.NAME_COLUMN] + ", "
+                            + "Role: " + staffDetails[Consts.Staff.ROLE_COLUMN]);
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            // Add New Staff
+            System.out.println("\nAdding a new staff member...");
+            String[] newStaffDetails = { "S102", "Alice Johnson", "Nurse", "Female", "30", "nurse.alice@example.com",
+                    "91234123" };
             try {
                 staffHandler.addStaff(newStaffDetails);
                 System.out.println("New staff added: " + Arrays.toString(newStaffDetails));
@@ -66,34 +74,33 @@ public class Test {
                 System.out.println("Error: " + e.getMessage());
             }
 
-            // View all medicines
-            System.out.println("\nViewing medicines:");
+            // Fetch Patients by Name
+            System.out.println("\nFetching patients named 'Charlie White':");
+            List<String[]> patients = patientHandler.getRows(Consts.Patient.NAME_COLUMN, "Charlie White");
+            for (String[] patient : patients) {
+                System.out.println("Patient ID: " + patient[Consts.Patient.ID_COLUMN] + " - Name: "
+                        + patient[Consts.Patient.NAME_COLUMN]);
+            }
+
+            // Retrieve Appointment Details with Prescriptions
+            System.out.println("\nRetrieving detailed appointment information:");
             try {
-                for (String medicineId : medicineHandler.data.keySet()) {
-                    String[] medicineDetails = medicineHandler.data.get(medicineId);
-                    System.out.println("Medicine: " + Arrays.toString(medicineDetails));
+                for (String appointmentId : appointmentAORHandler.readCsv().keySet()) {
+                    String[] appointmentDetails = appointmentAORHandler.readCsv().get(appointmentId);
+                    System.out.println("Appointment ID: " + appointmentDetails[Consts.AppointmentAORList.ID_COLUMN]
+                            + " - "
+                            + "Patient Name: " + appointmentDetails[Consts.AppointmentAORList.PATIENT_NAME_COLUMN]
+                            + ", "
+                            + "Doctor Name: " + appointmentDetails[Consts.AppointmentAORList.DOCTOR_NAME_COLUMN] + ", "
+                            + "Service: " + appointmentDetails[Consts.AppointmentAORList.SERVICE_COLUMN] + ", "
+                            + "Prescription: " + appointmentDetails[Consts.AppointmentAORList.PRESCRIPTION_COLUMN]
+                            + ", "
+                            + "Notes: " + appointmentDetails[Consts.AppointmentAORList.NOTES_COLUMN] + ", "
+                            + "Date: " + appointmentDetails[Consts.AppointmentAORList.DATE_COLUMN] + " "
+                            + appointmentDetails[Consts.AppointmentAORList.TIME_COLUMN]);
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
-            }
-
-            // Test the getRows method for staff with role "Nurse"
-            System.out.println("\nGetting all staff with role 'Nurse':");
-            List<String[]> nurseStaff = staffHandler.getRows(staffRoleColumn, "Nurse");
-            for (String[] staff : nurseStaff) {
-                System.out.println("Staff ID: " + staff[staffIdColumn] + " - " 
-                        + "Name: " + staff[staffNameColumn] + ", " 
-                        + "Role: " + staff[staffRoleColumn]);
-            }
-
-            // Test the getRows method for patients with a certain condition (if such data exists)
-            System.out.println("\nGetting all patients with a specific condition (example):");
-            // Assuming we have a column for "Condition" (let's say it's at index 3)
-            List<String[]> patientOfInterest = patientHandler.getRows(0, "P1006"); // Replace with actual condition
-            for (String[] patient : patientOfInterest) {
-                System.out.println("Patient ID: " + patient[patientIdColumn] + " - "
-                        + "Name: " + patient[1] + ", " // Assuming Name is at index 1
-                        + "Condition: " + patient[3]);
             }
 
         } catch (IOException e) {
