@@ -6,7 +6,7 @@ import java.io.IOException;
 
 
 
-abstract class Staff extends User {
+public abstract class Staff extends User {
 
     private String name, userRole, gender;
     private int age;
