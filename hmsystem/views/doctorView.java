@@ -1,17 +1,35 @@
 package hmsystem.views;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
+import hmsystem.controllers.AttributeController;
 
 public class doctorView extends generalView
 {
     public boolean useViewer()
     {
         displayMenu();
-        boolean ret = (getOperation() != 8);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        int operation = getOperation();
+        boolean ret = (operation != 8);
+        
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+        }
+
         return ret;
     }
     public void displayMenu()
@@ -29,30 +47,27 @@ public class doctorView extends generalView
     }
     public int getOperation() 
     {
-        Scanner in = new Scanner(System.in);
-        int op = -1; 
+        AttributeController getter = AttributeController.getInstance();
+        int op = 0;
         while (true) 
         {
-            System.out.print("Please enter your choice (1-8): ");
             try 
             {
-                op = in.nextInt();
+                op = getter.inputInt("Please enter your choice (1-5): ");
                 if (op >= 1 && op <= 8) 
                 {
                     break;
                 } 
                 else 
                 {
-                    System.out.println("Invalid choice. Please enter a number between 1 and 8.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                 }
             } 
             catch (InputMismatchException e) 
             {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                in.next(); 
             }
         }
-        in.close();
         return op;
     }
 }

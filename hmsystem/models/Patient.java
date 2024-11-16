@@ -14,7 +14,6 @@ public class Patient extends User {
         this.bloodType = bloodType;
     }
 
-    // Getters
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -22,4 +21,26 @@ public class Patient extends User {
     public BloodType getBloodType() {
         return bloodType;
     }
-}
+
+    public String getName() {
+        return super.getName();
+    }
+
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    public int getContactNumber() {
+        return super.getContactNumber();
+    }
+
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+public void setContactNumber(int contactNumber) {
+        super.setContactNumber(con

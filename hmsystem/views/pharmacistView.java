@@ -1,17 +1,27 @@
 package hmsystem.views;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
+import hmsystem.controllers.AttributeController;
 
 public class pharmacistView extends generalView
 {
     public boolean useViewer()
     {
         displayMenu();
-        boolean ret = (getOperation() != 5);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        int operation = getOperation();
+        boolean ret = (operation != 5);
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
         return ret;
     }
     public void displayMenu()
@@ -26,14 +36,14 @@ public class pharmacistView extends generalView
     }
     public int getOperation() 
     {
-        Scanner in = new Scanner(System.in);
-        int op = -1; 
-        while (true) {
-            System.out.print("Please enter your choice (1-5): ");
+        AttributeController getter = AttributeController.getInstance();
+        int op = 0;
+        while (true) 
+        {
             try 
             {
-                op = in.nextInt();
-                if (op >= 1 && op <= 8) 
+                op = getter.inputInt("Please enter your choice (1-5): ");
+                if (op >= 1 && op <= 5) 
                 {
                     break;
                 } 
@@ -45,10 +55,8 @@ public class pharmacistView extends generalView
             catch (InputMismatchException e) 
             {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                in.next(); 
             }
         }
-        in.close();
         return op;
     }
 }

@@ -1,7 +1,7 @@
 package hmsystem.models;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
-abstract class Staff extends User {
+abstract class Staff extends User{
 
     String userID, name, userRole, gender;
     int age;
