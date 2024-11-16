@@ -11,13 +11,9 @@ public class Replenishment {
     private CsvHandler medicineCsvHandler, replenishmentCsvHandler;
     private AttributeController getter = AttributeController.getInstance();
     private enum Status{
-        PENDING("PENDING"),
-        APPROVED("APPROVED"),
-        REJECTED("REJECTED");
-        private String status;
-        Status (String status){
-            this.status = status;
-        }
+        PENDING,
+        APPROVED,
+        REJECTED
     }
     private int requestID;
     private List<String> medicineNames;
@@ -30,12 +26,12 @@ public class Replenishment {
         requestID = data.size();
     }
     public Replenishment(CsvHandler medicineCsvHandler, CsvHandler replenishmentCsvHandler,
-                        int requestID, List<String> MedicineName, String status){
-        medicineNames = getLowMedicine();
+                        int requestID, List<String> medicineNames, String status){
         this.medicineCsvHandler = medicineCsvHandler;
         this.replenishmentCsvHandler = replenishmentCsvHandler;
-        Collection<String[]> data = replenishmentCsvHandler.readCsvValues();
-        requestID = data.size();
+        this.requestID = requestID;
+        this.medicineNames = medicineNames;
+        this.status = Replenishment.Status.valueOf(status);
     }
 
     public void submitRequest(){
