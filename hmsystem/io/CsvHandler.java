@@ -58,6 +58,11 @@ public class CsvHandler implements IOHandler {
         return new HashMap<>(data); // Return a copy of the data to prevent external modification
     }
 
+    // Read CSV values (rows only, without headers)
+    public Collection<String[]> readCsvValues() {
+        return new ArrayList<>(data.values()); // Return only the rows (values), excluding headers
+    }
+
     // Update CSV
     public void updateCsv(Map<String, String[]> newData) throws IOException {
         for (String key : newData.keySet()) {
