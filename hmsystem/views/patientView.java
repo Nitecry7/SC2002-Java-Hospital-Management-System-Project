@@ -1,7 +1,7 @@
 package hmsystem.views;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
+import hmsystem.controllers.AttributeController;
 
 public class patientView extends generalView
 {
@@ -29,30 +29,27 @@ public class patientView extends generalView
     }
     public int getOperation() 
     {
-        Scanner in = new Scanner(System.in);
-        int op = -1; 
+        AttributeController getter = AttributeController.getInstance();
+        int op = 0;
         while (true) 
         {
-            System.out.print("Please enter your choice (1-9): ");
             try 
             {
-                op = in.nextInt();
+                op = getter.inputInt("Please enter your choice (1-9): ");
                 if (op >= 1 && op <= 9) 
                 {
                     break;
                 } 
                 else 
                 {
-                    System.out.println("Invalid choice. Please enter a number between 1 and 9.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                 }
             } 
             catch (InputMismatchException e) 
             {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                in.next(); 
             }
         }
-        in.close();
         return op;
     }
 }

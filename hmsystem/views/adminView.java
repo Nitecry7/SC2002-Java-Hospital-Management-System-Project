@@ -1,7 +1,7 @@
 package hmsystem.views;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
+import hmsystem.controllers.AttributeController;
 
 public class adminView extends generalView
 {
@@ -27,15 +27,14 @@ public class adminView extends generalView
     }
     public int getOperation() 
     {
-        Scanner in = new Scanner(System.in);
-        int op = -1; 
+        AttributeController getter = AttributeController.getInstance();
+        int op = 0;
         while (true) 
         {
-            System.out.print("Please enter your choice (1-5): ");
             try 
             {
-                op = in.nextInt();
-                if (op >= 1 && op <= 8) 
+                op = getter.inputInt("Please enter your choice (1-5): ");
+                if (op >= 1 && op <= 5) 
                 {
                     break;
                 } 
@@ -47,10 +46,8 @@ public class adminView extends generalView
             catch (InputMismatchException e) 
             {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                in.next(); 
             }
         }
-        in.close();
         return op;
     }
 }
