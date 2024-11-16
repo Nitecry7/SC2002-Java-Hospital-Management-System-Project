@@ -114,9 +114,9 @@ public class CsvHandler implements IOHandler {
             // Check if the specified column matches the valueToFind
             if (row[columnToSearch].equals(valueToFind)) {
                 // If the row is found, replace the old row with the new data
-                data.put(entry.getKey(), rowData); // Update the row in the map
+                data.put(entry.getKey(), rowData);
                 found = true;
-                break; // Exit once the row is updated
+                break;
             }
         }
 
