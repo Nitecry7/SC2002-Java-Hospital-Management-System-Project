@@ -1,66 +1,62 @@
 package hmsystem.models;
-import java.util.*;
+import hmsystem.data.Consts;
+import hmsystem.io.*;
+import java.util.List;
 
-import User;
+class Doctor extends Staff {
 
-public class Doctor extends Staff
-{
-    public Doctor(String hospitalID, String name, String emailAddress, String userRole) 
-    {
-        super(hospitalID, name, emailAddress, "Doctor");
-    }
 
-    @Override
-    public void displayMenu() // Different Implementation based on User's Role 
-    {
-       displayMessage(); // Welcome message from User class
+    
+    private Doctor(String[] details, IOHandler handler) {
+        super (details, handler);
 
-        System.out.println("1. View Patient Medical Records");
-        System.out.println("2. Update Patient Medical Records");
-        System.out.println("3. View Schedule");
-        System.out.println("4. Set Availability");
-        System.out.println("5. Change Password");
-        System.out.println("6. Logout");
-
-        DoctorInput();
-    }
-
-    private void DoctorInput()
-    {
-        Scanner input = new Scanner(System.in);
-        int userChoice = input.nextInt();
-
-        boolean loggedIn = true;
-
-        while(loggedIn)
-        {
-            switch(userChoice)
-        {
-            case 1:
-            System.out.println("Enter Patient's ID: ");
-            String patientID = input.nextLine();
-
-            MedicalRecord patientRecord = getPatientRecord(patientID);
-            
-            viewPatientMedicalRecords(); //im not sure how to go about this
-            
-        }
-        } 
+        //super(userID, name, age, gender, email, contactNumber, userRole);
         
     }
 
-    public void viewPatientMedicalRecords(MedicalRecord patientRecord)
-    {
-        System.out.println("---Currently Viewing---");
 
-        System.out.println("Medical Record of Patient: " + patientRecord.getPatientName()); //Shows which patient the doctor is currently accessing
+    public static Doctor getDoctor(String adminID, IOHandler handler) {
 
-        System.out.println(patientRecord.displayPatientMedicalRecord()); //Display the full medical records of the patient
+        List<String[]> userDetails = handler.getRows(Consts.Staff.ID_COLUMN, adminID);
+        if (userDetails.isEmpty()) {
+            return null;
+        }
+        else {
+            return new Doctor(userDetails.get(0), handler);
+        }
 
     }
 
-    public void updatePatientMedicalRecords(MedicalRecord patientRecord, String patientDiagnosis, String patientTreatment, String doctorNotes, String diagnosedDate)
-    {
-        MedicalDiagnosis newDiagnosis = new MedicalDiagnosis(patientDiagnosis, patientTreatment, doctorNotes, diagnosedDate);
+
+    public void _View_Patient_Medical_Records() {
+
     }
+
+    public void _Update_Patient_Medical_Records() {
+
+    }
+
+    public void _View_Personal_Schedule() {
+
+    }
+
+    public void _Set_Availability_or_Appointments() {
+
+    }
+
+    public void _Accept_or_Decline_Appointment_Requests() {
+
+    }
+
+    public void _View_Upcoming_Appointments(){
+
+    }
+
+    public void _Record_Appointment_Outcome() {
+
+    }
+    }
+  
+
+
 }

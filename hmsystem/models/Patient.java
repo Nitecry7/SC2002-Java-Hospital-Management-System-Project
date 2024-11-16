@@ -5,7 +5,7 @@ import hmsystem.models.enums.BloodType;
 import java.io.IOException;
 import java.util.List;
 
-class Patient extends User {
+public class Patient extends User {
 
 
     MedicalRecord medicalRecord;

@@ -37,6 +37,7 @@ public final class Consts {
         public static final int ALERT_COLUMN = 2;
     }
 
+ 
     public static final class AORList {
         public static final String FILE_NAME = "hmsystem/data/AOR_List.csv";
         public static final int ID_COLUMN = 0;
@@ -55,6 +56,7 @@ public final class Consts {
         public static final int TIME_COLUMN = 4;
         public static final int APPOINTMENT_STATUS_COLUMN = 5;
     }
+    
 
     public static final class AppointmentAORList {
         public static final String FILE_NAME = "hmsystem/data/AppointmentAOR_List.csv";
