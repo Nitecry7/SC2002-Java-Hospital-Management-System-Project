@@ -6,5 +6,7 @@ D001,John Smith,Doctor,Male,45,john.smith@hospital.com,96778899
 N0005,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
 N0004,Alice Johnson,Nurse,Female,30,email@email.com,91234123
 P001,Mark Lee,Pharmacist,Male,29,mark.lee@hospital.com,91223344
+N0007,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
 N0006,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
+N0008,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
 A001,Sarah Lee,Administrator,Female,40,sarah.lee@hospital.com,92334455
