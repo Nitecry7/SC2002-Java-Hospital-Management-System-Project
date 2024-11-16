@@ -1,6 +1,11 @@
 package hmsystem.models;
+
 import hmsystem.data.Consts;
 import hmsystem.io.*;
+import java.io.IOException;
+
+
+
 abstract class Staff extends User {
 
     private String name, userRole, gender;
@@ -18,7 +23,7 @@ abstract class Staff extends User {
         this.handler = handler;
     }
 
-       public void saveData() {
+       public void saveData() throws IOException {
      
         String[] details = new String[5];
         details[Consts.Staff.ID_COLUMN] = getUserID();
@@ -36,7 +41,7 @@ abstract class Staff extends User {
         return name;
     }
   
-    public void setName(String name) {
+    public void setName(String name) throws IOException {
         this.name = name;
         saveData();
     }
@@ -45,7 +50,7 @@ abstract class Staff extends User {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(String userRole) throws IOException {
         this.userRole = userRole;
         saveData();
     }
@@ -55,7 +60,7 @@ abstract class Staff extends User {
     }
 
   
-    public void setGender(String gender) {
+    public void setGender(String gender) throws IOException {
         this.gender = gender;
         saveData();
     }
@@ -65,7 +70,7 @@ abstract class Staff extends User {
     }
 
 
-    public void setAge(int age) {
+    public void setAge(int age) throws IOException {
         this.age = age;
         saveData();
     }
