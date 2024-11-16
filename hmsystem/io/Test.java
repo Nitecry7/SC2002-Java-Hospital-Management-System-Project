@@ -11,9 +11,9 @@ public class Test {
     public static void main(String[] args) {
         try {
             // Initialize IOHandler for staff and patient data
-            CsvHandler staffHandler = new CsvHandler("hmsystem\\data\\staff.csv");
-            CsvHandler patientHandler = new CsvHandler("hmsystem\\data\\patient.csv");
-            CsvHandler medicineHandler = new CsvHandler("hmsystem\\data\\medicine.csv");
+            CsvHandler staffHandler = new CsvHandler("hmsystem\\data\\Staff_List.csv");
+            CsvHandler patientHandler = new CsvHandler("hmsystem\\data\\Patient_List.csv");
+            CsvHandler medicineHandler = new CsvHandler("hmsystem\\data\\Medicine_List.csv");
 
             // Indices based on the CSV headers
             int patientIdColumn = 0; // "Patient ID" column
@@ -58,7 +58,7 @@ public class Test {
 
             // Add a new staff member
             System.out.println("\nAdding new staff member...");
-            String[] newStaffDetails = { null, "Alice Johnson", "Nurse", "Female", "30" };
+            String[] newStaffDetails = { null, "Alice Johnson", "Nurse", "Female", "30", "email@email.com", "91234123" };
             try {
                 staffHandler.addStaff(newStaffDetails);
                 System.out.println("New staff added: " + Arrays.toString(newStaffDetails));
