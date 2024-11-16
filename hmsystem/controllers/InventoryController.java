@@ -4,10 +4,13 @@ package hmsystem.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import hmsystem.data.Consts;
 import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
+import hmsystem.models.Inventory;
+
 import java.util.Scanner;  
 
 
@@ -20,7 +23,7 @@ public class InventoryController {
     protected InventoryController() {
         System.out.println("Constructed one inventory controller. ");
         try {
-            this.csvhandler = new CsvHandler(Consts.Medicine.FILE_NAME);
+            InventoryController.csvhandler = new CsvHandler(Consts.Medicine.FILE_NAME);
         } catch (IOException e) {
             System.err.println("Error reading the CSV file: " + e.getMessage());
             e.printStackTrace(); // Print stack trace for debugging
@@ -29,7 +32,7 @@ public class InventoryController {
     }
 
     public static InventoryController getInstance() {
-       if (inventoryController != null) {
+       if (inventoryController == null) {
             inventoryController = new InventoryController();
         }
             return inventoryController;
@@ -113,7 +116,7 @@ public class InventoryController {
         return 1;
     }
 
-    public int editMedicationList(String[] Medications)
+    public int editMedicationList(List<String> Medications)
     {
         for (String medication:Medications)
         {
