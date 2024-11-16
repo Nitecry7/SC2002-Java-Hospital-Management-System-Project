@@ -14,6 +14,8 @@ public final class Consts {
         public static final int BLOODTYPE_COLUMN = 5;
         public static final int EMAIL_COLUMN = 6;
         public static final int CONTACTNUMBER_COUMN = 7;
+        public static final int AOR_ID_COLUMN = 8;
+        public static final int DIAGNOSISTREATMENT_COLUMN = 9;
     }
 
     public static final class Staff {
