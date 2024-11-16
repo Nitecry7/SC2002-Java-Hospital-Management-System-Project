@@ -1,6 +1,6 @@
-Appointment ID,Patient ID,Doctor ID,Date,Time,Service IDs,Prescription IDs,Notes,Appointment Status
-A1001,P1007,D003,2024-11-16,10:00,1,1,"Follow-up consultation, including blood tests",Completed
-A1002,P1005,D002,2024-11-16,11:00,2,2,"General check-up, minor examination",Completed
-A1003,P1004,D001,2024-11-17,09:00,3;4,3;4,"Prescription renewal, review of previous medicines",Pending
-A1004,P1001,D0004,2024-11-17,13:00,4,4,"New patient consultation, first-time visit",Completed
-A1005,P1002,D003,2024-11-18,08:30,1;2,2;3,"Routine check-up, needs additional tests",Pending
+Appointment ID,Patient ID,Doctor ID,Date,Time,Appointment Status
+A001,P1007,D003,2024-11-16,09:00,Confirmed
+A002,P1005,D002,2024-11-16,10:30,Confirmed
+A003,P1004,D001,2024-11-16,13:00,Pending
+A004,P1001,D003,2024-11-16,14:00,Cancelled
+A005,P1002,D0004,2024-11-16,15:30,Confirmed
