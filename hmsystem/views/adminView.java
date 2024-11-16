@@ -10,9 +10,18 @@ public class adminView extends generalView
         displayMenu();
         int operation = getOperation();
         boolean ret = (operation != 5);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
         return ret;
     }
     public void displayMenu()

@@ -5,12 +5,33 @@ import hmsystem.controllers.AttributeController;
 
 public class patientView extends generalView
 {
-    public boolean useViewer(){
+    public boolean useViewer()
+    {
         displayMenu();
-        boolean ret = (getOperation() != 9);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        int operation = getOperation();
+        boolean ret = (operation != 9);
+        
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+        }
+
         return ret;
     }
     public void displayMenu()
