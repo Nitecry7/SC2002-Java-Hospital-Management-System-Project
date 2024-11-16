@@ -5,20 +5,33 @@ import hmsystem.data.Consts;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collection;
 
 public class Test {
 
     public static void main(String[] args) {
         try {
             // Initialize IOHandler for staff, patient, appointment, and appointmentAOR data
-            CsvHandler staffHandler = new CsvHandler(Consts.Staff.FILE_NAME);
-            CsvHandler patientHandler = new CsvHandler(Consts.Patient.FILE_NAME);
-            CsvHandler appointmentHandler = new CsvHandler(Consts.AppointmentList.FILE_NAME);
-            CsvHandler appointmentAORHandler = new CsvHandler(Consts.AppointmentAORList.FILE_NAME);
+            IOHandler staffHandler = new CsvHandler(Consts.Staff.FILE_NAME);
+            IOHandler patientHandler = new CsvHandler(Consts.Patient.FILE_NAME);
+            IOHandler appointmentAORHandler = new CsvHandler(Consts.AppointmentAORList.FILE_NAME);
+
+            // Test readCsvValues() for staff data (just rows, excluding headers)
+            System.out.println("\nReading all staff data (excluding headers):");
+            try {
+                Collection<String[]> staffRows = staffHandler.readCsvValues(); // Fetch rows excluding headers
+                for (String[] staffDetails : staffRows) {
+                    System.out.println("Staff ID: " + staffDetails[Consts.Staff.ID_COLUMN] + " - "
+                            + "Name: " + staffDetails[Consts.Staff.NAME_COLUMN] + ", "
+                            + "Role: " + staffDetails[Consts.Staff.ROLE_COLUMN]);
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
 
             // Patient Example: Retrieve and Update Email
             String patientId = "P1001";
-            System.out.println("Fetching details for Patient ID: " + patientId);
+            System.out.println("\nFetching details for Patient ID: " + patientId);
             try {
                 String patientEmail = patientHandler.getField(Consts.Patient.ID_COLUMN, patientId,
                         Consts.Patient.EMAIL_COLUMN);
@@ -38,8 +51,10 @@ public class Test {
             // Display All Staff Details
             System.out.println("\nViewing all staff details:");
             try {
-                for (String staffId : staffHandler.data.keySet()) {
-                    String[] staffDetails = staffHandler.data.get(staffId);
+                // Instead of accessing 'data' directly from CsvHandler, use the method provided
+                // by IOHandler
+                for (String staffId : staffHandler.readCsv().keySet()) {
+                    String[] staffDetails = staffHandler.readCsv().get(staffId);
                     System.out.println("Staff ID: " + staffDetails[Consts.Staff.ID_COLUMN] + " - "
                             + "Name: " + staffDetails[Consts.Staff.NAME_COLUMN] + ", "
                             + "Role: " + staffDetails[Consts.Staff.ROLE_COLUMN]);
@@ -59,34 +74,6 @@ public class Test {
                 System.out.println("Error: " + e.getMessage());
             }
 
-            // Display All Appointments
-            System.out.println("\nViewing all appointments:");
-            try {
-                for (String appointmentId : appointmentHandler.data.keySet()) {
-                    String[] appointmentDetails = appointmentHandler.data.get(appointmentId);
-                    System.out.println("Appointment ID: " + appointmentDetails[Consts.AppointmentList.ID_COLUMN] + " - "
-                            + "Patient ID: " + appointmentDetails[Consts.AppointmentList.PATIENT_ID_COLUMN] + ", "
-                            + "Doctor ID: " + appointmentDetails[Consts.AppointmentList.DOCTOR_ID_COLUMN] + ", "
-                            + "Date: " + appointmentDetails[Consts.AppointmentList.DATE_COLUMN] + ", "
-                            + "Time: " + appointmentDetails[Consts.AppointmentList.TIME_COLUMN] + ", "
-                            + "Status: " + appointmentDetails[Consts.AppointmentList.APPOINTMENT_STATUS_COLUMN]);
-                }
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-
-            // Retrieve Confirmed Appointments
-            System.out.println("\nRetrieving appointments with status 'Confirmed':");
-            List<String[]> confirmedAppointments = appointmentHandler
-                    .getRows(Consts.AppointmentList.APPOINTMENT_STATUS_COLUMN, "Confirmed");
-            for (String[] appointment : confirmedAppointments) {
-                System.out.println("Appointment ID: " + appointment[Consts.AppointmentList.ID_COLUMN] + " - "
-                        + "Patient ID: " + appointment[Consts.AppointmentList.PATIENT_ID_COLUMN] + ", "
-                        + "Date: " + appointment[Consts.AppointmentList.DATE_COLUMN] + ", "
-                        + "Time: " + appointment[Consts.AppointmentList.TIME_COLUMN] + ", "
-                        + "Status: " + appointment[Consts.AppointmentList.APPOINTMENT_STATUS_COLUMN]);
-            }
-
             // Fetch Patients by Name
             System.out.println("\nFetching patients named 'Charlie White':");
             List<String[]> patients = patientHandler.getRows(Consts.Patient.NAME_COLUMN, "Charlie White");
@@ -98,8 +85,8 @@ public class Test {
             // Retrieve Appointment Details with Prescriptions
             System.out.println("\nRetrieving detailed appointment information:");
             try {
-                for (String appointmentId : appointmentAORHandler.data.keySet()) {
-                    String[] appointmentDetails = appointmentAORHandler.data.get(appointmentId);
+                for (String appointmentId : appointmentAORHandler.readCsv().keySet()) {
+                    String[] appointmentDetails = appointmentAORHandler.readCsv().get(appointmentId);
                     System.out.println("Appointment ID: " + appointmentDetails[Consts.AppointmentAORList.ID_COLUMN]
                             + " - "
                             + "Patient Name: " + appointmentDetails[Consts.AppointmentAORList.PATIENT_NAME_COLUMN]
