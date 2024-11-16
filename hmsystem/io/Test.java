@@ -15,7 +15,7 @@ public class Test {
             // Initialize IOHandler for staff, patient, appointment, and appointmentAOR data
             IOHandler staffHandler = new CsvHandler(Consts.Staff.FILE_NAME);
             IOHandler patientHandler = new CsvHandler(Consts.Patient.FILE_NAME);
-            IOHandler appointmentAORHandler = new CsvHandler(Consts.AppointmentAORList.FILE_NAME);
+            IOHandler appointmentAORHandler = new CsvHandler(Consts.AOR.FILE_NAME);
 
             // Test readCsvValues() for staff data (just rows, excluding headers)
             System.out.println("\nReading all staff data (excluding headers):");

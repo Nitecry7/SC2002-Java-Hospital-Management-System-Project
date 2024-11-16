@@ -1,9 +1,11 @@
 package hmsystem.controllers;
 
-//Singleton
+// Singleton
 import hmsystem.io.CsvHandler;
+import hmsystem.io.IOHandler;
 import hmsystem.utils.TablePrinter;
 import hmsystem.models.Staff;
+import hmsystem.data.Consts;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,11 +13,11 @@ import java.util.Map;
 public class StaffController {
 
     private static final StaffController staffController = new StaffController();
-    private CsvHandler csvHandler;
+    private static IOHandler csvHandler; // Fix the variable name to match
 
     private StaffController() {
         try {
-            csvHandler = new CsvHandler("hmsystem\\data\\Staff_List.csv");
+            StaffController.csvHandler = new CsvHandler(Consts.Staff.FILE_NAME); // Make sure to use the same name here
         } catch (IOException e) {
             throw new RuntimeException("Failed to initialize StaffController: " + e.getMessage());
         }
