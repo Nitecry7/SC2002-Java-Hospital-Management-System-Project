@@ -38,10 +38,10 @@ class Administrator extends Staff {
 
     }
     public void _View_and_Manage_Medication_Inventory() {
+        // view, create, edit, delete, logout
         Scanner sc = new Scanner(System.in);
         InventoryController ic = InventoryController.getInstance();
         int i;
-
         do{
 
             System.out.println("1. View Medication Inventory: ");
@@ -75,6 +75,7 @@ class Administrator extends Staff {
             }
 
         }while (1 < i && i < 4);
+        sc.close();
 
 
     }

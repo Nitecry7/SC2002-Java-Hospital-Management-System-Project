@@ -38,6 +38,7 @@ class Pharmacist extends Staff {
     }
     
     public void _View_Medication_Inventory() {
+        // call view medication inventory from inventorycontroller
         InventoryController ic = InventoryController.getInstance();
         ic.viewMedicationInventory();
     }
