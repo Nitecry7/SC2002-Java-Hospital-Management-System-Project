@@ -48,6 +48,11 @@ public class CsvHandler implements IOHandler {
         }
     }
 
+    // Get Headers
+    public String[] getHeaders() {
+        return headers; // This assumes headers are loaded in the CsvHandler when the CSV is read
+    }
+
     // Read CSV
     public Map<String, String[]> readCsv() {
         return new HashMap<>(data); // Return a copy of the data to prevent external modification
@@ -127,6 +132,20 @@ public class CsvHandler implements IOHandler {
         }
 
         data.put(uniqueKey, rowDetails);
+        saveCsv();
+    }
+
+    // Remove rows where a given column matches a specified value
+    public void removeRows(int columnToSearch, String valueToFind) throws IOException {
+        Iterator<Map.Entry<String, String[]>> iterator = data.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<String, String[]> entry = iterator.next();
+            String[] row = entry.getValue();
+            if (row[columnToSearch].equals(valueToFind)) {
+                iterator.remove();
+            }
+        }
         saveCsv();
     }
 
