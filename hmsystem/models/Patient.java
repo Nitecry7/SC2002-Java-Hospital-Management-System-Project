@@ -9,13 +9,11 @@ class Patient extends User {
 
 
     MedicalRecord medicalRecord;
-    IOHandler handler;
 
     
     private Patient(String patientID, IOHandler handler) throws Exception {
         super (patientID);
 
-        this.handler = handler;
         this.medicalRecord = new MedicalRecord(patientID, handler);
         //super(userID, name, age, gender, email, contactNumber, userRole);
         
@@ -67,7 +65,7 @@ class Patient extends User {
     }
 
     public MedicalRecord getMedicalRecord() throws Exception {
-        return new MedicalRecord(getUserID(), handler);
+        return medicalRecord;
     }
 
 
@@ -118,7 +116,5 @@ class Patient extends User {
     public void setBloodType(BloodType bloodType) throws IOException {
         medicalRecord.setPatientBloodType(bloodType);
     }
-  
-
 
 }

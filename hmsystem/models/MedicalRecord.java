@@ -1,15 +1,14 @@
 package hmsystem.models;
 
-import hmsystem.io.*;
-import java.util.*;
 import hmsystem.data.Consts;
+import hmsystem.io.*;
 import hmsystem.models.enums.BloodType;
-import java.util.Base64;
-import java.io.ObjectInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.ObjectOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.*;
 
 public class MedicalRecord 
 {
