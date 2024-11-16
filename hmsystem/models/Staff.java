@@ -1,5 +1,4 @@
 package hmsystem.models;
-import java.io.IOException;
 
 import hmsystem.data.Consts;
 import hmsystem.io.*;
