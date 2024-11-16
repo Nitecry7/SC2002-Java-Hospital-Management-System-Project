@@ -1,9 +1,11 @@
 package hmsystem.models;
+import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
 import hmsystem.models.enums.BloodType;
 import java.io.IOException;
 import java.util.List;
+
 
 public class Patient extends User {
 
@@ -34,12 +36,27 @@ public class Patient extends User {
 
 
     public void _View_Medical_Record() {
+        medicalRecord.displayPatientMedicalRecord();
+    }
+
+    public void _Update_Personal_Information() throws IOException {
+
+        AttributeController ac = AttributeController.getInstance();
+        switch(ac.inputInt("Update your personal information\n1. Email\n2. Phone number")) {
+            case 1 ->  {
+                setEmail(ac.inputString("Input your new E-mail address:"));
+            }
+            case 2 ->  {
+                setPhone(ac.inputString("Input your new phone number"));
+            }
+            default -> {
+                System.out.println("Invalid input");
+            }
+        }
+        
 
     }
 
-    public void _Update_Personal_Information() {
-
-    }
     public void _View_Available_Appointment_Slots() {
 
     }

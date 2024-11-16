@@ -41,17 +41,17 @@ public class AOR {
     // file
     private AOR(String[] s) throws Exception {
 
-        appointmentID = s[Consts.AppointmentAORList.ID_COLUMN];
-        patientName = s[Consts.AppointmentAORList.PATIENT_NAME_COLUMN];
-        doctorName = s[Consts.AppointmentAORList.DOCTOR_NAME_COLUMN];
-        serviceType = s[Consts.AppointmentAORList.SERVICE_COLUMN];
-        notes = s[Consts.AppointmentAORList.NOTES_COLUMN].replace("␟", ",");
+        appointmentID = s[Consts.AOR.ID_COLUMN];
+        patientName = s[Consts.AOR.PATIENT_NAME_COLUMN];
+        doctorName = s[Consts.AOR.DOCTOR_NAME_COLUMN];
+        serviceType = s[Consts.AOR.SERVICE_COLUMN];
+        notes = s[Consts.AOR.NOTES_COLUMN].replace("␟", ",");
 
-        byte[] dateData = Base64.getDecoder().decode(s[Consts.AppointmentAORList.DATE_COLUMN]);
+        byte[] dateData = Base64.getDecoder().decode(s[Consts.AOR.DATE_COLUMN]);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(dateData));
         date = (Date) ois.readObject();
 
-        byte[] prescriptionData = Base64.getDecoder().decode(s[Consts.AppointmentAORList.PRESCRIPTION_COLUMN]);
+        byte[] prescriptionData = Base64.getDecoder().decode(s[Consts.AOR.PRESCRIPTION_COLUMN]);
         ois = new ObjectInputStream(new ByteArrayInputStream(prescriptionData));
 
         prescriptions = (Prescription[]) ois.readObject();
@@ -68,7 +68,7 @@ public class AOR {
         String details = null;
 
         while ((details = br.readLine()) != null) {
-            if (details.split(",")[Consts.AppointmentAORList.ID_COLUMN].equals(appointmentID)) {
+            if (details.split(",")[Consts.AOR.ID_COLUMN].equals(appointmentID)) {
                 break;
             }
         }
