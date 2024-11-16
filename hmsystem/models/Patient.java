@@ -7,36 +7,29 @@ import java.util.List;
 
 class Patient extends User {
 
-    String name, gender, email, phone, dateOfBirth;
-    BloodType bloodType;
+
+    MedicalRecord medicalRecord;
     IOHandler handler;
 
-
     
-    private Patient(String[] details, IOHandler handler) {
-        super (details[Consts.Patient.ID_COLUMN]);
+    private Patient(String patientID, IOHandler handler) throws Exception {
+        super (patientID);
 
         this.handler = handler;
-        this.name = details[Consts.Patient.NAME_COLUMN];
-        this.gender = details[Consts.Patient.GENDER_COLUMN];
-        this.email = details[Consts.Patient.EMAIL_COLUMN];
-        this.dateOfBirth = details[Consts.Patient.DOB_COLUMN];
-        this.phone = details[Consts.Patient.CONTACTNUMBER_COUMN];
-        this.bloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
-        
+        this.medicalRecord = new MedicalRecord(patientID, handler);
         //super(userID, name, age, gender, email, contactNumber, userRole);
         
     }
 
 
-    public static Patient getPatient(String adminID, IOHandler handler) {
+    public static Patient getPatient(String patientID, IOHandler handler) throws Exception{
 
-        List<String[]> userDetails = handler.getRows(Consts.Patient.ID_COLUMN, adminID);
+        List<String[]> userDetails = handler.getRows(Consts.Patient.ID_COLUMN, patientID);
         if (userDetails.isEmpty()) {
             return null;
         }
         else {
-            return new Patient(userDetails.get(0), handler);
+            return new Patient(patientID, handler);
         }
 
     }
@@ -73,77 +66,57 @@ class Patient extends User {
 
     }
 
-
-
-
-    public void saveData() throws IOException {
-     
-        String[] details = new String[6];
-        details[Consts.Patient.ID_COLUMN] = getUserID();
-        details[Consts.Patient.NAME_COLUMN] = name;
-        details[Consts.Patient.EMAIL_COLUMN] = email;
-        details[Consts.Patient.GENDER_COLUMN] = gender;
-        details[Consts.Patient.CONTACTNUMBER_COUMN] = phone;
-        details[Consts.Patient.DOB_COLUMN] = dateOfBirth;
-        details[Consts.Patient.BLOODTYPE_COLUMN] = bloodType.name();
-
-        
-        handler.updateRow(Consts.Patient.ID_COLUMN, getUserID(), details);
-
+    public MedicalRecord getMedicalRecord() throws Exception {
+        return new MedicalRecord(getUserID(), handler);
     }
 
+
     public String getName() {
-        return name;
+        return medicalRecord.getPatientName();
     }
 
     public void setName(String name) throws IOException {
-        this.name = name;
-        saveData();
+        medicalRecord.setPatientName(name);
     }
 
     public String getGender() {
-        return gender;
+        return medicalRecord.getPatientGender();
     }
 
     public void setGender(String gender) throws IOException {
-        this.gender = gender;
-        saveData();
+        medicalRecord.setPatientGender(gender);
     }
 
     public String getEmail() {
-        return email;
+        return medicalRecord.getPatientEmail();
     }
 
     public void setEmail(String email)throws IOException {
-        this.email = email;
-        saveData();
+        medicalRecord.setPatientEmail(email);
     }
 
     public String getPhone() {
-        return phone;
+        return medicalRecord.getPatientPhone();
     }
 
     public void setPhone(String phone) throws IOException {
-        this.phone = phone;
-        saveData();
+        medicalRecord.setPatientPhone(phone);
     }
 
     public String getDateOfBirth() {
-        return dateOfBirth;
+        return medicalRecord.getPatientDateOfBirth();
     }
 
     public void setDateOfBirth(String dateOfBirth) throws IOException {
-        this.dateOfBirth = dateOfBirth;
-        saveData();
+        medicalRecord.setPatientDateOfBirth(dateOfBirth);
     }
 
     public BloodType getBloodType() {
-        return bloodType;
+        return medicalRecord.getPatientBloodType();
     }
 
     public void setBloodType(BloodType bloodType) throws IOException {
-        this.bloodType = bloodType;
-        saveData();
+        medicalRecord.setPatientBloodType(bloodType);
     }
   
 

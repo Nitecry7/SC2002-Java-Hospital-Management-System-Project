@@ -167,8 +167,7 @@ public class AOR {
 
         // Encoding the serialized Date object into storeable string
         oos.writeObject(getDate());
-        String serializedDate = Base64.getEncoder().encodeToString(baos.toByteArray()); // Encoding the serialized Date
-                                                                                        // object into storeable string
+        String serializedDate = Base64.getEncoder().encodeToString(baos.toByteArray());                                                                           
 
         baos.reset();
 
