@@ -8,10 +8,28 @@ public class doctorView extends generalView
     public boolean useViewer()
     {
         displayMenu();
-        boolean ret = (getOperation() != 8);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        int operation = getOperation();
+        boolean ret = (operation != 8);
+        
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+        }
+
         return ret;
     }
     public void displayMenu()

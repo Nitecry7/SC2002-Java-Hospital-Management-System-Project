@@ -8,10 +8,20 @@ public class pharmacistView extends generalView
     public boolean useViewer()
     {
         displayMenu();
-        boolean ret = (getOperation() != 5);
-        /*
-         * here we call the controllers based on the operation given
-         */
+        int operation = getOperation();
+        boolean ret = (operation != 5);
+        switch(operation){
+            case 1: 
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
         return ret;
     }
     public void displayMenu()
