@@ -1,5 +1,9 @@
 package hmsystem.controllers;
 //Singleton
+
+import java.util.*;
+import hmsystem.models.*;
+
 public class StaffController {
 
     private static final StaffController staffController = new StaffController();
@@ -12,6 +16,8 @@ public class StaffController {
     }
 
     public void viewStaff(){
+        AttributeController getter = AttributeController.getInstance();
+        List<Staff> staffList = new ArrayList<Staff>();
     }
 
     public void addStaff(){
