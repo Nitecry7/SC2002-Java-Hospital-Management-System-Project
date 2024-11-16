@@ -89,7 +89,7 @@ public class Test {
             // Test the getRows method for patients with a certain condition (if such data exists)
             System.out.println("\nGetting all patients with a specific condition (example):");
             // Assuming we have a column for "Condition" (let's say it's at index 3)
-            List<String[]> patientOfInterest = patientHandler.getRows(0, "P1006"); // Replace with actual condition
+            List<String[]> patientOfInterest = patientHandler.getRows(1, "Charlie White"); // Replace with actual condition
             for (String[] patient : patientOfInterest) {
                 System.out.println("Patient ID: " + patient[patientIdColumn] + " - "
                         + "Name: " + patient[1] + ", " // Assuming Name is at index 1
