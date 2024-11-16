@@ -43,4 +43,5 @@ public class Patient extends User {
     }
 
 public void setContactNumber(int contactNumber) {
-        super.setContactNumber(con
+        this.contactNumber = contactNumber;
+}

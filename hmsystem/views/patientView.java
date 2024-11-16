@@ -5,6 +5,8 @@ import hmsystem.controllers.AttributeController;
 
 public class patientView extends generalView
 {
+    
+
     public boolean useViewer()
     {
         displayMenu();
@@ -12,23 +14,33 @@ public class patientView extends generalView
         boolean ret = (operation != 9);
         
         switch(operation){
+            // will be putting the methods below, can transfer to generalView if anything overlaps
             case 1: 
+                ViewMedicalRecord();
                 break;
             case 2:
+                UpdatePersonalInformation();
                 break;
             case 3:
+                ViewAvailableAppointmentSlots();
                 break;
             case 4:
+                ScheduleAnAppointment();
                 break;
             case 5:
+                ReScheduleAnAppointment();
                 break;
             case 6:
+                CancelAnAppointment();
                 break;
             case 7:
+                ViewScheduledAppointments();
                 break;
             case 8:
+                ViewPastAppointmentOutcomeRecords();
                 break;
             case 9:
+                Logout();
                 break;
         }
 
@@ -73,4 +85,42 @@ public class patientView extends generalView
         }
         return op;
     }
+    public void ViewMedicalRecord()
+    {
+        System.out.println("You have chosen: View Medical Records:");
+
+    }
+    public void UpdatePersonalInformation()
+    {
+
+    }
+    public void ViewAvailableAppointmentSlots()
+    {
+
+    }
+    public void ScheduleAnAppointment()
+    {
+
+    }
+    public void ReScheduleAnAppointment()
+    {
+
+    }
+    public void CancelAnAppointment()
+    {
+
+    }
+    public void ViewScheduledAppointments()
+    {
+
+    }
+    public void ViewPastAppointmentOutcomeRecords()
+    {
+
+    }
+    public void Logout()
+    {
+
+    }
+
 }
