@@ -44,5 +44,5 @@ public final class Consts {
         public static final int NOTES_COLUMN = 4;
   }
 
-    private EntityConstants() {}
+    private Consts() {}
 }
