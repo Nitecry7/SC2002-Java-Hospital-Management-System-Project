@@ -93,6 +93,18 @@ public class InventoryController {
         return 1;
     }
 
+    public int editMedicationList(String[] Medications)
+    {
+        for (String medication:Medications)
+        {
+            int x = editMedication(medication);
+            if (x == 1){
+                return 1;
+            }
+        }
+        return 0;
+    }
+
 
 
 
