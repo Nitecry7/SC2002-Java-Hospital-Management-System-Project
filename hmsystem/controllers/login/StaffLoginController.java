@@ -1,4 +1,5 @@
 package hmsystem.controllers.login;
+import hmsystem.data.Consts;
 import hmsystem.io.*;
 import hmsystem.models.*;
 //Singleton
@@ -29,12 +30,12 @@ public class StaffLoginController implements ILoginController {
 
         try {
 
-            String actualPassword = handler.getField(userID, "Password");
+            String actualPassword = handler.getField(Consts.Staff.ID_COLUMN, userID, Consts.Staff.PW_COLUMN);
 
             if ((actualPassword.equals("") && password.equals("password")) || password.equals(actualPassword)) {
-                roleName = handler.getField(userID, "Role");
+                roleName = handler.getField(Consts.Staff.ID_COLUMN, userID, Consts.Staff.ROLE_COLUMN);
                 Class<?> staffRole = Class.forName(roleName);
-                user = (User) staffRole.getDeclaredConstructor().newInstance();
+                user = (User) staffRole.getDeclaredConstructor(String.class).newInstance(userID);
             }
             else {
                 System.out.println("Wrong password");

@@ -1,6 +1,8 @@
 package hmsystem.controllers.login;
+import hmsystem.data.Consts;
 import hmsystem.io.*;
-import hmsyste.models.*;
+import hmsystem.models.*;
+
 //Singleton
 public class PatientLoginController implements ILoginController {
 
@@ -28,11 +30,11 @@ public class PatientLoginController implements ILoginController {
 
         try {
 
-            String actualPassword = handler.getField(userID, "Password");
+            String actualPassword = handler.getField(Consts.Patient.ID_COLUMN, userID, Consts.Patient.PW_COLUMN);
 
             if ((actualPassword.equals("") && password.equals("password")) || password.equals(actualPassword)) {
 
-                user = (User) new Patient();
+                user = (User) new Patient(userID);
             }
             else {
                 System.out.println("Wrong password");

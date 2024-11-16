@@ -1,19 +1,28 @@
 package hmsystem.controllers.login;
+import hmsystem.controllers.AttributeController;
+import hmsystem.data.Consts;
+import hmsystem.io.*;
+import hmsystem.models.*;
 
 public class LoginHandler implements ILoginHandler {
 
+    private static final LoginHandler loginHandler = LoginHandler.getInstance();
     private ILoginController loginController;
     private final AttributeController attributeController;
 
     protected LoginHandler() {
-        this.attributeController = new AttributeController();
+        this.attributeController = AttributeController.getInstance();
+    }
+
+    public static LoginHandler getInstance() {
+        return loginHandler;
     }
 
     
     @Override
     public User authenticate() throws Exception {
         
-        String[] allUserTypes = EntityConstants.USER_TYPES;
+        String[] allUserTypes = Consts.USER_TYPES;
 
         //Choose staff or patient or anything else that has its own table
         System.out.println("Choose user type:\n");
@@ -35,7 +44,7 @@ public class LoginHandler implements ILoginHandler {
         Class<?> constantClass = Class.forName("EntityConstants$" + allUserTypes[input-1]);
         String fileName = (String) constantClass.getField("FILE_NAME").get(null);
 
-        loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CSVHandler(fileName));
+        loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
         
         //Authenticate using that login controller until either the user gets in or gives up
         String ID, pw;

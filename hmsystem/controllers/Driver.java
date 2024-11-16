@@ -7,7 +7,7 @@ public class Driver{
     public static void main(String[] args) throws Exception {
 
         //Default login handler and attribute controller
-        ILoginHandler loginHandler =  new LoginHandler();
+        ILoginHandler loginHandler =  LoginHandler.getInstance();
         switch (args.length) {
             case 0 -> {
                 System.out.println("Default config chosen");

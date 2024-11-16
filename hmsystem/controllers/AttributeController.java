@@ -23,7 +23,7 @@ public class AttributeController {
         System.out.println(message);
     }
 
-    public int inputInt(Scanner sc, String message) {
+    public int inputInt(String message) {
         int value = 0;
         while (true) {
             displayMessage(message);
@@ -58,9 +58,9 @@ public class AttributeController {
         System.out.println(message);
         int year, month, day;
         while(date == null){
-            day = inputInt(sc, "Please enter day: ");
-            month = inputInt(sc, "Please enter month: ") - 1; // 0-based
-            year = inputInt(sc, "Please enter year: ");
+            day = inputInt("Please enter day: ");
+            month = inputInt("Please enter month: ") - 1; // 0-based
+            year = inputInt("Please enter year: ");
             try {
                 date = new GregorianCalendar(year, month, day);
                 if (date.get(Calendar.YEAR) != year || 
@@ -81,11 +81,11 @@ public class AttributeController {
         System.out.println(message);
         int year, month, day, hour, minute;
         while(date == null){
-            day = inputInt(sc, "Please enter day: ");
-            month = inputInt(sc, "Please enter month: ") - 1; // 0-based
-            year = inputInt(sc, "Please enter year: ");
-            hour = inputInt(sc, "Please enter hour:");
-            minute = inputInt(sc, "Please enter minute:");
+            day = inputInt("Please enter day: ");
+            month = inputInt("Please enter month: ") - 1; // 0-based
+            year = inputInt("Please enter year: ");
+            hour = inputInt("Please enter hour:");
+            minute = inputInt("Please enter minute:");
             try {
                 date = new GregorianCalendar(year, month, day, hour, minute);
                 if (date.get(Calendar.YEAR) != year || 

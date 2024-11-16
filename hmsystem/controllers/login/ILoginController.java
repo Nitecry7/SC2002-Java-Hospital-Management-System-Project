@@ -1,4 +1,5 @@
 package hmsystem.controllers.login;
+import hmsystem.models.User;
 public interface ILoginController{
 
 
