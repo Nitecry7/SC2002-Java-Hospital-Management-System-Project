@@ -18,7 +18,7 @@ public class InventoryController {
 
     
     protected InventoryController() {
-        System.out.println("Constructed one inventory controller");
+        System.out.println("Constructed one inventory controller. ");
         try {
             this.csvhandler = new CsvHandler(Consts.Medicine.FILE_NAME);
         } catch (IOException e) {
@@ -38,6 +38,26 @@ public class InventoryController {
     
 
     // methods
+
+    public int addMedication()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter new medication name: ");
+        String name = sc.next();
+        System.out.println("Enter new medication quantity: ");
+        String quantity = sc.next();
+        System.out.println("Enter new medication low alert value: ");
+        String lowAlert = sc.next();
+        String[] temp = {name, quantity, lowAlert};
+        //
+        try{
+            csvhandler.addRow(temp);
+        }catch (IOException e){
+            System.out.println("Error occured during adding medication!");
+            return 0;
+        }
+        return 1;
+    }
 
     public void viewMedicationInventory()
     {
@@ -65,7 +85,7 @@ public class InventoryController {
             System.out.print(medications.get(i) + " : " + quantities.get(i));
             if (Integer.parseInt(quantities.get(i)) <= Integer.parseInt(topup.get(i)))
             {
-                System.out.println(" Alert: below " + topup.get(i));
+                System.out.println(" Alert! under threshold value. " + topup.get(i));
             } 
             else
             {
@@ -78,7 +98,7 @@ public class InventoryController {
     public int editMedication(String Medication)
     {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter change in medication");
+        System.out.println("Enter change in medication: ");
         int change = sc.nextInt();
         String oldValue = csvhandler.getField(0, Medication, 1);
         int newValue = Integer.parseInt(oldValue) + change;
@@ -104,6 +124,23 @@ public class InventoryController {
         }
         return 0;
     }
+
+    public int deleteMedication()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter medication name to delete: ");
+        String name = sc.next();
+        //
+        try{
+            csvhandler.removeRows(0,name);
+        }catch (IOException e){
+            System.out.println("Error occured during deleting medication!");
+            return 0;
+        }
+        return 1;
+    }
+
+    
 
 
 
