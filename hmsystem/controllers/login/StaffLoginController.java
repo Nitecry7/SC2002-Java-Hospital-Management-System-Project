@@ -32,10 +32,16 @@ public class StaffLoginController implements ILoginController {
 
             String actualPassword = handler.getField(Consts.Staff.ID_COLUMN, userID, Consts.Staff.PW_COLUMN);
 
+            //If password matches
             if ((actualPassword.equals("") && password.equals("password")) || password.equals(actualPassword)) {
+
+                //Get role name
                 roleName = handler.getField(Consts.Staff.ID_COLUMN, userID, Consts.Staff.ROLE_COLUMN);
+                //Get class corresponding to role name
                 Class<?> staffRole = Class.forName(roleName);
-                user = (User) staffRole.getDeclaredConstructor(String.class).newInstance(userID);
+                //Instantiate that class
+                user = (User) staffRole.getMethod("get" + roleName, String.class, IOHandler.class).invoke(null, userID, new CsvHandler(Consts.Staff.FILE_NAME));
+                
             }
             else {
                 System.out.println("Wrong password");

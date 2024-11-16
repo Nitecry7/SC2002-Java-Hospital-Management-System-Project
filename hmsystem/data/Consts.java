@@ -11,8 +11,8 @@ public final class Consts {
         public static final int NAME_COLUMN = 2;
         public static final int DOB_COLUMN = 3;
         public static final int GENDER_COLUMN = 4;
-        public static final int BLOODTYPE_COLUMN = 2;
-        public static final int EMAIL_COLUMN = 2;
+        public static final int BLOODTYPE_COLUMN = 5;
+        public static final int EMAIL_COLUMN = 6;
     }
 
     public static final class Staff {
@@ -41,7 +41,7 @@ public final class Consts {
         public static final int SERVICETYPE_COLUMN = 3;
         public static final int DATE_COLUMN = 4;
         public static final int PRESCRIPTIONS_COLUMN = 5;
-        public static final int NOTES_COLUMN = 4;
+        public static final int NOTES_COLUMN = 6;
   }
 
     private Consts() {}

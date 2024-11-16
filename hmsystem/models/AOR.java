@@ -1,18 +1,19 @@
 package hmsystem.models;
 
-import java.util.List;
+import hmsystem.data.Consts;
 import java.io.BufferedReader;
-import java.util.Base64;
-import java.io.FileReader;
-import java.util.Date;
-import java.io.ObjectInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class AOR {
 
@@ -40,17 +41,17 @@ public class AOR {
     // file
     private AOR(String[] s) throws Exception {
 
-        appointmentID = s[0];
-        patientName = s[1];
-        doctorName = s[2];
-        serviceType = s[3];
-        notes = s[6].replace("␟", ",");
+        appointmentID = s[Consts.AOR.ID_COLUMN];
+        patientName = s[Consts.AOR.PATIENT_COLUMN];
+        doctorName = s[Consts.AOR.DOCTOR_COLUMN];
+        serviceType = s[Consts.AOR.SERVICETYPE_COLUMN];
+        notes = s[Consts.AOR.NOTES_COLUMN].replace("␟", ",");
 
-        byte[] dateData = Base64.getDecoder().decode(s[4]);
+        byte[] dateData = Base64.getDecoder().decode(s[Consts.AOR.DATE_COLUMN]);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(dateData));
         date = (Date) ois.readObject();
 
-        byte[] prescriptionData = Base64.getDecoder().decode(s[5]);
+        byte[] prescriptionData = Base64.getDecoder().decode(s[Consts.AOR.PRESCRIPTIONS_COLUMN]);
         ois = new ObjectInputStream(new ByteArrayInputStream(prescriptionData));
 
         prescriptions = (Prescription[]) ois.readObject();
@@ -67,7 +68,7 @@ public class AOR {
         String details = null;
 
         while ((details = br.readLine()) != null) {
-            if (details.split(",")[0].equals(appointmentID)) {
+            if (details.split(",")[Consts.AOR.ID_COLUMN].equals(appointmentID)) {
                 break;
             }
         }
