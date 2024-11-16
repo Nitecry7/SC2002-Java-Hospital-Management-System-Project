@@ -1,7 +1,9 @@
 package hmsystem.models;
+import java.io.IOException;
+
 import hmsystem.data.Consts;
 import hmsystem.io.*;
-abstract class Staff extends User{
+public abstract class Staff extends User{
 
     String userID, name, userRole, gender;
     int age;
@@ -29,7 +31,14 @@ abstract class Staff extends User{
         details[Consts.Staff.GENDER_COLUMN] = gender;
         details[Consts.Staff.AGE_COLUMN] = String.valueOf(age);
 
-        handler.updateRow(Consts.Staff.ID_COLUMN, userID, details);
+        try {
+            // Attempt to update the row in the CSV file
+            handler.updateRow(Consts.Staff.ID_COLUMN, userID, details);
+            System.out.println("Row updated successfully for UserID: " + userID);
+        } catch (Exception e) {
+            // Catch-all for any other unexpected exceptions
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+        }
 
     }
 

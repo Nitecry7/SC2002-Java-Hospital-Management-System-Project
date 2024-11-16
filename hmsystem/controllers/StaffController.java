@@ -6,7 +6,6 @@ import hmsystem.utils.TablePrinter;
 import hmsystem.models.Staff;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public class StaffController {
@@ -56,7 +55,7 @@ public class StaffController {
 
     public void updateStaff(Staff staff, int columnToChange, String newValue) {
         try {
-            csvHandler.setField(0, staff.getUserID(), columnToChange, newValue); // Assuming column 0 is staffID
+            csvHandler.setField(0, staff.getUserID(), columnToChange, newValue);
             System.out.println("Staff updated successfully.");
         } catch (IOException e) {
             System.err.println("Error updating staff: " + e.getMessage());
