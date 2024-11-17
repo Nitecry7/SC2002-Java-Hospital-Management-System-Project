@@ -1,52 +1,84 @@
 package hmsystem.controllers;
 
+import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
 import hmsystem.data.Consts;
 
 import java.io.IOException;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class AORController {
-    private IOHandler appointmentHandler;
-    private IOHandler patientHandler;
-    private IOHandler doctorHandler;
 
-    public AORController(IOHandler appointmentHandler, IOHandler patientHandler, IOHandler doctorHandler) {
-        this.appointmentHandler = appointmentHandler;
-        this.patientHandler = patientHandler;
-        this.doctorHandler = doctorHandler;
+    private static AORController AorController = null;
+    private static IOHandler appointmentHandler, patientHandler, doctorHandler;
+
+    public static AORController getInstance() {
+        if (AorController == null) {
+            AORController.AorController = new AORController();
+        }
+        return AorController;
     }
 
-    public void viewAllAppointmentsDetails() throws IOException {
-        // Read all rows (appointments) using the readCsvValues method
-        Collection<String[]> rows = appointmentHandler.readCsvValues();
-        
-        // If there are no appointments, notify the user
-        if (rows.isEmpty()) {
-            System.out.println("No appointments found.");
-            return;
-        }
-
-        // Print the details of each appointment
-        System.out.println("All appointments:");
-        for (String[] row : rows) {
-            String appointmentID = row[Consts.AOR.ID_COLUMN];
-            String patientName = row[Consts.AOR.PATIENT_NAME_COLUMN];
-            String doctorName = row[Consts.AOR.DOCTOR_NAME_COLUMN];
-            String date = row[Consts.AOR.DATE_COLUMN];
-            String time = row[Consts.AOR.TIME_COLUMN];
-            String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
-
-            System.out.println("Appointment ID: " + appointmentID);
-            System.out.println("Patient: " + patientName);
-            System.out.println("Doctor: " + doctorName);
-            System.out.println("Date: " + date);
-            System.out.println("Time: " + time);
-            System.out.println("Status: " + status);
-            System.out.println("----------------------------");
+    protected AORController() {
+        System.out.println("test");
+        try {
+            AORController.appointmentHandler = new CsvHandler("hmsystem/data/AppointmentAOR_List.csv");
+            AORController.patientHandler = new CsvHandler("hmsystem/data/Patient_List.csv");
+            AORController.doctorHandler = new CsvHandler("hmsystem/data/Staff_List.csv");
+            System.out.println("test2");
+        } catch (IOException e) {
+            System.out.println("Error occurred creating AORController");
+            e.printStackTrace();
         }
     }
+
+public List<String> viewAllAppointmentsDetails() throws IOException {
+    // Read all rows (appointments) using the readCsvValues method
+    Collection<String[]> rows = appointmentHandler.readCsvValues();
+
+    // If there are no appointments, return an empty list
+    if (rows.isEmpty()) {
+        return new ArrayList<>(); // Return an empty list if no appointments are found
+    }
+
+    // List to hold all the appointment details as strings
+    List<String> appointmentDetails = new ArrayList<>();
+
+    // Define date and time format (adjust the format based on your CSV content)
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+    // Create a formatted string for each appointment row
+    for (String[] row : rows) {
+        String appointmentID = row[Consts.AOR.ID_COLUMN];
+        String patientID = row[Consts.AOR.PATIENT_ID_COLUMN]; // Adjust column index if necessary
+        String doctorID = row[Consts.AOR.DOCTOR_ID_COLUMN];   // Adjust column index if necessary
+        String dateStr = row[Consts.AOR.DATE_COLUMN];
+        String timeStr = row[Consts.AOR.TIME_COLUMN];
+
+        // Convert date and time strings to LocalDate and LocalTime
+        LocalDate date = LocalDate.parse(dateStr, dateFormatter);
+        LocalTime time = LocalTime.parse(timeStr, timeFormatter);
+
+        // Build a formatted string for the appointment
+        String formattedDetails = String.format(
+            "Appointment ID: %s\nPatient ID: %s\nDoctor ID: %s\nDate: %s\nTime: %s",
+            appointmentID, patientID, doctorID, date.format(dateFormatter), time.format(timeFormatter)
+        );
+
+        // Add the formatted string to the list
+        appointmentDetails.add(formattedDetails);
+    }
+
+    // Return the list of formatted appointment details
+    return appointmentDetails;
+}
 
 
     /**
@@ -152,40 +184,44 @@ public class AORController {
     }
 
     /**
-     * Displays all scheduled appointments for a given patient.
-     * 
+     * Retrieves all scheduled appointments for a given patient.
      *
      * @param patientID The ID of the patient for whom scheduled appointments need
      *                  to be retrieved.
+     * @return A list of strings, each representing a scheduled appointment for the
+     *         given patient.
      * @throws IOException If there's an error reading or updating the appointment
      *                     data from the CSV.
      */
-    public void viewScheduledAppointments(String patientID) throws IOException {
+    public List<String> viewScheduledAppointments(String patientID) throws IOException {
         // Fetch rows for the given patientID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
 
-        // If no appointments are found for the patient, notify the user
+        // If no appointments are found for the patient, return an empty list
         if (rows.isEmpty()) {
-            System.out.println("No scheduled appointments found for patient ID: " + patientID);
-            return;
+            return new ArrayList<>(); // Return an empty list
         }
 
-        // Print the details of each appointment for the given patient
-        System.out.println("Scheduled appointments for Patient ID: " + patientID);
+        // Define the list to hold formatted appointment details
+        List<String> scheduledAppointments = new ArrayList<>();
+
+        // Format each appointment row into a string and add it to the list
         for (String[] row : rows) {
             String appointmentID = row[Consts.AOR.ID_COLUMN];
             String doctorName = row[Consts.AOR.DOCTOR_NAME_COLUMN];
             String date = row[Consts.AOR.DATE_COLUMN];
             String time = row[Consts.AOR.TIME_COLUMN];
-            String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
+            String serviceType = row[Consts.AOR.SERVICE_COLUMN];
 
-            System.out.println("Appointment ID: " + appointmentID);
-            System.out.println("Doctor: " + doctorName);
-            System.out.println("Date: " + date);
-            System.out.println("Time: " + time);
-            System.out.println("Status: " + status);
-            System.out.println("----------------------------");
+            // Format the appointment details
+            String details = String.format(
+                    "Appointment ID: %s\nDoctor: %s\nDate: %s\nTime: %s\nService Type: %s",
+                    appointmentID, doctorName, date, time, serviceType);
+
+            scheduledAppointments.add(details); // Add the formatted string to the list
         }
+
+        return scheduledAppointments; // Return the list of appointment details
     }
 
     /**
@@ -196,18 +232,23 @@ public class AORController {
      * @throws IOException If there's an error reading or updating the appointment
      *                     data from the CSV.
      */
-    public void viewPastAppointmentsOutcome(String patientID) throws IOException {
+    public List<String> viewPastAppointmentsOutcome(String patientID) throws IOException {
         // Fetch rows for the given patientID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
 
-        // If no appointments are found for the patient, notify the user
+        // List to store the appointment details
+        List<String> appointmentDetails = new ArrayList<>();
+
+        // If no appointments are found for the patient, return an empty list with a
+        // message
         if (rows.isEmpty()) {
-            System.out.println("No appointments found for patient ID: " + patientID);
-            return;
+            appointmentDetails.add("No appointments found for patient ID: " + patientID);
+            return appointmentDetails;
         }
 
-        // Print the details of completed appointments for the given patient
-        System.out.println("Completed appointments for Patient ID: " + patientID);
+        // Add header for completed appointments
+        appointmentDetails.add("Completed appointments for Patient ID: " + patientID);
+
         boolean foundCompleted = false;
         for (String[] row : rows) {
             String appointmentID = row[Consts.AOR.ID_COLUMN];
@@ -218,23 +259,27 @@ public class AORController {
             String prescription = row[Consts.AOR.PRESCRIPTION_COLUMN]; // Assuming prescription info is in this column
             String notes = row[Consts.AOR.NOTES_COLUMN]; // Assuming notes about the outcome are in this column
 
-            // Only display completed appointments
+            // Only include completed appointments
             if ("Completed".equalsIgnoreCase(status)) {
                 foundCompleted = true;
-                System.out.println("Appointment ID: " + appointmentID);
-                System.out.println("Doctor: " + doctorName);
-                System.out.println("Date: " + date);
-                System.out.println("Time: " + time);
-                System.out.println("Status: " + status);
-                System.out.println("Prescription: " + prescription);
-                System.out.println("Notes: " + notes);
-                System.out.println("----------------------------");
+                appointmentDetails.add("Appointment ID: " + appointmentID);
+                appointmentDetails.add("Doctor: " + doctorName);
+                appointmentDetails.add("Date: " + date);
+                appointmentDetails.add("Time: " + time);
+                appointmentDetails.add("Status: " + status);
+                appointmentDetails.add("Prescription: " + prescription);
+                appointmentDetails.add("Notes: " + notes);
+                appointmentDetails.add("----------------------------");
             }
         }
 
+        // If no completed appointments are found, add a message to the list
         if (!foundCompleted) {
-            System.out.println("No completed appointments found for patient ID: " + patientID);
+            appointmentDetails.add("No completed appointments found for patient ID: " + patientID);
         }
+
+        // Return the list of appointment details
+        return appointmentDetails;
     }
 
     /**
@@ -245,18 +290,23 @@ public class AORController {
      * @throws IOException If there's an error reading or updating the appointment
      *                     data from the CSV.
      */
-    public void viewPendingAppointments(String doctorID) throws IOException {
+    public List<String> viewPendingAppointments(String doctorID) throws IOException {
         // Fetch rows for the given doctorID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
 
-        // If no appointments are found for the doctor, notify the user
+        // List to store the appointment details
+        List<String> appointmentDetails = new ArrayList<>();
+
+        // If no appointments are found for the doctor, return an empty list with a
+        // message
         if (rows.isEmpty()) {
-            System.out.println("No appointments found for Doctor ID: " + doctorID);
-            return;
+            appointmentDetails.add("No appointments found for Doctor ID: " + doctorID);
+            return appointmentDetails;
         }
 
-        // Print the details of each pending appointment for the given doctor
-        System.out.println("Pending appointments for Doctor ID: " + doctorID);
+        // Add header for pending appointments
+        appointmentDetails.add("Pending appointments for Doctor ID: " + doctorID);
+
         boolean foundPending = false;
         for (String[] row : rows) {
             String appointmentID = row[Consts.AOR.ID_COLUMN];
@@ -265,21 +315,25 @@ public class AORController {
             String time = row[Consts.AOR.TIME_COLUMN];
             String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
 
-            // Only display pending appointments
+            // Only include pending appointments
             if ("Pending".equalsIgnoreCase(status)) {
                 foundPending = true;
-                System.out.println("Appointment ID: " + appointmentID);
-                System.out.println("Patient: " + patientName);
-                System.out.println("Date: " + date);
-                System.out.println("Time: " + time);
-                System.out.println("Status: " + status);
-                System.out.println("----------------------------");
+                appointmentDetails.add("Appointment ID: " + appointmentID);
+                appointmentDetails.add("Patient: " + patientName);
+                appointmentDetails.add("Date: " + date);
+                appointmentDetails.add("Time: " + time);
+                appointmentDetails.add("Status: " + status);
+                appointmentDetails.add("----------------------------");
             }
         }
 
+        // If no pending appointments are found, add a message to the list
         if (!foundPending) {
-            System.out.println("No pending appointments found for Doctor ID: " + doctorID);
+            appointmentDetails.add("No pending appointments found for Doctor ID: " + doctorID);
         }
+
+        // Return the list of appointment details
+        return appointmentDetails;
     }
 
     /**
