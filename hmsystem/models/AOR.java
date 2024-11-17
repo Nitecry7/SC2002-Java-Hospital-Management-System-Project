@@ -21,6 +21,7 @@ public class AOR {
     private final String patientName;
     private final String doctorName;
     private Date date;
+    private Time time;
     private String serviceType;
     private Prescription[] prescriptions;
     private String notes;
