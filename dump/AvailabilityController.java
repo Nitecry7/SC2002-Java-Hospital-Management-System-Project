@@ -11,8 +11,8 @@ import java.util.Map;
 public class AvailabilityController {
         
     private static AvailabilityController availabilityController = null;
-    private static IOHandler csvhandler;
-    private static IOHandler csvhandlerAppt;
+    private IOHandler csvhandler;
+    private IOHandler csvhandlerAppt;
 
     
     protected AvailabilityController() throws IOException{
@@ -31,7 +31,7 @@ public class AvailabilityController {
     }
 
     public boolean checkSlot(String doctorID, String date, int timeSlot) {
-        Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
+        Collection<String[]> rows = csvhandler.readCsvValues();
         for (String[] row : rows) {
             if (row.length >= 4) {
                 if (doctorID.equals(row[Consts.AOR.DOCTOR_ID_COLUMN]) && date.equals(row[Consts.AOR.DATE_COLUMN]) && timeSlot == (Integer.parseInt(row[Consts.AOR.TIME_COLUMN])))
@@ -47,11 +47,10 @@ public class AvailabilityController {
 
     public int addBlockedSlots(String userID)
     {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter date: ");
-        String date = sc.next();
-        System.out.println("Enter time: ");
-        String time = sc.next();
+        AttributeController getter = AttributeController.getInstance();
+        String date = getter.inputString("Enter date(yyyy-mm-dd): ");
+        String time = getter.inputString("Enter time(hh:mm): ");
+
         
         String[] temp = {String.valueOf(getLowestAID()),userID, date, time};
         //
