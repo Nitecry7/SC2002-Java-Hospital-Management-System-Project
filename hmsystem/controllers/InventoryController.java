@@ -63,20 +63,20 @@ public class InventoryController {
 
     public void viewMedicationInventory()
     {
-        // Read the CSV data
+        // read csv values
         Collection<String[]> rows = csvhandler.readCsvValues();
     
-        // Initialise ArrayLists to store medications and their quantities
+        // ArrayLists to store quantities
         ArrayList<String> medications = new ArrayList<>();
         ArrayList<String> quantities = new ArrayList<>();
         ArrayList<String> topup = new ArrayList<>();
     
-        // Iterate through rows to extract medication names and quantities
+        // add each row that has 3 or more length to the arrayList
         for (String[] row : rows) {
-            if (row.length >= 3) { // Ensure the row has at least two columns
-                medications.add(row[0]); // First column: Medication name
-                quantities.add(row[1]);  // Second column: Quantity
-                topup.add(row[2]); // Third column: low alert
+            if (row.length >= 3) { 
+                medications.add(row[0]); 
+                quantities.add(row[1]);  
+                topup.add(row[2]); 
             }
         }
         
