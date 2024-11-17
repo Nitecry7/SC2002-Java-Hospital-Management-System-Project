@@ -200,7 +200,7 @@ public class Doctor extends Staff
         }
     }
 
-    // View Upcoming Appointments
+  
     public void _View_Upcoming_Appointments() 
     {
         try 
@@ -223,7 +223,7 @@ public class Doctor extends Staff
         }
     }
 
-    // Record Appointment Outcome
+  
     public void _Record_Appointment_Outcome() 
     {
         try
@@ -234,7 +234,7 @@ public class Doctor extends Staff
             String prescription = ac.inputString("Enter prescription details: ");
             String notes = ac.inputString("Enter consultation notes: ");
 
-            AORController aorController = new AORController(new CsvHandler(Consts.AOR.FILE_NAME), null, null);
+            AORController aorController = AORController.getInstance();
             aorController.recordAppointmentOutcome(appointmentID, prescription, notes);
 
             System.out.println("Appointment outcome recorded successfully.");
