@@ -16,8 +16,9 @@ public class Patient extends User {
     private AttributeController getter = AttributeController.getInstance();
     MedicalRecord medicalRecord;
 
-    private Patient(String patientID, IOHandler patientCsvHandler) throws Exception {
+    private Patient(String patientID, IOHandler patientCsvHandler) {
         super(patientID);
+        try{
         this.patientCsvHandler = patientCsvHandler;
         /*
         this.appointmentCsvHandler = appointmentCsvHandler;
@@ -25,18 +26,25 @@ public class Patient extends User {
         this.medicalRecordCsvHandler = medicalRecordCsvHandler;
         */
 
-        this.medicalRecord = new MedicalRecord(patientID, new CsvHandler(Consts.AOR.FILE_NAME));
+        this.medicalRecord = new MedicalRecord(patientID, new CsvHandler(Consts.Patient.FILE_NAME));
         // super(userID, name, age, gender, email, contactNumber, userRole);
+        }catch (Exception e){
+            System.out.println("Error at initializing patient");
+        }
 
     }
 
-    public Patient getPatient(String patientID, IOHandler handler) throws Exception {
-
+    public static Patient getPatient(String patientID, IOHandler handler)  {
+        try{
         List<String[]> userDetails = handler.getRows(Consts.Patient.ID_COLUMN, patientID);
         if (userDetails.isEmpty()) {
             return null;
         } else {
             return new Patient(patientID, handler);
+        }
+        }catch(Exception e){
+            System.out.println("Error at getting patient details");
+            return null;
         }
 
     }

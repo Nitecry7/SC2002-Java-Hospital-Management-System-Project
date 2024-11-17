@@ -1,20 +1,6 @@
-Staff ID,Name,Role,Gender,Age,Email,Contact Number
-P001,Mark Lee,Pharmacist,Male,29,mark.lee@hospital.com,91223344
-N0010,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-A001,Sarah Lee,Administrator,Female,40,sarah.lee@hospital.com,92334455
-N0012,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-N0011,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-D003,James Bond,Doctor,Male,50,james.bond@hospital.com,94556677
-N0003,Alice Johnson,Nurse,Female,30,email@email.com,91234123
-N0014,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-D002,Emily Clarke,Doctor,Female,38,emily.clarke@hospital.com,95667788
-N0013,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-D001,John Smith,Doctor,Male,45,john.smith@hospital.com,96778899
-N0005,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-N0016,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-N0004,Alice Johnson,Nurse,Female,30,email@email.com,91234123
-N0015,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-N0007,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
-N0006,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
-N0009,Alice Johnson,Nurse,Female,30,nurse.alice@example.com,91234123
-N0008,Jane Doe,Nurse,Female,35,jane.doe@hospital.com,98765432
+Staff ID,PW,Name,Role,Gender,Age,Email,Contact Number
+P001,,Mark Lee,Pharmacist,Male,29,mark.lee@hospital.com,91223344
+A001,,Sarah Lee,Administrator,Female,40,sarah.lee@hospital.com,92334455
+D003,,James Bond,Doctor,Male,50,james.bond@hospital.com,94556677
+D002,,Emily Clarke,Doctor,Female,38,emily.clarke@hospital.com,95667788
+D001,,John Smith,Doctor,Male,45,john.smith@hospital.com,96778899
