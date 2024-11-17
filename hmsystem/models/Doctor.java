@@ -82,13 +82,15 @@ public class Doctor extends Staff
         }
     }
 
-    public void _Update_Patient_Medical_Records() throws Exception {
+    public void _Update_Patient_Medical_Records() throws Exception 
+    {
         try {
             AttributeController ac = AttributeController.getInstance();
             System.out.println("Enter the patient ID whose record needs updating: ");
             MedicalRecord patientRecord = _View_Patient_Medical_Records();
 
-            if (patientRecord == null) {
+            if (patientRecord == null) 
+            {
                 return;
             }
 
@@ -99,7 +101,9 @@ public class Doctor extends Staff
 
             patientRecord.addMedicalHistory(new MedicalDiagnosis(diagnosis, treatment, notes, today));
             System.out.println("Patient medical record updated successfully.");
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             System.err.println("Error updating patient medical records: " + e.getMessage());
         }
     }
@@ -118,7 +122,8 @@ public class Doctor extends Staff
                 System.out.println(appointment.toString());
             }
 
-        } catch (Exception e) 
+        } 
+        catch (Exception e) 
         {
             System.err.println("Error viewing personal schedule: " + e.getMessage());
         }
@@ -146,7 +151,8 @@ public class Doctor extends Staff
             appointmentController.setDoctorAvailability(getUserID(), newAppointment);
 
             System.out.println("Availability set successfully.");
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.err.println("Error setting availability: " + e.getMessage());
         }
     }
