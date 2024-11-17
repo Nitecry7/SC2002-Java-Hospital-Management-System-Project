@@ -2,6 +2,7 @@ package hmsystem.models;
 
 import hmsystem.data.Consts;
 import hmsystem.io.*;
+import java.util.Scanner;
 public abstract class Staff extends User{
 
     String userID, name, userRole, gender;
@@ -22,7 +23,8 @@ public abstract class Staff extends User{
 
        public void saveData() {
      
-        String[] details = new String[5];
+        String[] details = new String[6];
+        details[Consts.Staff.PW_COLUMN] = getPassword();
         details[Consts.Staff.ID_COLUMN] = userID;
         details[Consts.Staff.NAME_COLUMN] = name;
         details[Consts.Staff.ROLE_COLUMN] = userRole;
@@ -40,6 +42,21 @@ public abstract class Staff extends User{
 
     }
 
+    @Override
+    public void _Set_new_password() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter new password");
+        String newPassword = in.nextLine();
+        System.out.println("Enter it again");
+        if (in.nextLine().equals(newPassword)) {
+            System.out.println("New password set");
+            setPassword(newPassword);
+            saveData();
+        }
+        else {
+            System.out.println("Password does not match. Exiting to menu...");
+        }
+    }
    
     public void setUserID(String userID) {
         this.userID = userID;
@@ -72,6 +89,8 @@ public abstract class Staff extends User{
         this.age = age;
         saveData();
     }
+
+   
 
     
 

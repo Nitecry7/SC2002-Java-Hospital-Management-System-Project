@@ -18,6 +18,7 @@ public class MedicalRecord
     private String patientGender;
     private String patientEmail;
     private String patientPhone;
+    private String patientPassword;
     private BloodType patientBloodType;
     private List<String> AORIDs;
     private List<MedicalDiagnosis> patientMedicalHistory; //List Interface is used to be general, so that ArrayList can implement it
@@ -36,6 +37,7 @@ public class MedicalRecord
         this.patientDateOfBirth = details[Consts.Patient.DOB_COLUMN];
         this.patientPhone = details[Consts.Patient.CONTACTNUMBER_COUMN];
         this.patientBloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
+        this.patientPassword = details[Consts.Patient.PW_COLUMN];
         
         byte[] AORIDdata = Base64.getDecoder().decode(details[Consts.Patient.AOR_ID_COLUMN]);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(AORIDdata));
@@ -53,7 +55,8 @@ public class MedicalRecord
 
     public void saveData() throws IOException {
      
-        String[] details = new String[9];
+        String[] details = new String[10];
+        
         details[Consts.Patient.ID_COLUMN] = patientID;
         details[Consts.Patient.NAME_COLUMN] = patientName;
         details[Consts.Patient.EMAIL_COLUMN] = patientEmail;
@@ -164,6 +167,12 @@ public class MedicalRecord
 
     public void addMedicalHistory(MedicalDiagnosis patientMedicalHistory) throws IOException {
         this.patientMedicalHistory.add(patientMedicalHistory);
+        saveData();
+    }
+
+
+    public void setPatientPassword(String patientPassword) throws IOException{
+        this.patientPassword = patientPassword;
         saveData();
     }
     

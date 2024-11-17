@@ -9,6 +9,7 @@ import hmsystem.models.enums.BloodType;
 import hmsystem.utils.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Patient extends User {
     private IOHandler patientCsvHandler;
@@ -59,6 +60,23 @@ public class Patient extends User {
             }
         }
 
+    }
+
+    
+
+    @Override
+    public void _Set_new_password() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter new password");
+        String newPassword = in.nextLine();
+        System.out.println("Enter it again");
+        if (in.nextLine().equals(newPassword)) {
+            System.out.println("New password set");
+            setPassword(newPassword);
+        }
+        else {
+            System.out.println("Password does not match. Exiting to menu...");
+        }
     }
 
     public void _View_Available_Appointment_Slots(String DoctorID, String date) {
@@ -229,6 +247,15 @@ public class Patient extends User {
 
     public void setBloodType(BloodType bloodType) throws IOException {
         medicalRecord.setPatientBloodType(bloodType);
+    }
+
+    @Override
+     public void setPassword(String password) {
+        try {
+            medicalRecord.setPatientPassword(password);
+        } catch (Exception e) {
+            System.out.println("Password was not set, an error occurred");
+        }
     }
 
 }

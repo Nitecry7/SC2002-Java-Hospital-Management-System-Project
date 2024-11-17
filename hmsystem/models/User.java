@@ -4,6 +4,7 @@ import java.util.Scanner;
 public abstract class User
 {
     private final String userID;
+    private String password;
 
     public User(String userID)
     {
@@ -31,5 +32,15 @@ public abstract class User
     public String getUserID() {
         return userID;
     }
+
+    protected String getPassword() {
+        return password;
+    }
+
+    protected void setPassword(String password) {
+        
+    }
+
+    public abstract void _Set_new_password();
 
 }
