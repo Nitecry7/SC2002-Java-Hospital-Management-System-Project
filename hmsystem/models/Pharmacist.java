@@ -18,9 +18,9 @@ class Pharmacist extends Staff {
     }
 
 
-    public static Pharmacist getPharmacist(String adminID, IOHandler handler) {
+    public static Pharmacist getPharmacist(String pharmacistID, IOHandler handler) {
 
-        List<String[]> userDetails = handler.getRows(Consts.Staff.ID_COLUMN, adminID);
+        List<String[]> userDetails = handler.getRows(Consts.Staff.ID_COLUMN, pharmacistID);
         if (userDetails.isEmpty()) {
             return null;
         }
@@ -36,7 +36,7 @@ class Pharmacist extends Staff {
         AttributeController ac = AttributeController.getInstance();
         String patientID = ac.inputString("Input patient's ID to check for pending prescriptions");
 
-        
+
 
     }
 
@@ -54,7 +54,6 @@ class Pharmacist extends Staff {
         ReplenishmentController rc = ReplenishmentController.getInstance();
         rc.submitRequest();
     }
-  
 
 
 }

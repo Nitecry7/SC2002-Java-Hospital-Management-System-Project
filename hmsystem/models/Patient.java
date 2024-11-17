@@ -73,21 +73,33 @@ public class Patient extends User {
 
     }
 
-    public void _Cancel_an_Appointment() {
+    public void _Cancel_an_Appointment() throws IOException {
+
+        System.out.println("Your scheduled appointments: ");
+        List<String> appointments = AORController.getInstance().viewScheduledAppointments(getUserID());
+
+        AttributeController ac = AttributeController.getInstance();
+        String appointmentID = ac.inputString("Enter appointment ID to cancel");
+
+        try {
+            AORController.getInstance().cancelAppointment(appointmentID);
+            System.out.println("Appointment with ID: " + appointmentID + " Successfully cancelled");
+        } catch (Exception e) {
+            System.out.println("Error. No appointment ID: \"" + appointmentID + "\" found");
+        }
          
     }
 
     public void _View_Scheduled_Appointments() throws IOException {
 
-         new AORController(new CsvHandler(Consts.AOR.FILE_NAME), new CsvHandler(Consts.Patient.FILE_NAME), 
-                new CsvHandler(Consts.Staff.FILE_NAME)).viewScheduledAppointments(getUserID());
+        System.out.println("Your scheduled appointments: ");
+        AORController.getInstance().viewScheduledAppointments(getUserID());
 
     }
 
     public void _View_Past_Appointment_Outcome_Records() throws IOException {
 
-        new AORController(new CsvHandler(Consts.AOR.FILE_NAME), new CsvHandler(Consts.Patient.FILE_NAME), 
-                new CsvHandler(Consts.Staff.FILE_NAME)).viewPastAppointmentsOutcome(getUserID());
+        AORController.getInstance().viewPastAppointmentsOutcome(getUserID());
 
     }
 
