@@ -153,11 +153,15 @@ public class Administrator extends Staff {
     }
 
     public void _View_Appointments_details() {
-        AppointmentController appCon = AppointmentController.getInstance();
-        List<Appointment> appList = appCon.getAllAppointments();
-        for(Appointment app : appList){
+        try{
+        AORController appCon = AORController.getInstance();
+        List<String> appList = appCon.viewAllAppointments();
+        for(String app : appList){
             System.out.println(app.toString());
         }
+        }catch(Exception e){
+            System.out.println("Something went wrong.");
+        }  
     }
     
     public void _View_and_Manage_Medication_Inventory() {
