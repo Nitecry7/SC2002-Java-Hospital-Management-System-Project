@@ -10,8 +10,6 @@ import hmsystem.data.Consts;
 import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
 
-import java.util.Scanner;  
-
 
 // Singleton Class
 public class InventoryController {
@@ -43,13 +41,12 @@ public class InventoryController {
 
     public int addMedication()
     {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter new medication name: ");
-        String name = sc.next();
-        System.out.println("Enter new medication quantity: ");
-        String quantity = sc.next();
-        System.out.println("Enter new medication low alert value: ");
-        String lowAlert = sc.next();
+        AttributeController getter = AttributeController.getInstance();
+        String name = getter.inputString("Enter new medication name: ");
+        int quantityNum = getter.inputInt("Enter new medication quantity: ");
+        String quantity = Integer.toString(quantityNum);
+        int lowAlertNum = getter.inputInt("Enter new medication low alert value: ");
+        String lowAlert = Integer.toString(lowAlertNum);
         String[] temp = {name, quantity, lowAlert};
         //
         try{
@@ -84,24 +81,19 @@ public class InventoryController {
         // Print the medications and quantities
         System.out.println("Medication Inventory:");
         for (int i = 0; i < medications.size(); i++) {
-            System.out.print(medications.get(i) + " : " + quantities.get(i) + ".");
+            System.out.println(medications.get(i) + " : " + quantities.get(i) + ".");
             if (Integer.parseInt(quantities.get(i)) <= Integer.parseInt(topup.get(i)))
             {
-                System.out.println(" Alert! under threshold value. " + topup.get(i));
+                System.out.printf(" Alert! %s amount under %d!\n", medications.get(i), topup.get(i));
             } 
-            else
-            {
-                System.out.println();
-            }
         }
     
     }
 
     public int editMedication(String Medication)
     {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter change in medication for " + Medication + ": ");
-        int change = sc.nextInt();
+        AttributeController getter = AttributeController.getInstance();
+        int change = getter.inputInt("Enter the top-up amount of " + Medication + ": ");
         String oldValue = csvhandler.getField(0, Medication, 1);
         int newValue = Integer.parseInt(oldValue) + change;
 
@@ -127,9 +119,8 @@ public class InventoryController {
 
     public int deleteMedication()
     {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter medication name to delete: ");
-        String name = sc.next();
+        AttributeController getter = AttributeController.getInstance();
+        String name = getter.inputString("Enter medication name to delete: ");
         //
         try{
             csvhandler.removeRows(0,name);
