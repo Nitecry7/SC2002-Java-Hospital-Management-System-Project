@@ -225,6 +225,8 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             String details = String.format(
                     "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s\nNote: %s",
                     appointmentID, doctorName, date, time, serviceType, status, note);
+            scheduledAppointments.add(details); // Add the formatted string to the list
+            scheduledAppointments.add("----------------------");
         }
 
         return scheduledAppointments; // Return the list of appointment details

@@ -41,11 +41,11 @@ public abstract class Staff extends User{
 
     
     public void _Set_new_password() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter new password");
-        String newPassword = in.nextLine();
-        System.out.println("Enter it again");
-        if (in.nextLine().equals(newPassword)) {
+        AttributeController ac = AttributeController.getInstance();
+;
+        String newPassword = ac.inputString("Enter new password:");
+        String verify = ac.inputString("Verify the password:");
+        if (verify.equals(newPassword)) {
             System.out.println("New password set");
             setPassword(newPassword);
             saveData();
