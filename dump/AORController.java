@@ -87,7 +87,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
      * @param service   The service to be provided.
      * @throws IOException If there's an error updating the CSV.
      */
-    public void scheduleAppointment(String patientID, String doctorID, int timeSlot, String date, String service)
+    public void scheduleAppointment(String patientID, String doctorID, String timeSlot, String date, String service)
             throws IOException {
         String appointmentID = generateNewAppointmentID();
         String[] newAppointment = {
@@ -97,7 +97,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
                 doctorID,
                 getDoctorName(doctorID),
                 date,
-                String.valueOf(timeSlot),
+                timeSlot,
                 service,
                 "",
                 "",

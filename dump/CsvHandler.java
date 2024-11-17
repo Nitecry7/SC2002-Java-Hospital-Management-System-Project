@@ -58,11 +58,19 @@ public class CsvHandler implements IOHandler {
 
     // Read CSV
     public Map<String, String[]> readCsv() {
+        try{
+        loadCsv();
+        }catch(IOException e){
+        }
         return new HashMap<>(data); // Return a copy of the data to prevent external modification
     }
 
     // Read CSV values (rows only, without headers)
     public Collection<String[]> readCsvValues() {
+        try{
+        loadCsv();
+        }catch(IOException e){
+        }
         return new ArrayList<>(data.values()); // Return only the rows (values), excluding headers
     }
 
@@ -82,6 +90,11 @@ public class CsvHandler implements IOHandler {
 
     // Get all rows where a given column matches a specified value
     public List<String[]> getRows(int columnToSearch, String valueToFind) {
+
+        try{
+        loadCsv();
+        }catch(IOException e){
+        }
         List<String[]> matchingRows = new ArrayList<>();
 
         // Search through the rows to find the matching value in the specified column
@@ -155,6 +168,11 @@ public class CsvHandler implements IOHandler {
     // Get a field value for a given column index (instead of column name), value to
     // search for, and column to get
     public String getField(int columnToSearch, String valueToFindRow, int columnToGet) {
+
+        try{
+            loadCsv();
+        }catch(IOException e){
+            }
         // Search through the rows to find the matching value
         for (String[] row : data.values()) {
             if (row[columnToSearch].equals(valueToFindRow)) {
