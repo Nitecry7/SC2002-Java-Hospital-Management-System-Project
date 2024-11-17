@@ -31,11 +31,6 @@ public class CsvHandler implements IOHandler {
                 if( values == null) {
                     System.out.println("values is null");
                 }
-                else {
-                    for (String s : values) {
-                        System.out.println(s);
-                    }
-                }
                 data.put(values[0], values); // Assuming the first column is the unique ID
             }
         }
