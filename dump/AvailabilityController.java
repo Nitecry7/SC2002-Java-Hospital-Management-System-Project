@@ -30,16 +30,28 @@ public class AvailabilityController {
         
     }
 
-    public boolean checkSlot(String doctorID, String date, int timeSlot) {
-        Collection<String[]> rows = csvhandler.readCsvValues();
+    public boolean checkSlot(String doctorID, String date, int timeSlot) throws IOException {
+        List<String[]> rows = csvhandlerAppt.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
+        System.out.println(rows.size());
         for (String[] row : rows) {
+            System.out.println(row[Consts.AOR.DATE_COLUMN] + "    " + date);
+            System.out.println(row[Consts.AOR.TIME_COLUMN] + "    " + timeSlot);
+            if (row[Consts.AOR.DATE_COLUMN].equals(date) && Integer.parseInt(row[Consts.AOR.TIME_COLUMN]) == timeSlot) {
+                    return false;
+            }
+
+        }
+        rows = csvhandler.getRows(1, doctorID);
+        for (String[] row : rows) {    
+            
             if (row.length >= 4) {
                 if (doctorID.equals(row[Consts.AOR.DOCTOR_ID_COLUMN]) && date.equals(row[Consts.AOR.DATE_COLUMN]) && timeSlot == (Integer.parseInt(row[Consts.AOR.TIME_COLUMN])))
                     // 0 means filled slot, cannot book
                     return false;
             }
+             
         }
-
+        
         // 1 means empty slot, can book
         return true;
 
