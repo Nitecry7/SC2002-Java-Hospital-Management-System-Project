@@ -61,8 +61,9 @@ public class Patient extends User {
 
     }
 
-    public void _View_Available_Appointment_Slots() {
-
+    public void _View_Available_Appointment_Slots(String DoctorID, String date) {
+        AvailabilityController ac = AvailabilityController.getInstance();
+        ac.viewAvailableSlots(DoctorID, date);
     }
 
     public void _Schedule_an_Appointment() throws IOException {
