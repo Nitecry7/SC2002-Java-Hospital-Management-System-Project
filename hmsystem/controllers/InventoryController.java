@@ -84,7 +84,7 @@ public class InventoryController {
             System.out.println(medications.get(i) + " : " + quantities.get(i) + ".");
             if (Integer.parseInt(quantities.get(i)) <= Integer.parseInt(topup.get(i)))
             {
-                System.out.printf(" Alert! %s amount under %d!\n", medications.get(i), topup.get(i));
+                System.out.printf("Alert! %s amount under %s.\n", medications.get(i), topup.get(i));
             } 
         }
     
@@ -121,7 +121,6 @@ public class InventoryController {
     {
         AttributeController getter = AttributeController.getInstance();
         String name = getter.inputString("Enter medication name to delete: ");
-        //
         try{
             csvhandler.removeRows(0,name);
         }catch (IOException e){

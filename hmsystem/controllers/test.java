@@ -14,5 +14,9 @@ public class test {
         rc.viewAllRequest();
         rc.viewPendingRequest();
         ic.viewMedicationInventory();
+        ic.addMedication();
+        ic.viewMedicationInventory();
+        ic.deleteMedication();
+        ic.viewMedicationInventory();
 ;    }
 }

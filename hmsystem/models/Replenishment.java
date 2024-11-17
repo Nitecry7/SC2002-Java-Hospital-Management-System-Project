@@ -68,6 +68,10 @@ public class Replenishment {
     }
 
     public void rejectRequest(){
+        if(status != Status.PENDING){
+            System.out.println("Cannot reject non-pending request!");
+            return;
+        }
         status = Status.REJECTED;
         try{
             replenishmentCsvHandler.setField(0, Integer.toString(requestID), 2, "REJECTED");
@@ -77,6 +81,10 @@ public class Replenishment {
     }
 
     public void approveRequest(){
+        if(status != Status.PENDING){
+            System.out.println("Cannot approve non-pending request!");
+            return;
+        }
         status = Status.APPROVED;
         try{
             replenishmentCsvHandler.setField(0, Integer.toString(requestID), 2, "APPROVED");
@@ -84,7 +92,6 @@ public class Replenishment {
             System.out.println("Error occured when approving request");
         }
         InventoryController inventoryController = InventoryController.getInstance();
-        viewRequest();
         inventoryController.editMedicationList(medicineNames);
     }
 
