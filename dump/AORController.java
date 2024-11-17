@@ -382,7 +382,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         if (rows.isEmpty()) {
             throw new IllegalArgumentException("Patient ID not found: " + patientID);
         }
-        return rows.get(0)[1]; // Assuming the patient's name is in the NAME_COLUMN
+        return rows.get(0)[Consts.Patient.NAME_COLUMN]; // Assuming the patient's name is in the NAME_COLUMN
     }
 
     /**
@@ -396,6 +396,6 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         if (rows.isEmpty()) {
             throw new IllegalArgumentException("Doctor ID not found: " + doctorID);
         }
-        return rows.get(0)[1]; // Assuming the doctor's name is in the NAME_COLUMN
+        return rows.get(0)[Consts.Staff.NAME_COLUMN]; // Assuming the doctor's name is in the NAME_COLUMN
     }    
 }
