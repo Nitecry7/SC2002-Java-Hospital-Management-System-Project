@@ -15,37 +15,67 @@ public class MedicalRecord
     private String patientEmail;
     private String patientPhone;
     private String patientPassword;
-    private BloodType patientBloodType;
-    private List<String> AORIDs;
-    private List<MedicalDiagnosis> patientMedicalHistory; //List Interface is used to be general, so that ArrayList can implement it
+    private BloodType patientBloodType = BloodType.NOT_SET;
+    private List<String> AORIDs = new ArrayList<String>();
+    private List<MedicalDiagnosis> patientMedicalHistory = new ArrayList<MedicalDiagnosis>(); //List Interface is used to be general, so that ArrayList can implement it
 
     private IOHandler handler;
 
     
-    public MedicalRecord(String patientID, IOHandler handler) 
+    //@SuppressWarnings("unchecked")
+    public MedicalRecord(String patientID, IOHandler handler) throws Exception
     {
         try{
         String[] details = handler.getRows(Consts.Patient.ID_COLUMN, patientID).get(0);
-        
+       
+        if (details.length < 10) {
+            details = Arrays.copyOf(details, 10);
+            
+        }
+      
         this.handler = handler;
+        this.patientID = details[Consts.Patient.ID_COLUMN];
         this.patientName = details[Consts.Patient.NAME_COLUMN];
         this.patientGender = details[Consts.Patient.GENDER_COLUMN];
         this.patientEmail = details[Consts.Patient.EMAIL_COLUMN];
         this.patientDateOfBirth = details[Consts.Patient.DOB_COLUMN];
         this.patientPhone = details[Consts.Patient.CONTACTNUMBER_COUMN];
-       this.patientBloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
+        this.patientBloodType = BloodType.NOT_SET;
+
+        if (BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]) != null) {
+            this.patientBloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
+        } 
         
-        // byte[] AORIDdata = Base64.getDecoder().decode(details[Consts.Patient.AOR_ID_COLUMN]);
-        // ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(AORIDdata));
-        // this.AORIDs = (List<String>) ois.readObject();
-
-        // byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
-        // ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
-
-        // this.patientMedicalHistory = (List<MedsicalDiagnosis>) ois.readObject();
-        }catch(Exception e){
-            System.out.println("Error when initializing medical record.");
+        if (details[Consts.Patient.AOR_ID_COLUMN] != null) {
+         byte[] AORIDdata = Base64.getDecoder().decode(details[Consts.Patient.AOR_ID_COLUMN]);
+         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(AORIDdata));
+         this.AORIDs = (List<String>) ois.readObject();
+         ois.close();
         }
+        else {
+            this.AORIDs = new ArrayList<String>();
+        }
+        
+        if (details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN] != null) {
+         byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
+
+         this.patientMedicalHistory = (List<MedicalDiagnosis>) ois.readObject();
+         ois.close();
+
+        }
+        else {
+            this.patientMedicalHistory = new ArrayList<MedicalDiagnosis>();
+        }
+
+         
+        } catch(Exception e){
+            System.out.println("Error when initializing medical record.");
+            e.printStackTrace();
+        }
+            
+      
+
     }
 
 
@@ -54,6 +84,7 @@ public class MedicalRecord
      
         String[] details = new String[10];
         
+        details[Consts.Patient.PW_COLUMN] = patientPassword;
         details[Consts.Patient.ID_COLUMN] = patientID;
         details[Consts.Patient.NAME_COLUMN] = patientName;
         details[Consts.Patient.EMAIL_COLUMN] = patientEmail;
@@ -83,9 +114,10 @@ public class MedicalRecord
     public String displayPatientMedicalRecord()
     {
         String record = "\n----Displaying patient record----\n" + "Patient ID: " + patientID +  "\nName: " + patientName +  "\nDate of Birth: " +
-            patientDateOfBirth +  "\nGender: " + patientGender + "\nBlood Type: " + patientBloodType.name() + "\n\n" + "Medical History:\n";
+            patientDateOfBirth +  "\nGender: " + patientGender + "\nBlood Type: " + getPatientBloodType().name() + "\n\n" + "Medical History:\n";
         
         record = record.concat("\n---Past diagnosis and treatments---\n");
+
         for(int i = 0; i < patientMedicalHistory.size(); i++)
         {
            record += patientMedicalHistory.get(i) + "\n\n"; 
@@ -141,7 +173,12 @@ public class MedicalRecord
     }
 
     public BloodType getPatientBloodType() {
+        if (patientBloodType == null) {
+            return BloodType.NOT_SET;
+        }
+        else {
         return patientBloodType;
+        }
     }
 
     public void setPatientBloodType(BloodType patientBloodType) throws IOException {

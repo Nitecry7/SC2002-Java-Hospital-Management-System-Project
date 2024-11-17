@@ -92,6 +92,7 @@ public class MenuController implements  IMenuController {
 
         catch (Exception e) {
             System.out.println("That isn't a valid choice, or something went wrong.");
+            e.printStackTrace();
            
         }
     }

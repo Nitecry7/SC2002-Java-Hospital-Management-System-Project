@@ -17,7 +17,7 @@ public class Medicine {
         try {
             // Initialize CsvHandler with the file path
             if (csvHandler == null) {
-                csvHandler = new CsvHandler(FILE_PATH);
+                csvHandler = new CsvHandler(Consts.Medicine.FILE_NAME);
             }
         } catch (IOException e) {
             System.err.println("Error initializing CSV handler: " + e.getMessage());

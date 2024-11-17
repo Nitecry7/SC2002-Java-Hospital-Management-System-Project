@@ -6,7 +6,12 @@ public class AppointmentList {
     private List<Appointment> appointments;
 
     public AppointmentList() {
+        try{
+        IOHandler csvHandler = new CsvHandler("ApppointmentAOR_List.csv");
         this.appointments = new ArrayList<>();
+        }catch(Exception e){
+            
+        }
     }
 
     public void addAppointment(Appointment appointment) {

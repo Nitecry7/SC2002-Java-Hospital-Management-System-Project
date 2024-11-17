@@ -37,7 +37,7 @@ public abstract class User
     }
 
     protected void setPassword(String password) {
-        
+        this.password = password;
     }
 
     //public abstract void _Set_new_password();

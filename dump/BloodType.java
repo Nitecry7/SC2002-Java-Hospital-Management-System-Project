@@ -7,5 +7,6 @@ public enum BloodType {
     Bneg,
     Bpos,
     ABneg,
-    ABpos
+    ABpos,
+    NOT_SET
 }

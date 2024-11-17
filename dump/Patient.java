@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Patient extends User {
     private IOHandler patientCsvHandler;
     private AttributeController getter = AttributeController.getInstance();
-    MedicalRecord medicalRecord;
+    private MedicalRecord medicalRecord;
 
     private Patient(String patientID, IOHandler patientCsvHandler) {
         super(patientID);

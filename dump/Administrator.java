@@ -65,13 +65,16 @@ public class Administrator extends Staff {
         String firstName = getter.inputString("Please enter first name:");
         String lastName = getter.inputString("Please enter last name:");
         String staffName = firstName + " " + lastName;
-        String staffRole = getter.inputString("Please enter role(Admin/Doctor/Nurse/Pharmacist):");
-        while(staffRole != "Admin" || staffRole != "Doctor" || staffRole != "Nurse" || staffRole != "Pharmacist"){
+        String staffRole = getter.inputString("Please enter role(Administrator/Doctor/Nurse/Pharmacist):");
+        while(!staffRole.equals("Administrator") && 
+                !staffRole.equals("Doctor") &&
+                !staffRole.equals("Pharmacist")){
             System.out.println("Please enter a valid role!");
             staffRole = getter.inputString("Please enter role(Admin/Doctor/Nurse/Pharmacist):");
         }
         String staffGender = getter.inputString("Please enter gender(Male/Female):");
-        while(staffGender != "Male" || staffGender != "Female"){
+        while(!staffGender.equals("Male") && 
+            !staffGender.equals("Female")){
             System.out.println("Please enter a valid gender!");
             staffGender = getter.inputString("Please enter gender(Male/Female):");
         }
