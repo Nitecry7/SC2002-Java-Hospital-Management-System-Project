@@ -40,6 +40,6 @@ public abstract class User
         
     }
 
-    public abstract void _Set_new_password();
+    //public abstract void _Set_new_password();
 
 }

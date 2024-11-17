@@ -16,12 +16,7 @@ public class AvailabilityController {
 
     
     protected AvailabilityController() {
-        System.out.println("Constructed one AvailabilityController. ");
-        try {
-        } catch (IOException e) {
-            System.err.println("Error reading the CSV file: " + e.getMessage());
-            e.printStackTrace(); // Print stack trace for debugging
-        }
+       
 
     }
 

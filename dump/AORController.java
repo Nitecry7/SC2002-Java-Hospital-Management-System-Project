@@ -20,6 +20,7 @@ public class AORController {
     }
 
     protected AORController() {
+        /* 
         System.out.println("test");
         try {
             System.out.println("test2");
@@ -27,6 +28,7 @@ public class AORController {
             System.out.println("Error occurred creating AORController");
             e.printStackTrace();
         }
+            */
     }
 
 public List<String> viewAllAppointmentsDetails() throws IOException {

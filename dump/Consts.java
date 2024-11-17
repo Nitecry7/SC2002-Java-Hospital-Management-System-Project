@@ -4,6 +4,7 @@ public final class Consts {
     public static final String[] USER_TYPES = new String[] { "Patient", "Staff" };
 
     public static final class Patient {
+        public static final String FILE_NAME = "Patient_List.csv";
         public static final int ID_COLUMN = 0;
         public static final int PW_COLUMN = 1;
         public static final int NAME_COLUMN = 2;
@@ -17,6 +18,7 @@ public final class Consts {
     }
 
     public static final class Staff {
+        public static final String FILE_NAME = "Staff_List.csv";
         public static final int ID_COLUMN = 0;
         public static final int PW_COLUMN = 1;
         public static final int NAME_COLUMN = 2;
@@ -28,18 +30,21 @@ public final class Consts {
     }
 
     public static final class Medicine {
+        public static final String FILE_NAME = "Medicine_List.csv";
         public static final int NAME_COLUMN = 0;
         public static final int STOCK_COLUMN = 1;
         public static final int ALERT_COLUMN = 2;
     }
 
     public static final class Replenishment {
+        public static final String FILE_NAME = "Replenishment_List.csv";
         public static final int ID_COLUMN = 0;
         public static final int NAMES_COLUMN = 1;
         public static final int STATUS_COLUMN = 2;
     }
 
     public static final class AOR {
+        public static final String FILE_NAME = "AOR_List.csv";
         public static final int ID_COLUMN = 0;
         public static final int PATIENT_ID_COLUMN = 1;
         public static final int PATIENT_NAME_COLUMN = 2;

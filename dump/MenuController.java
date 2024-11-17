@@ -59,10 +59,6 @@ public class MenuController implements  IMenuController {
             this.methodNames = declaredMethods.toArray(String[]::new);
         }
 
-        for (String s : this.methodNames) {
-            System.out.println(s);
-        }
-
     }
 
     private void displayMenu() {

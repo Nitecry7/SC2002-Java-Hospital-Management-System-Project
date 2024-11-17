@@ -64,7 +64,7 @@ public class Patient extends User {
 
     
 
-    @Override
+    
     public void _Set_new_password() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter new password");

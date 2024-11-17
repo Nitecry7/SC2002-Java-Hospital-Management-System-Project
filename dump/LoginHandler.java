@@ -29,16 +29,19 @@ public class LoginHandler implements ILoginHandler {
             input = attributeController.inputInt("");
 
         }
-        String userType = allUserTypes[input - 1];
         User user = null;
         //Get the appropriate login controller for the related file
-        //Class<?> constantClass = Class.forName("EntityConstants$" + allUserTypes[input-1]);
+        Class<?> constantClass = Class.forName("Consts$" + allUserTypes[input-1]);
+        String fileName = (String) constantClass.getField("FILE_NAME").get(null);
+
+        /* 
         if(userType.equals("Patient")){
             loginController = PatientLoginController.getInstance(new CsvHandler(fileName));
         }else{
             loginController = StaffLoginController.getInstance(new CsvHandler(fileName));
         }
-        //loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
+        */
+        loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
         
         //Authenticate using that login controller until either the user gets in or gives up
         String ID, pw;
