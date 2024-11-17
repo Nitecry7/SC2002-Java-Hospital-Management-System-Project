@@ -2,6 +2,7 @@
 // Singleton
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 public class StaffController {
@@ -11,7 +12,7 @@ public class StaffController {
 
     private StaffController() {
         try {
-            StaffController.csvHandler = new CsvHandler(Consts.Staff.FILE_NAME); // Make sure to use the same name here
+            StaffController.csvHandler = new CsvHandler("Staff_List.csv"); // Make sure to use the same name here
         } catch (IOException e) {
             throw new RuntimeException("Failed to initialize StaffController: " + e.getMessage());
         }
@@ -22,13 +23,25 @@ public class StaffController {
     }
 
     public void viewStaff() {
-        Map<String, String[]> staffData = csvHandler.readCsv();
+        //Map<String, String[]> staffData = csvHandler.readCsv();
 
         // Get the headers
         String[] headers = csvHandler.getHeaders();
+        Collection<String[]> data = csvHandler.readCsvValues();
+        
+        for(String item : headers){
+            System.out.printf("%s ", item);
+        }
+        System.out.println();
+        for(String[] row : data){
+            for(String item : row){
+                System.out.printf("%s ", item);
+            }
+            System.out.println();
+        }
 
         // Use the utility class to print the table
-        TablePrinter.printTable(staffData, headers);
+        //TablePrinter.printTable(staffData, headers);
     }
 
     public void addStaff(String[] staffDetails) {
