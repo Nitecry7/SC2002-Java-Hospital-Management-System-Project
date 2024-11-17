@@ -118,7 +118,7 @@ public class MedicalRecord
     public String displayPatientMedicalRecord()
     {
         String record = "\n----Displaying patient record----\n" + "Patient ID: " + patientID +  "\nName: " + patientName +  "\nDate of Birth: " +
-            patientDateOfBirth +  "\nGender: " + patientGender + "\nBlood Type: " + getPatientBloodType().name() + "\n\n" + "Medical History:\n";
+            patientDateOfBirth +  "\nGender: " + patientGender + "\nBlood Type: " + getPatientBloodType().name()+ "\nEmail: " + getPatientEmail() + "\nContact Number: " + getPatientPhone() + "\n\n" + "Medical History:\n";
         
         record = record.concat("\n---Past diagnosis and treatments---\n");
 
