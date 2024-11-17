@@ -135,7 +135,7 @@ public class Patient extends User {
         AvailabilityController availabilityController = AvailabilityController.getInstance();
 
 
-        if (!availabilityController.checkSlot(doctorID, newDate, timeSlot)) {
+        if (!availabilityController.checkSlot(doctorID, newDate, time)) {
             // Slot is not available
             System.out.println("The selected time slot is already filled. Please choose another time.");
         } else {
@@ -196,7 +196,7 @@ public class Patient extends User {
         AvailabilityController availabilityController = AvailabilityController.getInstance();
 
 
-        if (!availabilityController.checkSlot(doctorID, newDate, timeSlot)) {
+        if (!availabilityController.checkSlot(doctorID, newDate, time)) {
             // Slot is not available
             System.out.println("The selected time slot is already filled. Please choose another time.");
         } else {
