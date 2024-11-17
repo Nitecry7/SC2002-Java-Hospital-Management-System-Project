@@ -87,12 +87,12 @@ public class Appointment
 
     @Override
     public String toString() {
-        return "Appointment ID: " + appointmentID +
+        return "\nAppointment ID: " + appointmentID +
                 "\nPatient ID: " + patientID +
                 "\nDoctor ID: " + doctorID +
                 "\nStatus: " + status +
-                "\nDate" + date +
-                "\nTime" + getTime();
+                "\nDate: " + date +
+                "\nTime: " + getTime();
     }
 
 }
