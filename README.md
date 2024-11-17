@@ -17,5 +17,5 @@ Brief Outline illustrated by the UML Diagram
 * Faheem (Nitecry7)
 * Mario (PresidentDoggo)
 * Juber (AstraytLUL)
-* Qing Rong (Cobal Concrete)
+* Qing Rong (CobaltConcrete)
 * Lex (lpqtan)
