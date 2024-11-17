@@ -3,6 +3,8 @@ import hmsystem.controllers.AppointmentController;
 import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,7 @@ class Doctor extends Staff {
     }
 
 
-    public void _View_Patient_Medical_Records() throws Exception {
+    public MedicalRecord _View_Patient_Medical_Records() throws Exception {
 
         List<Appointment> appointments = new AppointmentController().getDoctorAppointments(getUserID());
         List<String> patientIDs = new ArrayList<>();
@@ -54,14 +56,34 @@ class Doctor extends Staff {
 
         if (choice < 1 || choice > patientIDs.size()) {
             System.out.println("Invalid choice. Exiting...");
+            return null;
         }
         else {
-            Patient.getPatient(patientIDs.get(choice - 1), new CsvHandler(Consts.Patient.FILE_NAME)).getMedicalRecord().displayPatientMedicalRecord();
+            MedicalRecord patientRecord = Patient.getPatient(patientIDs.get(choice - 1), new CsvHandler(Consts.Patient.FILE_NAME)).getMedicalRecord();
+            patientRecord.displayPatientMedicalRecord();
+            return patientRecord;
         }
 
     }
 
-    public void _Update_Patient_Medical_Records() {
+    public void _Update_Patient_Medical_Records() throws Exception {
+
+        AttributeController ac = AttributeController.getInstance();
+        MedicalRecord patientRecord = _View_Patient_Medical_Records();
+        if (patientRecord == null) {
+            return;
+        }
+        
+        String diagnosis = ac.inputString("Input diagnosis, if any");
+        String treatment = ac.inputString("Input patient treatment, if any");
+        String notes = ac.inputNote("Input notes, if any. Press enter twice to escape");
+        
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yy"));
+
+
+        patientRecord.addMedicalHistory(new MedicalDiagnosis(diagnosis, treatment, notes, today));
+               
+            
 
     }
 
