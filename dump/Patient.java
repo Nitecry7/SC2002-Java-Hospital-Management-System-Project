@@ -1,7 +1,10 @@
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Patient extends User {
     private IOHandler patientCsvHandler;
@@ -80,8 +83,13 @@ public class Patient extends User {
     }
 
     public void _View_Available_Appointment_Slots(String DoctorID, String date) {
-        AvailabilityController ac = AvailabilityController.getInstance();
-        ac.viewAvailableSlots(DoctorID, date);
+        try {
+            AvailabilityController ac = AvailabilityController.getInstance();
+            ac.viewAvailableSlots(DoctorID, date);
+        } catch (Exception e) {
+            System.out.println("An error occurred");
+            e.printStackTrace();
+        }
     }
 
     public void _Schedule_an_Appointment() throws IOException {
@@ -89,24 +97,43 @@ public class Patient extends User {
 
         String doctorID = ac.inputString("Enter the doctor ID to schedule an appointment:");
 
-        String appointmentDate = ac.inputString("Enter the appointment date (yyyy-mm-dd):");
+        Calendar date = ac.inputDate("Enter the new appointment date");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        String appointmentTime = ac.inputString("Enter the appointment time (HH:mm):");
+        String newDate = dateFormat.format(date.getTime());
+
+        System.out.println("Pick an appointment slot: ");
+        date.set(Calendar.HOUR_OF_DAY, 9);
+        
+        
+        dateFormat = new SimpleDateFormat("HH:mm");
+        int x = 1;
+        while (date.get(Calendar.HOUR_OF_DAY) < 18) {
+            System.out.println(x + ". " + dateFormat.format(date.getTime()));
+            date.add(Calendar.MINUTE, 30);
+            x++;
+        }
+
+        int timeSlot = 0;
+        do {
+            timeSlot = ac.inputInt("Input your choice of time slot:");
+        } while (timeSlot < 1 && timeSlot > x);
+
 
         String serviceType = ac.inputString("Enter the type of service for the appointment (e.g., 'General Consultation'):");
         
         // Check if timeslot is available
         AvailabilityController availabilityController = AvailabilityController.getInstance();
-        int slotStatus = availabilityController.checkSlot(doctorID, appointmentDate, appointmentTime);
 
-        if (slotStatus == 0) {
+
+        if (!availabilityController.checkSlot(doctorID, newDate, timeSlot)) {
             // Slot is not available
             System.out.println("The selected time slot is already filled. Please choose another time.");
         } else {
             // Slot is available, proceed with scheduling the appointment
             try {
                 AORController aorController = AORController.getInstance();
-                aorController.scheduleAppointment(getUserID(), doctorID, appointmentTime, appointmentDate, serviceType);
+                aorController.scheduleAppointment(getUserID(), doctorID, timeSlot, newDate, serviceType);
                 System.out.println("Appointment scheduled successfully!");
             } catch (IOException e) {
                 System.out.println("Error scheduling appointment: " + e.getMessage());
@@ -114,27 +141,45 @@ public class Patient extends User {
         }
     }
 
-    public void _Reschedule_an_Appointment() {
+    public void _Reschedule_an_Appointment() throws IOException {
         AttributeController ac = AttributeController.getInstance();
 
         // Get the appointment ID, new doctor ID, new date, and new time from the user
         String appointmentID = ac.inputString("Enter the appointment ID to reschedule:");
         String doctorID = ac.inputString("Enter the new doctor ID for the appointment:");
-        String newDate = ac.inputString("Enter the new appointment date (yyyy-mm-dd):");
-        String newTime = ac.inputString("Enter the new appointment time (HH:mm):");
 
+        Calendar date = ac.inputDate("Enter the new appointment date");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String newDate = dateFormat.format(date.getTime());
+
+        System.out.println("Pick an appointment slot: ");
+        date.set(Calendar.HOUR_OF_DAY, 9);
+        
+        dateFormat = new SimpleDateFormat("HH:mm");
+        int x = 1;
+        while (date.get(Calendar.HOUR_OF_DAY) < 18) {
+            System.out.println(x + ". " + dateFormat.format(date));
+            date.add(Calendar.MINUTE, 30);
+            x++;
+        }
+
+        int timeSlot = 0;
+        do {
+            timeSlot = ac.inputInt("Input your choice of time slot:");
+        } while (timeSlot < 1 && timeSlot > x);
         // Check if time slot is available
         AvailabilityController availabilityController = AvailabilityController.getInstance();
-        int slotStatus = availabilityController.checkSlot(doctorID, newDate, newTime);
+        
 
-        if (slotStatus == 0) {
+        if (!availabilityController.checkSlot(doctorID, newDate, timeSlot)) {
             // Slot is not available
             System.out.println("The selected time slot is already filled. Please choose another time.");
         } else {
             // Slot is available, proceed with rescheduling the appointment
             try {
                 AORController aorController = AORController.getInstance();
-                aorController.rescheduleAppointment(appointmentID, doctorID, newTime, newDate);
+                aorController.rescheduleAppointment(appointmentID, doctorID, timeSlot, newDate);
                 System.out.println("Appointment rescheduled successfully!");
             } catch (IOException e) {
                 System.out.println("Error rescheduling appointment: " + e.getMessage());

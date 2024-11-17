@@ -43,8 +43,10 @@ public final class Consts {
         public static final int STATUS_COLUMN = 2;
     }
 
+    
+
     public static final class AOR {
-        public static final String FILE_NAME = "AOR_List.csv";
+        public static final String FILE_NAME = "AppointmentAOR_List.csv";
         public static final int ID_COLUMN = 0;
         public static final int PATIENT_ID_COLUMN = 1;
         public static final int PATIENT_NAME_COLUMN = 2;

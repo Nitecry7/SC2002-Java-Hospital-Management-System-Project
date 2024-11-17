@@ -1,6 +1,8 @@
 
-import java.time.LocalDate;
+
 import java.time.LocalTime;
+
+import java.util.List;
 
 public class Appointment 
 {
@@ -9,17 +11,34 @@ public class Appointment
     private String patientID;
     private String doctorID;
     private AppointmentStatus status;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private int timeSlot;
+    private IOHandler handler;
 
     // Constructor
-    public Appointment(String appointmentID, String patientID, String doctorID, LocalDate date, LocalTime time) {
-        this.appointmentID = appointmentID;
-        this.patientID = patientID;
-        this.doctorID = doctorID;
-        this.date = date;
-        this.time = time;
+    private Appointment(String[] details, IOHandler handler) {
+        this.appointmentID = details[Consts.AOR.ID_COLUMN];
+        this.patientID = details[Consts.AOR.PATIENT_ID_COLUMN];
+        this.doctorID = details[Consts.AOR.DOCTOR_ID_COLUMN];
+        this.status = AppointmentStatus.valueOf(details[Consts.AOR.APPOINTMENT_STATUS_COLUMN]);
+        this.date = details[Consts.AOR.DATE_COLUMN];
+        this.timeSlot = Integer.parseInt(details[Consts.AOR.TIME_COLUMN]);
+        this.handler = handler;
+        //this.LocalDate = String[]
+        //this.date = date;
+        //this.time = time;
+        
         this.status = AppointmentStatus.PENDING;
+    }
+
+    public static Appointment getAppointment(String appointmentID, IOHandler handler) {
+        List<String[]> appointmentDetails = handler.getRows(Consts.Staff.ID_COLUMN, appointmentID);
+        if (appointmentDetails.isEmpty()) {
+            return null;
+        }
+        else {
+            return new Appointment(appointmentDetails.get(0), handler);
+        }
     }
 
     // Getters
@@ -39,12 +58,12 @@ public class Appointment
         return status;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public int getTimeSlot() {
+        return timeSlot;
     }
 
     // Setters
@@ -52,12 +71,18 @@ public class Appointment
         this.status = status;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setTime(int timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public String getTime(){
+        LocalTime time = LocalTime.of(9,0,0);
+        time.plusMinutes(30 * timeSlot);
+        return time.toString();
     }
 
     @Override
@@ -67,7 +92,7 @@ public class Appointment
                 "\nDoctor ID: " + doctorID +
                 "\nStatus: " + status +
                 "\nDate" + date +
-                "\nTime" + time;
+                "\nTime" + getTime();
     }
 
 }

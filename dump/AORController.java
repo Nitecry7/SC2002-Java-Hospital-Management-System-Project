@@ -12,7 +12,10 @@ public class AORController {
     private static AORController AorController = null;
     private static IOHandler appointmentHandler, patientHandler, doctorHandler;
 
-    public static AORController getInstance() {
+    public static AORController getInstance() throws IOException {
+        appointmentHandler = new CsvHandler(Consts.AOR.FILE_NAME);
+        patientHandler = new CsvHandler(Consts.Patient.FILE_NAME);
+        doctorHandler = new CsvHandler(Consts.Staff.FILE_NAME);
         if (AorController == null) {
             AORController.AorController = new AORController();
         }
@@ -84,7 +87,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
      * @param service   The service to be provided.
      * @throws IOException If there's an error updating the CSV.
      */
-    public void scheduleAppointment(String patientID, String doctorID, String time, String date, String service)
+    public void scheduleAppointment(String patientID, String doctorID, int timeSlot, String date, String service)
             throws IOException {
         String appointmentID = generateNewAppointmentID();
         String[] newAppointment = {
@@ -94,7 +97,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
                 doctorID,
                 getDoctorName(doctorID),
                 date,
-                time,
+                String.valueOf(timeSlot),
                 service,
                 "",
                 "",
@@ -113,7 +116,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
      * @param date          The new date for the appointment.
      * @throws IOException If there's an error updating the CSV.
      */
-    public void rescheduleAppointment(String appointmentID, String doctorID, String time, String date)
+    public void rescheduleAppointment(String appointmentID, String doctorID, int timeSlot, String date)
             throws IOException {
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.ID_COLUMN, appointmentID);
         if (rows.isEmpty()) {
@@ -123,7 +126,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         updatedAppointment[Consts.AOR.DOCTOR_ID_COLUMN] = doctorID;
         updatedAppointment[Consts.AOR.DOCTOR_NAME_COLUMN] = getDoctorName(doctorID);
         updatedAppointment[Consts.AOR.DATE_COLUMN] = date;
-        updatedAppointment[Consts.AOR.TIME_COLUMN] = time;
+        updatedAppointment[Consts.AOR.TIME_COLUMN] = String.valueOf(timeSlot);
         updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "Pending";
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment rescheduled successfully: " + appointmentID);

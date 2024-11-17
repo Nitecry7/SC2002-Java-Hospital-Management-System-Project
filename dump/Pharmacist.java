@@ -31,9 +31,13 @@ public class Pharmacist extends Staff {
         String patientID = ac.inputString("Input patient's ID");
 
         try {
-            AORController.getInstance().viewPastAppointmentsOutcome(patientID);
+            List<String> pastAORs = AORController.getInstance().viewPastAppointmentsOutcome(patientID);
+            for (String s : pastAORs) {
+                System.out.println(s);
+            }
         }
         catch (Exception e) {
+            e.printStackTrace();
             System.out.println("No such patient");
         }
 

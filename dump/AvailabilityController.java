@@ -15,12 +15,14 @@ public class AvailabilityController {
     private static IOHandler csvhandlerAppt;
 
     
-    protected AvailabilityController() {
+    protected AvailabilityController() throws IOException{
        
+        this.csvhandler = new CsvHandler("Availability.csv");
+        this.csvhandlerAppt = new CsvHandler(Consts.AOR.FILE_NAME);
 
     }
 
-    public static AvailabilityController getInstance() {
+    public static AvailabilityController getInstance() throws IOException{
        if (availabilityController == null) {
             availabilityController = new AvailabilityController();
         }
@@ -28,18 +30,18 @@ public class AvailabilityController {
         
     }
 
-    public int checkSlot(String doctorID, String date, String time) {
+    public boolean checkSlot(String doctorID, String date, int timeSlot) {
         Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
         for (String[] row : rows) {
             if (row.length >= 4) {
-                if (doctorID.equals(row[1]) && date.equals(row[2]) && time.equals(row[3]))
+                if (doctorID.equals(row[Consts.AOR.DOCTOR_ID_COLUMN]) && date.equals(row[Consts.AOR.DATE_COLUMN]) && timeSlot == (Integer.parseInt(row[Consts.AOR.TIME_COLUMN])))
                     // 0 means filled slot, cannot book
-                    return 0;
+                    return false;
             }
         }
 
         // 1 means empty slot, can book
-        return 1;
+        return true;
 
     }
 

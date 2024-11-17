@@ -1,17 +1,17 @@
+import java.io.IOException;
 import java.util.List;
 
 
 public class AppointmentController {
 
     private AppointmentList appointmentList;
-
-    public static final AppointmentController ac = new AppointmentController();
+    private static final AppointmentController ac = new AppointmentController();
 
     public static AppointmentController getInstance(){
         return ac;
     }
 
-    public AppointmentController() {
+    private AppointmentController() {
         this.appointmentList = new AppointmentList();
     }
 
@@ -22,12 +22,12 @@ public class AppointmentController {
     }
 
     // Patients schedule appointments
-    public void scheduleAppointment(String patientID, String doctorID, Appointment appointment) {
+    public void scheduleAppointment(String patientID, String doctorID, Appointment appointment) throws IOException{
         appointmentList.addAppointment(appointment);
     }
 
     // Patients reschedule appointments
-    public void rescheduleAppointment(String patientID, String appointmentID, Appointment newAppointment) {
+    public void rescheduleAppointment(String patientID, String appointmentID, Appointment newAppointment) throws IOException {
         Appointment appointment = appointmentList.findAppointmentByID(appointmentID);
         if (appointment != null && appointment.getPatientID().equals(patientID)) {
             appointmentList.removeAppointment(appointmentID);
@@ -55,7 +55,7 @@ public class AppointmentController {
     }
 
     // Doctors set their availability for appointments
-    public void setDoctorAvailability(String doctorID, Appointment appointment) {
+    public void setDoctorAvailability(String doctorID, Appointment appointment) throws IOException{
         appointmentList.addAppointment(appointment);
     }
 
