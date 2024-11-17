@@ -1,4 +1,5 @@
 package hmsystem.models;
+import hmsystem.controllers.AORController;
 import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
@@ -70,14 +71,20 @@ public class Patient extends User {
     }
 
     public void _Cancel_an_Appointment() {
+         
+    }
+
+    public void _View_Scheduled_Appointments() throws IOException {
+
+         new AORController(new CsvHandler(Consts.AOR.FILE_NAME), new CsvHandler(Consts.Patient.FILE_NAME), 
+                new CsvHandler(Consts.Staff.FILE_NAME)).viewScheduledAppointments(getUserID());
 
     }
 
-    public void _View_Scheduled_Appointments() {
+    public void _View_Past_Appointment_Outcome_Records() throws IOException {
 
-    }
-
-    public void _View_Past_Appointment_Outcome_Records() {
+        new AORController(new CsvHandler(Consts.AOR.FILE_NAME), new CsvHandler(Consts.Patient.FILE_NAME), 
+                new CsvHandler(Consts.Staff.FILE_NAME)).viewPastAppointmentsOutcome(getUserID());
 
     }
 
