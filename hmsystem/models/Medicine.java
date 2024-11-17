@@ -1,14 +1,17 @@
 package hmsystem.models;
 
+import hmsystem.data.Consts;
 import hmsystem.io.CsvHandler;
-
+import hmsystem.io.IOHandler;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Medicine {
     private String name;
-    private int alertLine, stock, request = 0;
+    private int alertLine, stock;
+    private IOHandler handler;
 
     // Static final file path for the CSV file
     private static final String FILE_PATH = "hmsystem/data/Medicine_List.csv";
@@ -25,6 +28,24 @@ public class Medicine {
             System.err.println("Error initializing CSV handler: " + e.getMessage());
         }
         build();
+    }
+
+    private Medicine(String[] medicineDetails, IOHandler handler) {
+        this.handler = handler;
+        this.name = medicineDetails[Consts.Medicine.NAME_COLUMN];
+        this.alertLine = Integer.parseInt(medicineDetails[Consts.Medicine.ALERT_COLUMN]);
+        this.stock = Integer.parseInt(medicineDetails[Consts.Medicine.STOCK_COLUMN]);
+    }
+
+    public static Medicine getMedicine(String medicineName, IOHandler handler) {
+       
+       List<String[]> medicineDetails =  handler.getRows(Consts.Medicine.NAME_COLUMN, medicineName);
+         if (medicineDetails.isEmpty()) {
+            return null;
+        }
+        else {
+            return new Medicine(medicineDetails.get(0), handler);
+        }
     }
 
     // Method to build a new Medicine entry
@@ -66,6 +87,10 @@ public class Medicine {
         return value;
     }
 
+    public void saveData() throws Exception {
+        
+    }
+
     // Getters and Setters for the medicine properties
     public String getName() {
         return name;
@@ -89,14 +114,6 @@ public class Medicine {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public int getRequest() {
-        return request;
-    }
-
-    public void setRequest(int request) {
-        this.request = request;
     }
 
     // Method to reduce stock and return success/failure

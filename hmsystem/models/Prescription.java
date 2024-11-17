@@ -1,16 +1,13 @@
 package hmsystem.models;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.InputMismatchException;
+import hmsystem.controllers.AttributeController;
+import hmsystem.models.enums.Frequency;
+import java.io.Serializable;
 import java.util.Scanner;
 
-import hmsystem.models.enums.Frequency;
-
-import java.io.Serializable;
-
 public class Prescription implements Serializable{
-    private Calendar startDate, endDate;
+    //private Calendar startDate, endDate;
+    private int amount;
     private Frequency frequency;
     private String note;
     private String medicineName;
@@ -27,35 +24,42 @@ public class Prescription implements Serializable{
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter information for prescription");
 
+        /*
         this.startDate = inputDate(sc, "Please enter the start date:");
         this.endDate = inputDate(sc, "Please enter the end date:");
         while (endDate.before(startDate)) {
             System.out.println("End date cannot be before start date. Please enter a valid end date.");
             this.endDate = inputDate(sc, "Please enter the end date:");
         }
+        */
 
+        AttributeController ac = AttributeController.getInstance();
+        this.amount = ac.inputInt("Input amount to prescribe");
         this.frequency = inputFrequency(sc, "Please enter the frequency (PRN/BD/TDS/QDS/MANE/NOCTE):");
-        this.note = inputNote(sc, "Please enter notes. Press enter twice on a line to finish");
-        this.medicineName = inputMedicineName(sc, "Please choose medicine name to use");
+        this.note = ac.inputNote("Please enter notes. Press enter twice on a line to finish");
+        this.medicineName = ac.inputString("Please choose medicine name to use");
 
         sc.close();
     }
 
     public void display() {
         System.out.println("Medicine Name: " + medicineName);
-        System.out.println("Start Date: " + formatDate(startDate));
-        System.out.println("End Date: " + formatDate(endDate));
+        System.out.println("Amount prescribed: " + amount);
+        //System.out.println("Start Date: " + formatDate(startDate));
+        //System.out.println("End Date: " + formatDate(endDate));
         System.out.println("Frequency: " + frequency);
         System.out.println("Notes: " + note);
         System.out.println("Dispensed: " + (dispensed ? "Yes" : "No"));
     }
 
+    /*
     private String formatDate(Calendar date) {
         int day = date.get(Calendar.DAY_OF_MONTH);
         int month = date.get(Calendar.MONTH) + 1;
         int year = date.get(Calendar.YEAR);
         return String.format("%02d/%02d/%04d", day, month, year);
     }
+    */
 
     private String inputMedicineName(Scanner sc, String message){
         // yet to be implemented
@@ -77,6 +81,7 @@ public class Prescription implements Serializable{
         return frequency;
     }
 
+    /*
     private String inputNote(Scanner sc, String message){
         System.out.println(message);
 
@@ -90,7 +95,9 @@ public class Prescription implements Serializable{
 
         return note;
     }
+    */
 
+    /*
     private Calendar inputDate(Scanner sc, String message){
         Calendar date = null;
         System.out.println(message);
@@ -113,6 +120,9 @@ public class Prescription implements Serializable{
         }
         return date;
     }
+    */
+
+   /*
 
     private int inputInt(Scanner sc, String message) {
         int value = 0;
@@ -128,7 +138,9 @@ public class Prescription implements Serializable{
         }
         return value;
     }
+    */
 
+    /*
     public Calendar getStartDate() {
         return startDate;
     }
@@ -144,6 +156,7 @@ public class Prescription implements Serializable{
     public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
+    */
 
     public Frequency getFrequency() {
         return frequency;
@@ -175,5 +188,13 @@ public class Prescription implements Serializable{
 
     public void setDispensed(boolean dispensed) {
         this.dispensed = dispensed;
+    }
+    
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

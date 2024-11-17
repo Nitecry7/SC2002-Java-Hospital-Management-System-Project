@@ -1,11 +1,11 @@
 package hmsystem.controllers;
 
+import hmsystem.data.Consts;
 import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
-import hmsystem.data.Consts;
-
+import hmsystem.models.AOR;
+import hmsystem.models.Appointment;
 import java.io.IOException;
-import java.text.AttributedCharacterIterator.Attribute;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -280,6 +280,21 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 
         // Return the list of appointment details
         return appointmentDetails;
+    }
+
+    public List<AOR> returnPastAppointmentsOutcome(String patientID) throws Exception {
+
+    
+        List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
+
+        List<AOR> appointments= new ArrayList<>();
+
+        for (String[] s : rows) {
+            if (s[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals(Appointment.AppointmentStatus.COMPLETED.name())) {
+                appointments.add(AOR.findAOR(s[Consts.AOR.ID_COLUMN]));
+            }
+        }
+        return appointments;
     }
 
     /**

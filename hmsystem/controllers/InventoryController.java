@@ -1,14 +1,14 @@
 package hmsystem.controllers;
 
 
+import hmsystem.data.Consts;
+import hmsystem.io.CsvHandler;
+import hmsystem.io.IOHandler;
+import hmsystem.models.Medicine;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import hmsystem.data.Consts;
-import hmsystem.io.CsvHandler;
-import hmsystem.io.IOHandler;
 
 
 // Singleton Class
@@ -34,6 +34,13 @@ public class InventoryController {
         }
             return inventoryController;
         
+    }
+
+    public boolean reduceStock(String medicineName, int amount) {
+        
+        Medicine medicine = Medicine.getMedicine(medicineName, csvhandler);
+        return medicine.reduceStock(amount);
+
     }
     
 
