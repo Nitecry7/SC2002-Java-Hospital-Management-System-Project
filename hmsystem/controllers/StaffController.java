@@ -4,7 +4,6 @@ package hmsystem.controllers;
 import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
 import hmsystem.utils.TablePrinter;
-import hmsystem.models.Staff;
 import hmsystem.data.Consts;
 
 import java.io.IOException;
@@ -46,18 +45,18 @@ public class StaffController {
         }
     }
 
-    public void removeStaff(Staff staff) {
+    public void removeStaff(String staffID) {
         try {
-            csvHandler.removeRows(0, staff.getUserID());
+            csvHandler.removeRows(0, staffID);
             System.out.println("Staff removed successfully.");
         } catch (IOException e) {
             System.err.println("Error removing staff: " + e.getMessage());
         }
     }
 
-    public void updateStaff(Staff staff, int columnToChange, String newValue) {
+    public void updateStaff(String staffID, int columnToChange, String newValue) {
         try {
-            csvHandler.setField(0, staff.getUserID(), columnToChange, newValue);
+            csvHandler.setField(0, staffID, columnToChange, newValue);
             System.out.println("Staff updated successfully.");
         } catch (IOException e) {
             System.err.println("Error updating staff: " + e.getMessage());
