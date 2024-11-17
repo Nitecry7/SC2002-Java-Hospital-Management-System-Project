@@ -114,26 +114,30 @@ public class Doctor extends Staff
     }
 
 
-    public void _Set_Availability_or_Appointments()
+    public void _Set_Availability_for_Appointments()
     {
         try 
         {
+            System.out.println("1. Set unavailable");
+            System.out.println("2. Set available");
+            System.out.println("3. Go Back");
             AttributeController ac = AttributeController.getInstance();
-            String dateInput = ac.inputString("Enter the date (yyyy-mm-dd): ");
-            LocalDate date = LocalDate.parse(dateInput);
-
-            String timeInput = ac.inputString("Enter the time (HH:mm): ");
-            LocalTime time = LocalTime.parse(timeInput);
-
-            String appointmentID = "APPT-" + getUserID() + "-" + System.currentTimeMillis(); // generate a unique appointment ID
-
-            Appointment newAppointment = null;//new Appointment(appointmentID, null, getUserID(), date, time);
-
-            newAppointment.setStatus(AppointmentStatus.PENDING);
-
-            AppointmentController appointmentController = AppointmentController.getInstance();
-            appointmentController.setDoctorAvailability(getUserID(), newAppointment);
-
+            int operation = ac.inputInt("Enter your choice(1-3): ");
+            while(operation > 3 || operation < 1){
+                System.out.println("Please enter a valid choice.");
+                operation = ac.inputInt("Enter your choice(1-3): ");
+            }
+            AvailabilityController AvC = AvailabilityController.getInstance();
+            switch(operation){
+                case 1:
+                    AvC.addBlockedSlots(userID);
+                    break;
+                case 2:
+                    AvC.deleteBlockedSlot(userID);
+                    break;
+                case 3:
+                    return;
+            }
             System.out.println("Availability set successfully.");
         } catch (Exception e) {
             System.err.println("Error setting availability: " + e.getMessage());

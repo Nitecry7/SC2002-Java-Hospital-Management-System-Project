@@ -47,12 +47,10 @@ public class AvailabilityController {
 
     public int addBlockedSlots(String userID)
     {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter date: ");
-        String date = sc.next();
-        System.out.println("Enter time: ");
-        String time = sc.next();
-        sc.close();
+        AttributeController getter = AttributeController.getInstance();
+        String date = getter.inputString("Enter date(yyyy-mm-dd): ");
+        String time = getter.inputString("Enter time(hh:mm): ");
+
         
         String[] temp = {String.valueOf(getLowestAID()),userID, date, time};
         //
