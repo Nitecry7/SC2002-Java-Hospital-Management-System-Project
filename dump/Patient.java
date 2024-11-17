@@ -146,7 +146,15 @@ public class Patient extends User {
 
         // Get the appointment ID, new doctor ID, new date, and new time from the user
         String appointmentID = ac.inputString("Enter the appointment ID to reschedule:");
-        String doctorID = ac.inputString("Enter the new doctor ID for the appointment:");
+        
+        try {
+            AORController aorController = AORController.getInstance();
+            aorController.cancelAppointment(appointmentID);
+        } catch (IOException e) {
+            System.out.println("Error rescheduling appointment: " + e.getMessage());
+        }
+
+        String doctorID = ac.inputString("Enter the doctor ID to schedule an appointment:");
 
         Calendar date = ac.inputDate("Enter the new appointment date");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -156,10 +164,11 @@ public class Patient extends User {
         System.out.println("Pick an appointment slot: ");
         date.set(Calendar.HOUR_OF_DAY, 9);
         
+        
         dateFormat = new SimpleDateFormat("HH:mm");
         int x = 1;
         while (date.get(Calendar.HOUR_OF_DAY) < 18) {
-            System.out.println(x + ". " + dateFormat.format(date));
+            System.out.println(x + ". " + dateFormat.format(date.getTime()));
             date.add(Calendar.MINUTE, 30);
             x++;
         }
@@ -168,18 +177,22 @@ public class Patient extends User {
         do {
             timeSlot = ac.inputInt("Input your choice of time slot:");
         } while (timeSlot < 1 && timeSlot > x);
-        // Check if time slot is available
-        AvailabilityController availabilityController = AvailabilityController.getInstance();
+
+
+        String serviceType = ac.inputString("Enter the type of service for the appointment (e.g., 'General Consultation'):");
         
+        // Check if timeslot is available
+        AvailabilityController availabilityController = AvailabilityController.getInstance();
+
 
         if (!availabilityController.checkSlot(doctorID, newDate, timeSlot)) {
             // Slot is not available
             System.out.println("The selected time slot is already filled. Please choose another time.");
         } else {
-            // Slot is available, proceed with rescheduling the appointment
+            // Slot is available, proceed with scheduling the appointment
             try {
                 AORController aorController = AORController.getInstance();
-                aorController.rescheduleAppointment(appointmentID, doctorID, timeSlot, newDate);
+                aorController.scheduleAppointment(getUserID(), doctorID, timeSlot, newDate, serviceType);
                 System.out.println("Appointment rescheduled successfully!");
             } catch (IOException e) {
                 System.out.println("Error rescheduling appointment: " + e.getMessage());
@@ -203,12 +216,20 @@ public class Patient extends User {
             System.out.println("Error canceling appointment: " + e.getMessage());
         }
     }
+    public void cancelAppointment(String appointmentID) {
+
+        // Call the AORController to cancel the appointment
+        try {
+            AORController aorController = AORController.getInstance();
+            aorController.cancelAppointment(appointmentID);
+            System.out.println("Appointment canceled successfully!");
+        } catch (IOException e) {
+            System.out.println("Error canceling appointment: " + e.getMessage());
+        }
+    }
 
     public void _View_Scheduled_Appointments() {
-        AttributeController ac = AttributeController.getInstance();
-
-        String patientID = ac.inputString("Enter the Patient ID to view scheduled appointments:");
-
+        String patientID = getUserID();
         try {
             AORController aorController = AORController.getInstance();
             List<String> appointments = aorController.viewScheduledAppointments(patientID);
@@ -224,9 +245,8 @@ public class Patient extends User {
     }
 
     public void _View_Past_Appointment_Outcome_Records() {
-        AttributeController ac = AttributeController.getInstance();
 
-        String patientID = ac.inputString("Enter the Patient ID to view past appointment outcomes:");
+        String patientID = getUserID();
 
         try {
             AORController aorController = AORController.getInstance();
