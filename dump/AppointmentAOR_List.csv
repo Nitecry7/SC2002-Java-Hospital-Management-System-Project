@@ -1,2 +1,6 @@
 Appointment ID,Patient ID,Patient Name,Doctor ID,Doctor Name,Date,Time,Service,Prescription,Notes,Appointment Status
+<<<<<<< HEAD
 A001,P1001,Alice Brown,D001,John Smith,2024-12-12,6,wff,,,PENDING
+=======
+
+>>>>>>> 3ffff78 (create const for availability)

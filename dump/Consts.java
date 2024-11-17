@@ -3,6 +3,15 @@ public final class Consts {
 
     public static final String[] USER_TYPES = new String[] { "Patient", "Staff" };
 
+    public static final class Availability{
+        public static final String FILE_NAME = "Availability.csv";
+        
+        public static final int ID_COLUMN = 0;
+        public static final int DOCTOR_ID_COLUMN = 1;
+        public static final int DATE_COLUMN = 2;
+        public static final int TIME_COLUMN = 3;
+    }
+
     public static final class Patient {
         public static final String FILE_NAME = "Patient_List.csv";
         public static final int ID_COLUMN = 0;
