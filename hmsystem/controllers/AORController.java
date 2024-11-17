@@ -5,6 +5,7 @@ import hmsystem.io.CsvHandler;
 import hmsystem.io.IOHandler;
 import hmsystem.models.AOR;
 import hmsystem.models.Appointment;
+import hmsystem.models.enums.AppointmentStatus;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -290,7 +291,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         List<AOR> appointments= new ArrayList<>();
 
         for (String[] s : rows) {
-            if (s[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals(Appointment.AppointmentStatus.COMPLETED.name())) {
+            if (s[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals(AppointmentStatus.COMPLETED.name())) {
                 appointments.add(AOR.findAOR(s[Consts.AOR.ID_COLUMN]));
             }
         }

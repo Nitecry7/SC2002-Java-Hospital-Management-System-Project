@@ -1,12 +1,18 @@
 package hmsystem.models;
 
 
+import hmsystem.controllers.AORController;
+import hmsystem.controllers.AppointmentController;
+import hmsystem.controllers.AttributeController;
+import hmsystem.data.Consts;
+
+import hmsystem.io.*;
+
 import hmsystem.controllers.*;
 import hmsystem.io.*;
 import hmsystem.models.*;
 import hmsystem.data.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -132,7 +138,8 @@ public class Doctor extends Staff
             String appointmentID = "APPT-" + getUserID() + "-" + System.currentTimeMillis(); // generate a unique appointment ID
 
             Appointment newAppointment = new Appointment(appointmentID, null, getUserID(), date, time);
-            newAppointment.setStatus(Appointment.AppointmentStatus.PENDING);
+
+            newAppointment.setStatus(AppointmentStatus.PENDING);
 
             AppointmentController appointmentController = new AppointmentController();
             appointmentController.setDoctorAvailability(getUserID(), newAppointment);
