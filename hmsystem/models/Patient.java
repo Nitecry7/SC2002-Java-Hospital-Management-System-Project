@@ -9,23 +9,26 @@ import java.util.List;
 
 
 public class Patient extends User {
-
-
+    private CsvHandler patientCsvHandler, appointmentCsvHandler, staffCsvHandler, medicalRecordCsvHandler;
+    private AttributeController getter = AttributeController.getInstance();
     MedicalRecord medicalRecord;
 
     
-    private Patient(String patientID, IOHandler handler) throws Exception {
-        super (patientID);
+    private Patient(String patientID, CsvHandler patientCsvHandler, CsvHandler appointmentCsvHandler, CsvHandler staffCsvHandler, CsvHandler medicalRecordCsvHandler) throws Exception {
+        super(patientID);
+        this.patientCsvHandler = patientCsvHandler;
+        this.appointmentCsvHandler = appointmentCsvHandler;
+        this.staffCsvHandler = staffCsvHandler;
+        this.medicalRecordCsvHandler = medicalRecordCsvHandler;
 
-        this.medicalRecord = new MedicalRecord(patientID, handler);
+        this.medicalRecord = new MedicalRecord(patientID, medicalRecordCsvHandler);
         //super(userID, name, age, gender, email, contactNumber, userRole);
         
     }
 
-
     public static Patient getPatient(String patientID, IOHandler handler) throws Exception{
 
-        List<String[]> userDetails = handler.getRows(Consts.Patient.ID_COLUMN, patientID);
+        List<String[]> userDetails = patientCsvHandler.getRows(Consts.Patient.ID_COLUMN, patientID);
         if (userDetails.isEmpty()) {
             return null;
         }
