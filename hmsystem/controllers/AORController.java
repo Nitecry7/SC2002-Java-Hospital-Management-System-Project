@@ -386,5 +386,5 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             throw new IllegalArgumentException("Doctor ID not found: " + doctorID);
         }
         return rows.get(0)[1]; // Assuming the doctor's name is in the NAME_COLUMN
-    }
+    }    
 }
