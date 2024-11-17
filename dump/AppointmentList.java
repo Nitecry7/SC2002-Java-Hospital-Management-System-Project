@@ -68,6 +68,10 @@ public class AppointmentList {
         
     }
 
+    public void updatedAppointment(Appointment appointment) {
+        
+    }
+
     public List<Appointment> getAppointmentsForPatient(String patientID) {
 
         List<String[]> rows = csvHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);

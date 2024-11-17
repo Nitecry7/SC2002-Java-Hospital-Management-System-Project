@@ -101,7 +101,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
                 service,
                 "",
                 "",
-                "Pending"
+                AppointmentStatus.PENDING.name()
         };
         appointmentHandler.addRow(newAppointment);
         System.out.println("Appointment scheduled successfully: " + appointmentID);
@@ -127,7 +127,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         updatedAppointment[Consts.AOR.DOCTOR_NAME_COLUMN] = getDoctorName(doctorID);
         updatedAppointment[Consts.AOR.DATE_COLUMN] = date;
         updatedAppointment[Consts.AOR.TIME_COLUMN] = String.valueOf(timeSlot);
-        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "Pending";
+        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = AppointmentStatus.PENDING.name();
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment rescheduled successfully: " + appointmentID);
     }
@@ -144,7 +144,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             throw new IllegalArgumentException("Appointment ID not found: " + appointmentID);
         }
         String[] updatedAppointment = rows.get(0);
-        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "Cancelled";
+        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = AppointmentStatus.CANCELED.name();
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment cancelled successfully: " + appointmentID);
     }
@@ -161,7 +161,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             throw new IllegalArgumentException("Appointment ID not found: " + appointmentID);
         }
         String[] updatedAppointment = rows.get(0);
-        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "Confirmed"; // Set status to Confirmed
+        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = AppointmentStatus.CONFIRMED.name(); // Set status to Confirmed
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment accepted and status updated to Confirmed: " + appointmentID);
     }

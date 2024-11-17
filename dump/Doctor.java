@@ -182,12 +182,16 @@ public class Doctor extends Staff
 
             if (action == 1) 
             {
-                appointmentController.acceptAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
+                AORController aorController = AORController.getInstance();
+                aorController.acceptAppointment(selectedAppointment.getAppointmentID());
+                //appointmentController.acceptAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
                 System.out.println("Appointment accepted.");
             } 
             else if (action == 2) 
             {
-                appointmentController.declineAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
+                AORController aorController = AORController.getInstance();
+                aorController.cancelAppointment(selectedAppointment.getAppointmentID());
+                //appointmentController.declineAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
                 System.out.println("Appointment declined.");
             }
             else 

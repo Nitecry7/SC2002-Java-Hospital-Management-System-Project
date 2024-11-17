@@ -20,7 +20,7 @@ public class Appointment
         this.appointmentID = details[Consts.AOR.ID_COLUMN];
         this.patientID = details[Consts.AOR.PATIENT_ID_COLUMN];
         this.doctorID = details[Consts.AOR.DOCTOR_ID_COLUMN];
-        this.status = AppointmentStatus.valueOf(details[Consts.AOR.APPOINTMENT_STATUS_COLUMN]);
+        this.status = AppointmentStatus.valueOf(details[Consts.AOR.APPOINTMENT_STATUS_COLUMN].toUpperCase());
         this.date = details[Consts.AOR.DATE_COLUMN];
         this.timeSlot = Integer.parseInt(details[Consts.AOR.TIME_COLUMN]);
         this.handler = handler;
@@ -81,7 +81,7 @@ public class Appointment
 
     public String getTime(){
         LocalTime time = LocalTime.of(9,0,0);
-        time.plusMinutes(30 * timeSlot);
+        time = time.plusMinutes(30 * timeSlot);
         return time.toString();
     }
 
@@ -91,8 +91,8 @@ public class Appointment
                 "\nPatient ID: " + patientID +
                 "\nDoctor ID: " + doctorID +
                 "\nStatus: " + status +
-                "\nDate" + date +
-                "\nTime" + getTime();
+                "\nDate: " + date +
+                "\nTime: " + getTime();
     }
 
 }
