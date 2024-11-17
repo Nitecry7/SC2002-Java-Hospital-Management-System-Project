@@ -103,17 +103,21 @@ public class AttributeController {
         return date;
     }
     
-    public String inputNote(String message){
+    public String inputNote(String message) {
         System.out.println(message);
-
-        String input = sc.nextLine();
+    
         String note = "";
-        
-        while(!input.equals("")) {
-            note =  note.concat(input + "\n");
+        String input;
+    
+        while (true) {
             input = sc.nextLine();
+            if (input.equals("END")) { 
+                break;
+            }
+            if(!input.isEmpty()) note = note.concat(input + "\n"); 
         }
-
-        return note;
+        System.out.println(note);
+    
+        return note.trim();
     }
 }

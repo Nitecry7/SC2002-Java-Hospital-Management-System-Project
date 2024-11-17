@@ -155,7 +155,7 @@ public class Administrator extends Staff {
     public void _View_Appointments_details() {
         try{
         AORController appCon = AORController.getInstance();
-        List<String> appList = appCon.viewAllAppointments();
+        List<String> appList = appCon.viewAllAppointmentsDetails();
         for(String app : appList){
             System.out.println(app.toString());
         }

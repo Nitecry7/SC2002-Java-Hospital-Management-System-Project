@@ -1,13 +1,7 @@
-package unused;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import Appointment;
-import Consts;
-import CsvHandler;
-import IOHandler;
-import Consts.AOR;
 
 public class AppointmentList {
 
