@@ -30,13 +30,13 @@ public class AvailabilityController {
         
     }
 
-    public boolean checkSlot(String doctorID, String date, int timeSlot) throws IOException {
+    public boolean checkSlot(String doctorID, String date, String timeSlot) throws IOException {
         List<String[]> rows = csvhandlerAppt.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
         System.out.println(rows.size());
         for (String[] row : rows) {
-            System.out.println(row[Consts.AOR.DATE_COLUMN] + "    " + date);
-            System.out.println(row[Consts.AOR.TIME_COLUMN] + "    " + timeSlot);
-            if (row[Consts.AOR.DATE_COLUMN].equals(date) && Integer.parseInt(row[Consts.AOR.TIME_COLUMN]) == timeSlot) {
+            //System.out.println(row[Consts.AOR.DATE_COLUMN] + "    " + date);
+            //System.out.println(row[Consts.AOR.TIME_COLUMN] + "    " + timeSlot);
+            if (row[Consts.AOR.DATE_COLUMN].equals(date) && row[Consts.AOR.TIME_COLUMN].equals(timeSlot)) {
                     return false;
             }
 
@@ -45,7 +45,7 @@ public class AvailabilityController {
         for (String[] row : rows) {    
             
             if (row.length >= 4) {
-                if (doctorID.equals(row[Consts.AOR.DOCTOR_ID_COLUMN]) && date.equals(row[Consts.AOR.DATE_COLUMN]) && timeSlot == (Integer.parseInt(row[Consts.AOR.TIME_COLUMN])))
+                if (doctorID.equals(row[Consts.Availability.DOCTOR_ID_COLUMN]) && date.equals(row[Consts.Availability.DATE_COLUMN]) && row[Consts.Availability.TIME_COLUMN].equals(timeSlot))
                     // 0 means filled slot, cannot book
                     return false;
             }
