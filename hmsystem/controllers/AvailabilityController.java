@@ -40,6 +40,21 @@ public class AvailabilityController {
         
     }
 
+    public int checkSlot(String doctorID, String date, String time) {
+        Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
+        for (String[] row : rows) {
+            if (row.length >= 4) {
+                if (doctorID.equals(row[1]) && date.equals(row[2]) && time.equals(row[3]))
+                    // 0 means filled slot, cannot book
+                    return 0;
+            }
+        }
+
+        // 1 means empty slot, can book
+        return 1;
+
+    }
+
     public int addBlockedSlots(String userID)
     {
         Scanner sc = new Scanner(System.in);
