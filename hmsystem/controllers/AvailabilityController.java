@@ -40,6 +40,21 @@ public class AvailabilityController {
         
     }
 
+    public int checkSlot(String doctorID, String date, String time) {
+        Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
+        for (String[] row : rows) {
+            if (row.length >= 4) {
+                if (doctorID.equals(row[1]) && date.equals(row[2]) && time.equals(row[3]))
+                    // 0 means filled slot, cannot book
+                    return 0;
+            }
+        }
+
+        // 1 means empty slot, can book
+        return 1;
+
+    }
+
     public int addBlockedSlots(String userID)
     {
         Scanner sc = new Scanner(System.in);
@@ -59,6 +74,22 @@ public class AvailabilityController {
         return 1;
     }
 
+    public int checkSlot(String doctorID, String date, String time)
+    {
+        Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
+        for (String[] row : rows) {
+            if (row.length >= 4) {
+                if (doctorID.equals(row[1]) && date.equals(row[2]) && time.equals(row[3]))
+                    // 0 means filled slot, cannot book
+                    return 0;
+            }
+        }
+
+        // 1 means empty slot, can book
+        return 1;
+
+    }
+
 
     // change to localtime, localdate, object with rows
     public List<String> getAvailableSlots(String doctorID, String date) {
@@ -74,7 +105,7 @@ public class AvailabilityController {
         // Extract booked slots for the specified doctor and date
         HashSet<String> bookedSlots = new HashSet<>();
         for (String[] row : rows) {
-            if (row.length >= 3) {
+            if (row.length >= 4) {
                 String currentDoctorID = row[1].trim(); // Ensure no extra spaces
                 String currentDate = row[2].trim();
     
@@ -89,7 +120,7 @@ public class AvailabilityController {
         }
 
         for (String[] row : rowsAppt) {
-            if (row.length >= 3) {
+            if (row.length >= 4) {
                 String currentDoctorID = row[3].trim(); // Ensure no extra spaces
                 String currentDate = row[5].trim();
                 String status = row[10].trim();

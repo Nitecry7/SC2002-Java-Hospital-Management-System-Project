@@ -1,5 +1,7 @@
 package hmsystem.models;
+import hmsystem.controllers.AttributeController;
 import hmsystem.controllers.InventoryController;
+import hmsystem.controllers.ReplenishmentController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
 import java.util.List;
@@ -16,9 +18,9 @@ class Pharmacist extends Staff {
     }
 
 
-    public static Pharmacist getPharmacist(String adminID, IOHandler handler) {
+    public static Pharmacist getPharmacist(String pharmacistID, IOHandler handler) {
 
-        List<String[]> userDetails = handler.getRows(Consts.Staff.ID_COLUMN, adminID);
+        List<String[]> userDetails = handler.getRows(Consts.Staff.ID_COLUMN, pharmacistID);
         if (userDetails.isEmpty()) {
             return null;
         }
@@ -31,6 +33,11 @@ class Pharmacist extends Staff {
 
     public void _View_Appointment_Outcome_Record(){
 
+        AttributeController ac = AttributeController.getInstance();
+        String patientID = ac.inputString("Input patient's ID to check for pending prescriptions");
+
+
+
     }
 
     public void _Update_Prescription_Status() {
@@ -42,10 +49,11 @@ class Pharmacist extends Staff {
         InventoryController ic = InventoryController.getInstance();
         ic.viewMedicationInventory();
     }
+    
     public void _Submit_Replenishment_Request() {
-
+        ReplenishmentController rc = ReplenishmentController.getInstance();
+        rc.submitRequest();
     }
-  
 
 
 }
