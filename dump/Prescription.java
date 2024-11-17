@@ -1,12 +1,14 @@
 
+
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.Scanner;
+import java.util.*;
 
 public class Prescription implements Serializable{
     //private Calendar startDate, endDate;
+    private int prescriptionID;
     private int amount;
     private Frequency frequency;
-    private String note;
     private String medicineName;
     private boolean dispensed = false;
 
@@ -18,25 +20,28 @@ public class Prescription implements Serializable{
     }
 
     private void build(){
-        Scanner sc = new Scanner(System.in);
+        try{
+        IOHandler prescriptionHandler = new CsvHandler("Prescription_List.csv");
         System.out.println("Please enter information for prescription");
-
-        /*
-        this.startDate = inputDate(sc, "Please enter the start date:");
-        this.endDate = inputDate(sc, "Please enter the end date:");
-        while (endDate.before(startDate)) {
-            System.out.println("End date cannot be before start date. Please enter a valid end date.");
-            this.endDate = inputDate(sc, "Please enter the end date:");
-        }
-        */
+        Collection<String[]> data = prescriptionHandler.readCsvValues();
+        this.prescriptionID = data.size();
 
         AttributeController ac = AttributeController.getInstance();
-        this.amount = ac.inputInt("Input amount to prescribe");
-        this.frequency = inputFrequency(sc, "Please enter the frequency (PRN/BD/TDS/QDS/MANE/NOCTE):");
-        this.note = ac.inputNote("Please enter notes. Press enter twice on a line to finish");
         this.medicineName = ac.inputString("Please choose medicine name to use");
+        this.amount = ac.inputInt("Input amount to prescribe");
+        this.frequency = ac.inputFrequency("Please enter the frequency (PRN/BD/TDS/QDS/MANE/NOCTE):");
+        //this.frequency = Frequency.BD;
+        String[] row = new String[5];
+        row[0] = String.valueOf(prescriptionID);
+        row[1] = String.valueOf(amount);
+        row[2] = String.valueOf(frequency);
+        row[3] = medicineName;
+        row[4] = String.valueOf(dispensed);
 
-        sc.close();
+        prescriptionHandler.addRow(row);
+        }catch(IOException e){
+            System.out.println("Something bad happened :(");
+        }
     }
 
     public void display() {
@@ -45,7 +50,6 @@ public class Prescription implements Serializable{
         //System.out.println("Start Date: " + formatDate(startDate));
         //System.out.println("End Date: " + formatDate(endDate));
         System.out.println("Frequency: " + frequency);
-        System.out.println("Notes: " + note);
         System.out.println("Dispensed: " + (dispensed ? "Yes" : "No"));
     }
 
@@ -57,26 +61,6 @@ public class Prescription implements Serializable{
         return String.format("%02d/%02d/%04d", day, month, year);
     }
     */
-
-    private String inputMedicineName(Scanner sc, String message){
-        // yet to be implemented
-        // use medicineModel to fetch data
-        return "";
-    }
-
-    private Frequency inputFrequency(Scanner sc, String message) {
-        Frequency frequency = null;
-        while (frequency == null) {
-            System.out.println(message);
-            String input = sc.nextLine().toUpperCase();
-            try {
-                frequency = Frequency.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid input. Please enter a valid frequency.");
-            }
-        }
-        return frequency;
-    }
 
     /*
     private String inputNote(Scanner sc, String message){
@@ -162,15 +146,6 @@ public class Prescription implements Serializable{
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public String getMedicineName() {
         return medicineName;
     }

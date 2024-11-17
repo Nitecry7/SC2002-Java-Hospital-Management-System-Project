@@ -7,18 +7,13 @@ import java.util.Scanner;
 public class Medicine {
     private String name;
     private int alertLine, stock;
-    private IOHandler handler;
-
-    // Static final file path for the CSV file
-    private static CsvHandler csvHandler;
+    private IOHandler csvHandler;
 
     // Constructor
     public Medicine() {
         try {
-            // Initialize CsvHandler with the file path
-            if (csvHandler == null) {
-                csvHandler = new CsvHandler(Consts.Medicine.FILE_NAME);
-            }
+            csvHandler = new CsvHandler(Consts.Medicine.FILE_NAME);
+            
         } catch (IOException e) {
             System.err.println("Error initializing CSV handler: " + e.getMessage());
         }
@@ -26,7 +21,7 @@ public class Medicine {
     }
 
     private Medicine(String[] medicineDetails, IOHandler handler) {
-        this.handler = handler;
+        this.csvHandler = handler;
         this.name = medicineDetails[Consts.Medicine.NAME_COLUMN];
         this.alertLine = Integer.parseInt(medicineDetails[Consts.Medicine.ALERT_COLUMN]);
         this.stock = Integer.parseInt(medicineDetails[Consts.Medicine.STOCK_COLUMN]);
@@ -114,7 +109,13 @@ public class Medicine {
     // Method to reduce stock and return success/failure
     public boolean reduceStock(int amount) {
         if (stock >= amount) {
-            System.out.printf("Successfully reduced %d amount of %s\n", amount, name);
+            try{
+                stock -= amount;
+                csvHandler.setField(0,getName(),1,String.valueOf(stock));
+                System.out.printf("Successfully reduced %d amount of %s\n", amount, name);
+            }catch(IOException e){
+                System.out.println("Something went wrong");
+            }
             return true;
         }
         System.out.printf("Error! %s not enough!\n", name);

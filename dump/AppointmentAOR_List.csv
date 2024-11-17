@@ -3,4 +3,4 @@ A005,P1001,Alice Brown,D002,Emily Clarke,2024-01-02,09:30,aa,,,CANCELED
 A003,P1001,Alice Brown,D001,John Smith,2024-11-13,09:00,abc,,,PENDING
 A004,P1001,Alice Brown,D002,Emily Clarke,2025-01-01,10:30,yy,,,CANCELED
 A001,P1001,Alice Brown,D001,John Smith,2024-12-12,10:30,dd,,,CONFIRMED
-A002,P1001,Alice Brown,D001,John Smith,2024-12-13,10:00,aa,,,PENDING
+A002,P1001,Alice Brown,D001,John Smith,2024-12-13,10:00,aa,Aspirin Ibuprofen ,abc abc abc,COMPLETED

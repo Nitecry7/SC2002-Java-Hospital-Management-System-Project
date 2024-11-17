@@ -2,5 +2,5 @@ Staff ID,PW,Name,Role,Gender,Age,Email,Contact Number
 D003,,James Bond,Doctor,Male,50,james.bond@hospital.com,94556677
 D002,,Emily Clarke,Doctor,Female,38,emily.clarke@hospital.com,95667788
 D001,a,John Smith,Doctor,Male,45
-P001,new,Mark Lee,Pharmacist,Male,29
+P001,a,Mark Lee,Pharmacist,Male,29
 A001,,Sarah Lee,Administrator,Female,40,sarah.lee@hospital.com,92334455

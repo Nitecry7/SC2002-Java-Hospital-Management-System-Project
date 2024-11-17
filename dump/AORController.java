@@ -219,13 +219,12 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             String time = row[Consts.AOR.TIME_COLUMN];
             String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
             String serviceType = row[Consts.AOR.SERVICE_COLUMN];
-
+            String note = row[Consts.AOR.NOTES_COLUMN];
+            if(status.equals("CANCELED") || status.equals("COMPLETED")) continue;
             // Format the appointment details
             String details = String.format(
-                    "Appointment ID: %s\nDoctor: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s",
-                    appointmentID, doctorName, date, time, serviceType, status);
-
-            scheduledAppointments.add(details); // Add the formatted string to the list
+                    "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s\nNote: %s",
+                    appointmentID, doctorName, date, time, serviceType, status, note);
         }
 
         return scheduledAppointments; // Return the list of appointment details
@@ -251,11 +250,12 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             String time = row[Consts.AOR.TIME_COLUMN];
             String serviceType = row[Consts.AOR.SERVICE_COLUMN];
             String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
+            String note = row[Consts.AOR.NOTES_COLUMN];
             if(status.equals("CANCELED") || status.equals("COMPLETED")) continue;
             // Format the appointment details
             String details = String.format(
-                    "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s",
-                    appointmentID, patientName, date, time, serviceType, status);
+                    "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s\nNote: %s",
+                    appointmentID, patientName, date, time, serviceType, status, note);
 
             scheduledAppointments.add(details); // Add the formatted string to the list
             scheduledAppointments.add("----------------------");
