@@ -98,7 +98,7 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = new AppointmentController();
+            AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> appointments = appointmentController.getDoctorSchedule(getUserID());
 
             System.out.println("Personal Schedule:");
@@ -127,11 +127,11 @@ public class Doctor extends Staff
 
             String appointmentID = "APPT-" + getUserID() + "-" + System.currentTimeMillis(); // generate a unique appointment ID
 
-            Appointment newAppointment = new Appointment(appointmentID, null, getUserID(), date, time);
+            Appointment newAppointment = null;//new Appointment(appointmentID, null, getUserID(), date, time);
 
             newAppointment.setStatus(AppointmentStatus.PENDING);
 
-            AppointmentController appointmentController = new AppointmentController();
+            AppointmentController appointmentController = AppointmentController.getInstance();
             appointmentController.setDoctorAvailability(getUserID(), newAppointment);
 
             System.out.println("Availability set successfully.");
@@ -145,7 +145,7 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = new AppointmentController();
+            AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> pendingAppointments = appointmentController.getDoctorAppointments(getUserID());
             pendingAppointments.removeIf(appointment -> appointment.getStatus() != AppointmentStatus.PENDING);
 
@@ -202,7 +202,7 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = new AppointmentController();
+            AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> appointments = appointmentController.getDoctorAppointments(getUserID());
 
             System.out.println("Upcoming Appointments:");
