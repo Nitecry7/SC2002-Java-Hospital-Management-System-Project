@@ -5,25 +5,26 @@ import hmsystem.controllers.AttributeController;
 import hmsystem.controllers.AvailabilityController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
-import hmsystem.utils.*;
 import hmsystem.models.enums.BloodType;
+import hmsystem.utils.*;
 import java.io.IOException;
 import java.util.List;
 
 public class Patient extends User {
-    private CsvHandler patientCsvHandler, appointmentCsvHandler, staffCsvHandler, medicalRecordCsvHandler;
+    private IOHandler patientCsvHandler;
     private AttributeController getter = AttributeController.getInstance();
     MedicalRecord medicalRecord;
 
-    private Patient(String patientID, CsvHandler patientCsvHandler, CsvHandler appointmentCsvHandler,
-            CsvHandler staffCsvHandler, CsvHandler medicalRecordCsvHandler) throws Exception {
+    private Patient(String patientID, IOHandler patientCsvHandler) throws Exception {
         super(patientID);
         this.patientCsvHandler = patientCsvHandler;
+        /*
         this.appointmentCsvHandler = appointmentCsvHandler;
         this.staffCsvHandler = staffCsvHandler;
         this.medicalRecordCsvHandler = medicalRecordCsvHandler;
+        */
 
-        this.medicalRecord = new MedicalRecord(patientID, medicalRecordCsvHandler);
+        this.medicalRecord = new MedicalRecord(patientID, new CsvHandler(Consts.AOR.FILE_NAME));
         // super(userID, name, age, gender, email, contactNumber, userRole);
 
     }
