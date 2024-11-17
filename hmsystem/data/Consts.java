@@ -37,6 +37,13 @@ public final class Consts {
         public static final int ALERT_COLUMN = 2;
     }
 
+    public static final class Replenishment {
+        public static final String FILE_NAME = "hmsystem/data/Replenishment_List.csv";
+        public static final int ID_COLUMN = 0;
+        public static final int NAMES_COLUMN = 1;
+        public static final int STATUS_COLUMN = 2;
+    }
+
     public static final class AOR {
         public static final String FILE_NAME = "hmsystem/data/AppointmentAOR_List.csv";
         public static final int ID_COLUMN = 0;

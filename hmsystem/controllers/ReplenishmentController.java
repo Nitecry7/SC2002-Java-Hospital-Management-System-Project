@@ -4,22 +4,23 @@ import java.util.*;
 
 import java.io.IOException;
 
-import hmsystem.io.CsvHandler;
+import hmsystem.data.Consts;
+import hmsystem.io.*;
 
 import hmsystem.models.Replenishment;
 
 public class ReplenishmentController 
 {
-    public final ReplenishmentController replenishmentController = new ReplenishmentController();
-    public ReplenishmentController getInstance(){
+    public static final ReplenishmentController replenishmentController = new ReplenishmentController();
+    public static ReplenishmentController getInstance(){
         return replenishmentController;
     }
-    CsvHandler replenishmentCsvHandler, medicineCsvHandler;
-    AttributeController getter = AttributeController.getInstance();
+    private IOHandler replenishmentCsvHandler, medicineCsvHandler;
+    private AttributeController getter = AttributeController.getInstance();
     ReplenishmentController(){
         try{
-            replenishmentCsvHandler = new CsvHandler("hmsystem\\data\\replenishment.csv");
-            medicineCsvHandler = new CsvHandler("hmsystem\\data\\Medicine_List.csv");
+            this.replenishmentCsvHandler = new CsvHandler(Consts.Replenishment.FILE_NAME);
+            this.medicineCsvHandler = new CsvHandler(Consts.Medicine.FILE_NAME);
         }catch (IOException e){
             System.out.println("Error occured creating replenishment controller");
         }
@@ -60,13 +61,13 @@ public class ReplenishmentController
         }
         String[] row = rows.getFirst();
         int requestIDnum = Integer.valueOf(requestID);
-        List<String> medicineNames = Arrays.asList(row[1].split("\\s*"));
-        Replenishment request = new Replenishment(medicineCsvHandler, replenishmentCsvHandler, requestIDnum, medicineNames, row[3]);
+        List<String> medicineNames = Arrays.asList(row[1]);
+        Replenishment request = new Replenishment(medicineCsvHandler, replenishmentCsvHandler, requestIDnum, medicineNames, row[2]);
         request.rejectRequest();
     }
 
     public void approveRequest(){
-        String requestID = getter.inputString("Please input requestID to reject: ");
+        String requestID = getter.inputString("Please input requestID to approve: ");
         List<String[]> rows = replenishmentCsvHandler.getRows(0, requestID);
         if(rows.size() == 0){
             System.out.println("Request Not Found!");
@@ -74,8 +75,12 @@ public class ReplenishmentController
         }
         String[] row = rows.getFirst();
         int requestIDnum = Integer.valueOf(requestID);
-        List<String> medicineNames = Arrays.asList(row[1].split("\\s*"));
-        Replenishment request = new Replenishment(medicineCsvHandler, replenishmentCsvHandler, requestIDnum, medicineNames, row[3]);
-        request.rejectRequest();
+        String[] arrMedicineNames = row[1].split(" ");
+        List<String> medicineList = new ArrayList<String>();
+        for(String medicineName:arrMedicineNames){
+            medicineList.add(medicineName);
+        }
+        Replenishment request = new Replenishment(medicineCsvHandler, replenishmentCsvHandler, requestIDnum, medicineList, row[2]);
+        request.approveRequest();
     }
 }

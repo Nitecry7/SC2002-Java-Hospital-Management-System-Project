@@ -8,7 +8,7 @@ import hmsystem.controllers.AttributeController;
 import hmsystem.controllers.InventoryController;
 
 public class Replenishment {
-    private CsvHandler medicineCsvHandler, replenishmentCsvHandler;
+    private IOHandler medicineCsvHandler, replenishmentCsvHandler;
     private AttributeController getter = AttributeController.getInstance();
     private enum Status{
         PENDING,
@@ -18,14 +18,14 @@ public class Replenishment {
     private int requestID;
     private List<String> medicineNames;
     private Status status = Status.PENDING;
-    public Replenishment(CsvHandler medicineCsvHandler, CsvHandler replenishmentCsvHandler){
-        medicineNames = getLowMedicine();
+    public Replenishment(IOHandler medicineCsvHandler, IOHandler replenishmentCsvHandler){
         this.medicineCsvHandler = medicineCsvHandler;
         this.replenishmentCsvHandler = replenishmentCsvHandler;
         Collection<String[]> data = replenishmentCsvHandler.readCsvValues();
         requestID = data.size();
+        medicineNames = getLowMedicine();
     }
-    public Replenishment(CsvHandler medicineCsvHandler, CsvHandler replenishmentCsvHandler,
+    public Replenishment(IOHandler medicineCsvHandler, IOHandler replenishmentCsvHandler,
                         int requestID, List<String> medicineNames, String status){
         this.medicineCsvHandler = medicineCsvHandler;
         this.replenishmentCsvHandler = replenishmentCsvHandler;
@@ -68,6 +68,10 @@ public class Replenishment {
     }
 
     public void rejectRequest(){
+        if(status != Status.PENDING){
+            System.out.println("Cannot reject non-pending request!");
+            return;
+        }
         status = Status.REJECTED;
         try{
             replenishmentCsvHandler.setField(0, Integer.toString(requestID), 2, "REJECTED");
@@ -77,9 +81,13 @@ public class Replenishment {
     }
 
     public void approveRequest(){
+        if(status != Status.PENDING){
+            System.out.println("Cannot approve non-pending request!");
+            return;
+        }
         status = Status.APPROVED;
         try{
-            replenishmentCsvHandler.setField(0, Integer.toString(requestID), 2, "APPROVING");
+            replenishmentCsvHandler.setField(0, Integer.toString(requestID), 2, "APPROVED");
         }catch(IOException e){
             System.out.println("Error occured when approving request");
         }
@@ -88,7 +96,7 @@ public class Replenishment {
     }
 
     public void viewRequest(){
-        System.out.printf("RequestID: %d", requestID);
+        System.out.printf("RequestID: %d\n", requestID);
         System.out.println("Medicine Requested: ");
         for(String medicineName:medicineNames){
             System.out.println(medicineName);

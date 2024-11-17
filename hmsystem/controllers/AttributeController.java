@@ -43,7 +43,7 @@ public class AttributeController {
         while (true) {
             displayMessage(message);
             try {
-                value = sc.nextLine();
+                value = sc.next();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid string.");
