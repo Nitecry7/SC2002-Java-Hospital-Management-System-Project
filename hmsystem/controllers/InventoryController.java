@@ -84,7 +84,7 @@ public class InventoryController {
         // Print the medications and quantities
         System.out.println("Medication Inventory:");
         for (int i = 0; i < medications.size(); i++) {
-            System.out.print(medications.get(i) + " : " + quantities.get(i));
+            System.out.print(medications.get(i) + " : " + quantities.get(i) + ".");
             if (Integer.parseInt(quantities.get(i)) <= Integer.parseInt(topup.get(i)))
             {
                 System.out.println(" Alert! under threshold value. " + topup.get(i));
@@ -100,7 +100,7 @@ public class InventoryController {
     public int editMedication(String Medication)
     {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter change in medication: ");
+        System.out.println("Enter change in medication for " + Medication + ": ");
         int change = sc.nextInt();
         String oldValue = csvhandler.getField(0, Medication, 1);
         int newValue = Integer.parseInt(oldValue) + change;
@@ -117,14 +117,12 @@ public class InventoryController {
 
     public int editMedicationList(List<String> Medications)
     {
+        int x = 1;
         for (String medication:Medications)
-        {
-            int x = editMedication(medication);
-            if (x == 1){
-                return 1;
-            }
+        {   
+            x &= editMedication(medication);
         }
-        return 0;
+        return x;
     }
 
     public int deleteMedication()
