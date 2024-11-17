@@ -84,6 +84,7 @@ public class MedicalRecord
      
         String[] details = new String[10];
         
+        details[Consts.Patient.PW_COLUMN] = patientPassword;
         details[Consts.Patient.ID_COLUMN] = patientID;
         details[Consts.Patient.NAME_COLUMN] = patientName;
         details[Consts.Patient.EMAIL_COLUMN] = patientEmail;
