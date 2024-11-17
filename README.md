@@ -1,7 +1,7 @@
 # SC2002 Java Hospital Management System Project 🏥
 A Command Line Interface based Hospital Management System that simulates almost all processes that occur at a real Hospital 💊🌡️🩹💉🩺
 
-# SetUp Intstructions 🛠️
+# SetUp Instructions 🛠️
 ## Project Folder Structure 📂
 
 ## How To Run Our Project? 
