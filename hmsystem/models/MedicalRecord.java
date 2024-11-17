@@ -26,8 +26,9 @@ public class MedicalRecord
     private IOHandler handler;
 
     
-    public MedicalRecord(String patientID, IOHandler handler) throws Exception
+    public MedicalRecord(String patientID, IOHandler handler) 
     {
+        try{
         String[] details = handler.getRows(Consts.Patient.ID_COLUMN, patientID).get(0);
         
         this.handler = handler;
@@ -47,8 +48,9 @@ public class MedicalRecord
         ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
 
         this.patientMedicalHistory = (List<MedicalDiagnosis>) ois.readObject();
-
-        this.handler = handler;
+        }catch(Exception e){
+            System.out.println("Something went wrong creating medical record");
+        }
     }
 
 

@@ -1,2 +1,1 @@
-javac ./controllers/*.java ./models/*.java ./io/*Handler.java ./data/*.java ./models/enums/*.java ./controllers/login/*.java ./utils/*.java
-java hmsystem.controllers.AORControllerTest
+javac ./hmsystem/controllers/*.java ./hmsystem/models/*.java ./hmsystem/io/*Handler.java ./hmsystem/data/*.java ./hmsystem/models/enums/*.java ./hmsystem/controllers/login/*.java ./hmsystem/utils/*.java

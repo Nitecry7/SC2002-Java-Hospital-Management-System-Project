@@ -40,7 +40,8 @@ public class AvailabilityController {
         
     }
 
-    public int checkSlot(String doctorID, String date, String time) {
+    public int checkSlot(String doctorID, String date, String time)
+    {
         Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
         for (String[] row : rows) {
             if (row.length >= 4) {
@@ -49,11 +50,11 @@ public class AvailabilityController {
                     return 0;
             }
         }
-
         // 1 means empty slot, can book
         return 1;
-
     }
+
+    
 
     public int addBlockedSlots(String userID)
     {
@@ -74,22 +75,6 @@ public class AvailabilityController {
         return 1;
     }
 
-    public int checkSlot(String doctorID, String date, String time)
-    {
-        Collection<String[]> rows = AvailabilityController.csvhandler.readCsvValues();
-        for (String[] row : rows) {
-            if (row.length >= 4) {
-                if (doctorID.equals(row[1]) && date.equals(row[2]) && time.equals(row[3]))
-                    // 0 means filled slot, cannot book
-                    return 0;
-            }
-        }
-
-        // 1 means empty slot, can book
-        return 1;
-
-    }
-
 
     // change to localtime, localdate, object with rows
     public List<String> getAvailableSlots(String doctorID, String date) {
@@ -101,6 +86,7 @@ public class AvailabilityController {
         for (int hour = 9; hour <= 17; hour++) {
             workingHours.add(String.format("%02d:00", hour));
         }
+
     
         // Extract booked slots for the specified doctor and date
         HashSet<String> bookedSlots = new HashSet<>();

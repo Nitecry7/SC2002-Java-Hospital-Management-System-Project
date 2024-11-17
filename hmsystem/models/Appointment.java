@@ -2,6 +2,7 @@ package hmsystem.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import hmsystem.models.enums.AppointmentStatus;
 
 public class Appointment 
 {
@@ -12,13 +13,6 @@ public class Appointment
     private AppointmentStatus status;
     private LocalDate date;
     private LocalTime time;
-
-    public enum AppointmentStatus {
-        PENDING,
-        CONFIRMED,
-        CANCELED,
-        COMPLETED
-    }
 
     // Constructor
     public Appointment(String appointmentID, String patientID, String doctorID, LocalDate date, LocalTime time) {

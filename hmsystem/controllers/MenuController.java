@@ -44,7 +44,7 @@ public class MenuController implements  IMenuController {
                
                 tempMethods.add(index, tempMethods.remove(tempMethods.indexOf(method)));
             }
-            else if (method.getName().startsWith("_")) {
+            else if (method.getName().startsWith("_") && !declaredMethods.contains(method.getName())) {
                 declaredMethods.add(method.getName());
             }
             else {
