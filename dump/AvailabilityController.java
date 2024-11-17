@@ -73,6 +73,7 @@ public class AvailabilityController {
         List<String> workingHours = new ArrayList<>();
         for (int hour = 9; hour <= 17; hour++) {
             workingHours.add(String.format("%02d:00", hour));
+            workingHours.add(String.format("%02d:30", hour));
         }
     
         // Extract booked slots for the specified doctor and date
@@ -83,11 +84,11 @@ public class AvailabilityController {
                 String currentDate = row[2].trim();
     
                 // Debugging output to verify comparisons
-                System.out.println("Checking Row: DoctorID=" + currentDoctorID + ", Date=" + currentDate + ", Time=" + row[2]);
+                // System.out.println("Checking Row: DoctorID=" + currentDoctorID + ", Date=" + currentDate + ", Time=" + row[2]);
     
                 if (currentDoctorID.equals(doctorID) && currentDate.equals(date)) {
-                    bookedSlots.add(row[2].trim()); // Add the booked time slot
-                    System.out.println("Added to booked slots: " + row[3]);
+                    bookedSlots.add(row[3].trim()); // Add the booked time slot
+                    // System.out.println("Added to booked slots: " + row[3]);
                 }
             }
         }
@@ -99,11 +100,11 @@ public class AvailabilityController {
                 String status = row[10].trim();
                 
                 // Debugging output to verify comparisons
-                System.out.println("Checking Row: DoctorID=" + currentDoctorID + ", Date=" + currentDate + ", Time=" + row[6] + ", Status=" + status);
+                //System.out.println("Checking Row: DoctorID=" + currentDoctorID + ", Date=" + currentDate + ", Time=" + row[6] + ", Status=" + status);
     
                 if (currentDoctorID.equals(doctorID) && currentDate.equals(date) && !(status.equals("Cancelled"))) {
                     bookedSlots.add(row[6].trim()); // Add the booked time slot
-                    System.out.println("Added to booked slots: " + row[6]);
+                    //System.out.println("Added to booked slots: " + row[6]);
                 }
             }
         }

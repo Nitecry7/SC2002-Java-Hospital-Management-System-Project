@@ -82,10 +82,16 @@ public class Patient extends User {
         }
     }
 
-    public void _View_Available_Appointment_Slots(String DoctorID, String date) {
+    public void _View_Available_Appointment_Slots() {
         try {
+            AttributeController getter = AttributeController.getInstance();
             AvailabilityController ac = AvailabilityController.getInstance();
-            ac.viewAvailableSlots(DoctorID, date);
+            String doctorID = getter.inputString("Enter the doctor ID for availability:");
+            Calendar date = getter.inputDate("Enter the date");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+            String newDate = dateFormat.format(date.getTime());
+            ac.viewAvailableSlots(doctorID, newDate);
         } catch (Exception e) {
             System.out.println("An error occurred");
             e.printStackTrace();
