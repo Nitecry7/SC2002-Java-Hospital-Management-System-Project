@@ -1,11 +1,7 @@
 package hmsystem.models;
 
 
-import hmsystem.controllers.AORController;
-import hmsystem.controllers.AppointmentController;
-import hmsystem.controllers.AttributeController;
-import hmsystem.data.Consts;
-import hmsystem.models.enums.*;
+
 
 import hmsystem.io.*;
 
