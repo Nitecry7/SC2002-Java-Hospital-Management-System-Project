@@ -5,15 +5,25 @@ import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class AttributeController {
-    public AttributeController(){
+    
+    private final Scanner sc;
+    private static final AttributeController attributeController = new AttributeController();
+    
+    protected AttributeController(){
+        sc = new Scanner(System.in);
+    }
+
+    public static AttributeController getInstance() {
+        return attributeController;
     }
 
     public void displayMessage(String message){
         System.out.println(message);
     }
 
-    public int inputInt(Scanner sc, String message) {
+    public int inputInt(String message) {
         int value = 0;
         while (true) {
             displayMessage(message);
@@ -28,12 +38,12 @@ public class AttributeController {
         return value;
     }
 
-    public String inputString(Scanner sc, String message){
+    public String inputString(String message){
         String value = "";
         while (true) {
             displayMessage(message);
             try {
-                value = sc.nextLine();
+                value = sc.next();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid string.");
@@ -43,14 +53,14 @@ public class AttributeController {
         return value;
     }
 
-    public Calendar inputDate(Scanner sc, String message){
+    public Calendar inputDate(String message){
         Calendar date = null;
         System.out.println(message);
         int year, month, day;
         while(date == null){
-            day = inputInt(sc, "Please enter day: ");
-            month = inputInt(sc, "Please enter month: ") - 1; // 0-based
-            year = inputInt(sc, "Please enter year: ");
+            day = inputInt("Please enter day: ");
+            month = inputInt("Please enter month: ") - 1; // 0-based
+            year = inputInt("Please enter year: ");
             try {
                 date = new GregorianCalendar(year, month, day);
                 if (date.get(Calendar.YEAR) != year || 
@@ -66,16 +76,16 @@ public class AttributeController {
         return date;
     }
 
-    public Calendar inputDateTime(Scanner sc, String message){
+    public Calendar inputDateTime(String message){
         Calendar date = null;
         System.out.println(message);
         int year, month, day, hour, minute;
         while(date == null){
-            day = inputInt(sc, "Please enter day: ");
-            month = inputInt(sc, "Please enter month: ") - 1; // 0-based
-            year = inputInt(sc, "Please enter year: ");
-            hour = inputInt(sc, "Please enter hour:");
-            minute = inputInt(sc, "Please enter minute:");
+            day = inputInt("Please enter day: ");
+            month = inputInt("Please enter month: ") - 1; // 0-based
+            year = inputInt("Please enter year: ");
+            hour = inputInt("Please enter hour:");
+            minute = inputInt("Please enter minute:");
             try {
                 date = new GregorianCalendar(year, month, day, hour, minute);
                 if (date.get(Calendar.YEAR) != year || 
@@ -94,7 +104,7 @@ public class AttributeController {
         return date;
     }
     
-    public String inputNote(Scanner sc, String message){
+    public String inputNote(String message){
         System.out.println(message);
 
         String input = sc.nextLine();

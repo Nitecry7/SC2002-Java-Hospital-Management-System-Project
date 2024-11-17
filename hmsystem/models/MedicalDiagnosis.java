@@ -1,10 +1,13 @@
 package hmsystem.models;
-public class MedicalDiagnosis //This Class represents each diagnosis entry in a patient's medical record
+
+import java.io.Serializable;
+
+public class MedicalDiagnosis implements Serializable//This Class represents each diagnosis entry in a patient's medical record
 {
-    private String patientDiagnosis; //Diagnosis for the patient
-    private String patientTreatment; //Treatment administered for the patient
-    private String doctorNotes; //Additional Doctor notes
-    private String diagnosedDate; //Date patient was diagnosed
+    private final String patientDiagnosis; //Diagnosis for the patient
+    private final String patientTreatment; //Treatment administered for the patient
+    private final String doctorNotes; //Additional Doctor notes
+    private final String diagnosedDate; //Date patient was diagnosed
 
     public MedicalDiagnosis(String patientDiagnosis, String patientTreatment, String doctorNotes, String diagnosedDate)
     {

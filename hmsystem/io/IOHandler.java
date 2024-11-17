@@ -1,139 +1,45 @@
 package hmsystem.io;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-public class IOHandler {
+public interface IOHandler {
+    // Method to get headers
+    public String[] getHeaders();
 
-    public Map<String, String[]> data; // Stores data rows, keyed by staff ID
-    private Map<String, Integer> columnIndex; // Maps column names to indices
-    private String filePath; // Path to the CSV file
-    private String[] headers; // CSV headers
+    // Method to read CSV data into memory
+    Map<String, String[]> readCsv();
 
-    // Constructor to initialize the IOHandler with the staff CSV file
-    public IOHandler(String filePath) throws IOException {
-        this.filePath = filePath;
-        loadCsv(); // Load data from the CSV file into memory
-    }
+    // Method to update CSV data in memory and save it back to the file
+    void updateCsv(Map<String, String[]> newData) throws IOException;
 
-    // Load the CSV into memory
-    private void loadCsv() throws IOException {
-        data = new HashMap<>();
-        columnIndex = new HashMap<>();
+    // Method to get rows based on column name and row value
+    List<String[]> getRows(int columnToSearch, String valueToFind);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            // Read and parse headers
-            String headerLine = reader.readLine();
-            headers = headerLine.split(",");
-            for (int i = 0; i < headers.length; i++) {
-                columnIndex.put(headers[i], i);
-            }
+    // Method to get a specific field based on column name and row value
+    String getField(int columnToSearch, String valueToFindRow, int columnToGet);
 
-            // Read and parse data rows
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-                data.put(values[0], values); // Assuming the first column is the unique ID
-            }
-        }
-    }
+    // Method to set a specific field value based on column name and row value
+    void setField(int columnToSearch, String valueToFindRow, int columnToChange, String newValue)
+            throws IOException;
 
-    // Save the in-memory data back to the CSV file
-    private void saveCsv() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Write headers
-            writer.write(String.join(",", headers));
-            writer.newLine();
+    // Method to add a new patient record to the CSV
+    void addPatient(String[] patientDetails) throws IOException;
 
-            // Write data rows
-            for (String[] row : data.values()) {
-                writer.write(String.join(",", row));
-                writer.newLine();
-            }
-        }
-    }
+    // Method to add a new staff record to the CSV
+    void addStaff(String[] staffDetails) throws IOException;
 
-    // Read CSV
-    public Map<String, String[]> readCsv() {
-        return new HashMap<>(data); // Return a copy of the data to prevent external modification
-    }
+    // Method to read CSV values (rows only, without headers)
+    Collection<String[]> readCsvValues();
 
-    // Update CSV
-    public void updateCsv(Map<String, String[]> newData) throws IOException {
-        for (String key : newData.keySet()) {
-            String[] values = newData.get(key);
-            if (values.length != headers.length) {
-                throw new IllegalArgumentException("Mismatch in column count for key: " + key);
-            }
-        }
+    // Method to add a new row to the CSV
+    void addRow(String[] rowDetails) throws IOException;
 
-        data.clear();
-        data.putAll(newData);
-        saveCsv();
-    }
+    // Method to update a row where a given column matches a specified value
+    void updateRow(int columnToSearch, String valueToFind, String[] rowData) throws IOException;
 
-    // Get a field value for a given staff ID and column name
-    public String getField(String staffId, String columnName) {
-        Integer column = columnIndex.get(columnName); // Get column index
-        if (column == null) {
-            throw new IllegalArgumentException("Column name '" + columnName + "' not found.");
-        }
-        String[] row = data.get(staffId); // Get row by ID
-        if (row == null) {
-            throw new IllegalArgumentException("Staff ID '" + staffId + "' not found.");
-        }
-        return row[column]; // Return the requested field value
-    }
-
-    // Set a field value for a given staff ID and column name
-    public void setField(String staffId, String columnName, String value) throws IOException {
-        Integer column = columnIndex.get(columnName); // Get column index
-        if (column == null) {
-            throw new IllegalArgumentException("Column name '" + columnName + "' not found.");
-        }
-        String[] row = data.get(staffId); // Get row by ID
-        if (row == null) {
-            throw new IllegalArgumentException("Staff ID '" + staffId + "' not found.");
-        }
-        row[column] = value; // Update the field value
-        saveCsv(); // Save changes back to the CSV
-    }
-
-    // Get next bigger ID
-    private static String getNextId(Set<String> existingIds, String prefix) {
-        int maxId = 0;
-
-        for (String id : existingIds) {
-            if (id.startsWith(prefix)) {
-                try {
-                    int idValue = Integer.parseInt(id.substring(prefix.length()));
-                    maxId = Math.max(maxId, idValue);
-                } catch (NumberFormatException e) {
-                    // Ignore malformed IDs
-                }
-            }
-        }
-
-        return prefix + String.format("%04d", maxId + 1);
-    }
-
-    // Add a new patient
-    public void addPatient(String[] patientDetails) throws IOException {
-        // Generate the next Patient ID
-        String nextPatientID = getNextId(data.keySet(), "P");
-        patientDetails[0] = nextPatientID; // Set the new Patient ID
-
-        data.put(nextPatientID, patientDetails);
-        saveCsv();
-    }
-
-    // Add a new staff
-    public void addStaff(String[] staffDetails) throws IOException {
-        // Generate the next Staff ID
-        String nextStaffID = getNextId(data.keySet(), staffDetails[2].substring(0, 1)); // Prefix based on Role
-        staffDetails[0] = nextStaffID; // Set the new Staff ID
-
-        data.put(nextStaffID, staffDetails);
-        saveCsv();
-    }
+    // Method to remove rows where a given column matches a specified value
+    void removeRows(int columnToSearch, String valueToFind) throws IOException;
 }
