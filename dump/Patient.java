@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Patient extends User {
     private IOHandler patientCsvHandler;

@@ -69,7 +69,7 @@ public class AppointmentList {
     }
 
     public void updatedAppointment(Appointment appointment) {
-        
+
     }
 
     public List<Appointment> getAppointmentsForPatient(String patientID) {

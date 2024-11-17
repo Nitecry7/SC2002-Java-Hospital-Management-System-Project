@@ -151,6 +151,7 @@ public class Doctor extends Staff
         {
             AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> pendingAppointments = appointmentController.getDoctorAppointments(getUserID());
+
             pendingAppointments.removeIf(appointment -> appointment.getStatus() != AppointmentStatus.PENDING);
 
             if (pendingAppointments.isEmpty()) 
@@ -162,7 +163,7 @@ public class Doctor extends Staff
             System.out.println("Pending Appointments:");
             for (int i = 0; i < pendingAppointments.size(); i++) 
             {
-                System.out.println((i + 1) + ". " + pendingAppointments.get(i).toString());
+                System.out.println("\n" + (i + 1) + ". " + pendingAppointments.get(i).toString());
             }
 
             AttributeController ac = AttributeController.getInstance();

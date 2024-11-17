@@ -20,6 +20,7 @@ public class Appointment
         this.appointmentID = details[Consts.AOR.ID_COLUMN];
         this.patientID = details[Consts.AOR.PATIENT_ID_COLUMN];
         this.doctorID = details[Consts.AOR.DOCTOR_ID_COLUMN];
+        
         this.status = AppointmentStatus.valueOf(details[Consts.AOR.APPOINTMENT_STATUS_COLUMN].toUpperCase());
         this.date = details[Consts.AOR.DATE_COLUMN];
         this.timeSlot = Integer.parseInt(details[Consts.AOR.TIME_COLUMN]);
@@ -27,16 +28,16 @@ public class Appointment
         //this.LocalDate = String[]
         //this.date = date;
         //this.time = time;
-        
-        this.status = AppointmentStatus.PENDING;
     }
 
     public static Appointment getAppointment(String appointmentID, IOHandler handler) {
         List<String[]> appointmentDetails = handler.getRows(Consts.Staff.ID_COLUMN, appointmentID);
+        
         if (appointmentDetails.isEmpty()) {
             return null;
         }
         else {
+            
             return new Appointment(appointmentDetails.get(0), handler);
         }
     }

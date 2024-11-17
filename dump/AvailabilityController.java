@@ -41,7 +41,7 @@ public class AvailabilityController {
             }
 
         }
-        rows = csvhandler.getRows(1, doctorID);
+        rows = csvhandler.getRows(Consts.Availability.DOCTOR_ID_COLUMN, doctorID);
         for (String[] row : rows) {    
             
             if (row.length >= 4) {
