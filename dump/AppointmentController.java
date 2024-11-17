@@ -5,6 +5,12 @@ public class AppointmentController {
 
     private AppointmentList appointmentList;
 
+    public static final AppointmentController ac = new AppointmentController();
+
+    public static AppointmentController getInstance(){
+        return ac;
+    }
+
     public AppointmentController() {
         this.appointmentList = new AppointmentList();
     }

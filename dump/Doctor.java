@@ -28,11 +28,11 @@ public class Doctor extends Staff
     }
 
 
-    public MedicalRecord _View_Patient_Medical_Records() throws Exception 
+    public MedicalRecord _View_Patient_Medical_Records()
     {
         try 
         {
-            AppointmentController appointmentController = new AppointmentController();
+            AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> appointments = appointmentController.getDoctorAppointments(getUserID());
             List<String> patientIDs = new ArrayList<>();
 
@@ -40,11 +40,11 @@ public class Doctor extends Staff
 
             for (Appointment appointment : appointments) 
             {
-                String patientID = appointment.getPatientID();
-                if (!patientIDs.contains(patientID)) 
+                System.out.println('0');
+                if (appointment.getDoctorID().equals(this.userID))
                 {
-                    patientIDs.add(patientID);
-                    System.out.println(patientIDs.size() + ". ID: " + patientID);
+                    patientIDs.add(appointment.getPatientID());
+                    System.out.println(patientIDs.size() + ". ID: " + appointment.getPatientID());
                 }
             }
 
@@ -71,7 +71,7 @@ public class Doctor extends Staff
         }
     }
 
-    public void _Update_Patient_Medical_Records() throws Exception {
+    public void _Update_Patient_Medical_Records() {
         try {
             AttributeController ac = AttributeController.getInstance();
             System.out.println("Enter the patient ID whose record needs updating: ");
