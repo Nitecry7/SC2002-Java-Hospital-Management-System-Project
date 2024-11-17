@@ -57,6 +57,7 @@ public class MedicalRecord
         }
         
         if (details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN] != null) {
+            System.out.println(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
          byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
 
@@ -91,22 +92,25 @@ public class MedicalRecord
         details[Consts.Patient.GENDER_COLUMN] = patientGender;
         details[Consts.Patient.CONTACTNUMBER_COUMN] = patientPhone;
         details[Consts.Patient.DOB_COLUMN] = patientDateOfBirth;
+        
         details[Consts.Patient.BLOODTYPE_COLUMN] = patientBloodType.name();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+        ObjectOutputStream oos1 = new ObjectOutputStream(baos1);
+        oos1.writeObject(AORIDs);
+        details[Consts.Patient.AOR_ID_COLUMN] = Base64.getEncoder().encodeToString(baos1.toByteArray());
 
-        // Encoding the serialized Date object into storeable string
-        oos.writeObject(AORIDs);
-        details[Consts.Patient.AOR_ID_COLUMN] = Base64.getEncoder().encodeToString(baos.toByteArray());                                                                           
+        ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+        ObjectOutputStream oos2 = new ObjectOutputStream(baos2);
+        oos2.writeObject(patientMedicalHistory);
+        details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN] = Base64.getEncoder().encodeToString(baos2.toByteArray());
 
-        baos.reset();
+        // Closing the streams after usage
+        oos1.close();
+        baos1.close();
+        oos2.close();
+        baos2.close();
 
-        // Encoding the serialized Prescrpition[] object into storeable string
-        oos.writeObject(patientMedicalHistory);
-        details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN] = Base64.getEncoder().encodeToString(baos.toByteArray());
-
-        
         handler.updateRow(Consts.Patient.ID_COLUMN, patientID, details);
 
     }
