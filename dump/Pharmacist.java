@@ -1,6 +1,6 @@
 import java.util.List;
 
-class Pharmacist extends Staff {
+public class Pharmacist extends Staff {
 
 
     

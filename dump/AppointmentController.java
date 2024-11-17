@@ -57,7 +57,7 @@ public class AppointmentController {
     public void acceptAppointmentRequest(String doctorID, String appointmentID) {
         Appointment appointment = appointmentList.findAppointmentByID(appointmentID);
         if (appointment != null && appointment.getDoctorID().equals(doctorID)) {
-            appointment.setStatus(Appointment.AppointmentStatus.CONFIRMED);
+            appointment.setStatus(AppointmentStatus.CONFIRMED);
         }
     }
 
@@ -65,7 +65,7 @@ public class AppointmentController {
     public void declineAppointmentRequest(String doctorID, String appointmentID) {
         Appointment appointment = appointmentList.findAppointmentByID(appointmentID);
         if (appointment != null && appointment.getDoctorID().equals(doctorID)) {
-            appointment.setStatus(Appointment.AppointmentStatus.CANCELED);
+            appointment.setStatus(AppointmentStatus.CANCELED);
         }
     }
 

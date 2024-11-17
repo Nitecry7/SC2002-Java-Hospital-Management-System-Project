@@ -2,7 +2,7 @@
 import java.io.IOException;
 import java.util.List;
 
-class Administrator extends Staff {
+public class Administrator extends Staff {
 
     private AttributeController getter = AttributeController.getInstance();
     
@@ -45,19 +45,20 @@ class Administrator extends Staff {
                 sc.viewStaff();
                 break;
             case 2:
-                _Add_Staff(sc);
+                addStaff(sc);
                 break;
             case 3:
-                _Remove_Staff(sc);
+                removeStaff(sc);
                 break;
             case 4:
-                _Update_Staff(sc);
+                updateStaff(sc);
+                break;
             case 5:
                 return;
         }
     }
 
-    public void _Add_Staff(StaffController sc){
+    public void addStaff(StaffController sc){
         try{
 
         IOHandler staffCsvHandler = new CsvHandler(Consts.Staff.FILE_NAME);
@@ -90,12 +91,12 @@ class Administrator extends Staff {
         
     }
 
-    public void _Remove_Staff(StaffController sc){
+    public void removeStaff(StaffController sc){
         String staffID = getter.inputString("Please enter staff ID for removal: ");
         sc.removeStaff(staffID);
     }
 
-    public void _Update_Staff(StaffController sc){
+    public void updateStaff(StaffController sc){
         String staffID = getter.inputString("Please enter staff ID for edit: ");
         
         System.out.println("1. Edit Name: ");
@@ -200,34 +201,34 @@ class Administrator extends Staff {
         }
         switch(operation){
             case 1:
-                _View_All_Request();
+                viewAllRequest();
                 break;
             case 2:
-                _View_Pending_Request();
+                viewPendingRequest();
                 break;
             case 3:
-                _Reject_Replenishment_Requests();
+                rejectReplenishmentRequests();
                 break;
             case 4:
-                _Approve_Replenishment_Requests();
+                approveReplenishmentRequests();
                 break;
             case 5:
                 return;
         }
     }
-    public void _View_All_Request () {
+    public void viewAllRequest () {
         ReplenishmentController rc = ReplenishmentController.getInstance();
         rc.viewAllRequest();
     }
-    public void _View_Pending_Request () {
+    public void viewPendingRequest () {
         ReplenishmentController rc = ReplenishmentController.getInstance();
         rc.viewPendingRequest();
     }
-    public void _Reject_Replenishment_Requests () {
+    public void rejectReplenishmentRequests () {
         ReplenishmentController rc = ReplenishmentController.getInstance();
         rc.rejectRequest();
     }
-    public void _Approve_Replenishment_Requests () {
+    public void approveReplenishmentRequests () {
         ReplenishmentController rc = ReplenishmentController.getInstance();
         rc.approveRequest();
     }

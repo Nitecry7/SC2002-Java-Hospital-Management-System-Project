@@ -1,7 +1,6 @@
-public enum AppointmentStatus{
+public enum AppointmentStatus {
     PENDING,
     CONFIRMED,
-    BLOCKED,
-    COMPELETED,
-    CANCELLED
+    CANCELED,
+    COMPLETED
 }

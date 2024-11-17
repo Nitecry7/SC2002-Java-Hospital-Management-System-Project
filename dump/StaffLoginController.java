@@ -21,7 +21,7 @@ public class StaffLoginController implements ILoginController {
     @Override
     public User authenticate(String userID, String password) throws Exception {
         
-        User user;
+        User user = null;
         String roleName = "";
 
         try {
@@ -34,9 +34,20 @@ public class StaffLoginController implements ILoginController {
                 //Get role name
                 roleName = handler.getField(Consts.Staff.ID_COLUMN, userID, Consts.Staff.ROLE_COLUMN);
                 //Get class corresponding to role name
-                Class<?> staffRole = Class.forName(roleName);
+                switch (roleName){
+                    case "Doctor":
+                        user = Doctor.getDoctor(userID, handler);
+                        break;
+
+                    case "Pharmacist":
+                        user = Pharmacist.getPharmacist(userID, handler);
+                        break;
+                    case "Administrator":
+                        user = Administrator.getAdministrator(userID, handler);
+                        break;
+                }
                 //Instantiate that class
-                user = (User) staffRole.getMethod("get" + roleName, String.class, IOHandler.class).invoke(null, userID, new CsvHandler(Consts.Staff.FILE_NAME));
+               // user = (User) staffRole.getMethod("get" + roleName, String.class, IOHandler.class).invoke(null, userID, new CsvHandler(Consts.Staff.FILE_NAME));
                 
             }
             else {

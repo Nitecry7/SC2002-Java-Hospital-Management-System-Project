@@ -29,29 +29,28 @@ public class LoginHandler implements ILoginHandler {
             input = attributeController.inputInt("");
 
         }
-
+        String userType = allUserTypes[input - 1];
         User user = null;
         //Get the appropriate login controller for the related file
-        Class<?> constantClass = Class.forName("EntityConstants$" + allUserTypes[input-1]);
-        String fileName = (String) constantClass.getField("FILE_NAME").get(null);
-
-        loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
+        //Class<?> constantClass = Class.forName("EntityConstants$" + allUserTypes[input-1]);
+        if(userType.equals("Patient")){
+            loginController = PatientLoginController.getInstance(new CsvHandler(fileName));
+        }else{
+            loginController = StaffLoginController.getInstance(new CsvHandler(fileName));
+        }
+        //loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
         
         //Authenticate using that login controller until either the user gets in or gives up
         String ID, pw;
         boolean tryAgain = false;
         do {
             if (tryAgain) {
-                System.out.println("Quit? Q");
-                if (attributeController.inputString("").toUpperCase().equals(input)) {
+                if (attributeController.inputString("Quit?(y/n)").toUpperCase().equals("Y")) {
                     System.exit(0);
                 }
             }
-            System.out.println("Input ID");
             ID = attributeController.inputString("Input ID");
-
-            System.out.println("Input Password");
-            pw = attributeController.inputString("Input ID");
+            pw = attributeController.inputString("Input password");
             
             tryAgain = true;
         } while ((user = loginController.authenticate(ID,pw)) == null);

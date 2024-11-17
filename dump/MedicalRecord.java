@@ -22,8 +22,9 @@ public class MedicalRecord
     private IOHandler handler;
 
     
-    public MedicalRecord(String patientID, IOHandler handler) throws Exception
+    public MedicalRecord(String patientID, IOHandler handler) 
     {
+        try{
         String[] details = handler.getRows(Consts.Patient.ID_COLUMN, patientID).get(0);
         
         this.handler = handler;
@@ -32,19 +33,19 @@ public class MedicalRecord
         this.patientEmail = details[Consts.Patient.EMAIL_COLUMN];
         this.patientDateOfBirth = details[Consts.Patient.DOB_COLUMN];
         this.patientPhone = details[Consts.Patient.CONTACTNUMBER_COUMN];
-        this.patientBloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
-        this.patientPassword = details[Consts.Patient.PW_COLUMN];
+       this.patientBloodType = BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]);
         
-        byte[] AORIDdata = Base64.getDecoder().decode(details[Consts.Patient.AOR_ID_COLUMN]);
-        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(AORIDdata));
-        this.AORIDs = (List<String>) ois.readObject();
+        // byte[] AORIDdata = Base64.getDecoder().decode(details[Consts.Patient.AOR_ID_COLUMN]);
+        // ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(AORIDdata));
+        // this.AORIDs = (List<String>) ois.readObject();
 
-        byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
-        ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
+        // byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
+        // ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
 
-        this.patientMedicalHistory = (List<MedicalDiagnosis>) ois.readObject();
-
-        this.handler = handler;
+        // this.patientMedicalHistory = (List<MedsicalDiagnosis>) ois.readObject();
+        }catch(Exception e){
+            System.out.println("Error when initializing medical record.");
+        }
     }
 
 
