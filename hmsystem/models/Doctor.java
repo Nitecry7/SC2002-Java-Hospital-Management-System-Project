@@ -35,7 +35,7 @@ public class Doctor extends Staff
     }
 
     // View Patient Medical Records
-    public void  _View_Patient_Medical_Records() throws Exception 
+    public void  _View_Patient_Medical_Records() 
     {
         try 
         {
@@ -78,7 +78,7 @@ public class Doctor extends Staff
     }
 
     // Update Patient Medical Records
-    public void _Update_Patient_Medical_Records() throws Exception 
+    public void _Update_Patient_Medical_Records() 
     {
         try 
         {
@@ -108,7 +108,7 @@ public class Doctor extends Staff
     }
 
     // View Personal Schedule
-    public void _View_Personal_Schedule() throws IOException 
+    public void _View_Personal_Schedule() 
     {
         try 
         {
@@ -121,14 +121,14 @@ public class Doctor extends Staff
                 System.out.println(appointment.toString());
             }
         } 
-        catch (IOException e)
+        catch (Exception e)
         {
             System.err.println("Error viewing personal schedule: " + e.getMessage());
         }
     }
 
     // Set Availability for Appointments
-    public void _Set_Availability_or_Appointments() throws IOException
+    public void _Set_Availability_or_Appointments() 
     {
         try 
         {
@@ -157,7 +157,7 @@ public class Doctor extends Staff
     }
 
     // Accept or Decline Appointment Requests
-    public void _Accept_or_Decline_Appointment_Requests() throws IOException 
+    public void _Accept_or_Decline_Appointment_Requests() 
     {
         try 
         {
@@ -214,7 +214,7 @@ public class Doctor extends Staff
     }
 
     // View Upcoming Appointments
-    public void _View_Upcoming_Appointments() throws IOException 
+    public void _View_Upcoming_Appointments() 
     {
         try 
         {
@@ -230,14 +230,14 @@ public class Doctor extends Staff
                 }
             }
         } 
-        catch (IOException e) 
+        catch (Exception e) 
         {
             System.err.println("Error viewing upcoming appointments: " + e.getMessage());
         }
     }
 
     // Record Appointment Outcome
-    public void _Record_Appointment_Outcome() throws IOException 
+    public void _Record_Appointment_Outcome()  
     {
         try 
         {
