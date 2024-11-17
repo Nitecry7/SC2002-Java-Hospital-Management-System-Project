@@ -1,7 +1,11 @@
 package hmsystem.models;
+import hmsystem.controllers.AppointmentController;
+import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
 import hmsystem.io.*;
+import java.util.ArrayList;
 import java.util.List;
+
 
 class Doctor extends Staff {
 
@@ -28,7 +32,32 @@ class Doctor extends Staff {
     }
 
 
-    public void _View_Patient_Medical_Records() {
+    public void _View_Patient_Medical_Records() throws Exception {
+
+        List<Appointment> appointments = new AppointmentController().getDoctorAppointments(getUserID());
+        List<String> patientIDs = new ArrayList<>();
+    
+
+        System.out.println("\nChoose a patient under your care to view medical history:\n");
+
+        for (Appointment a : appointments) {
+            String s = a.getPatientID();
+            if (!patientIDs.contains(s)) {
+                patientIDs.add(s);
+                System.out.println(patientIDs.size() + ". ID: " + a.getPatientID());
+            }
+        }
+
+        AttributeController ac = AttributeController.getInstance();
+
+        int choice = ac.inputInt("Input choice of patient");
+
+        if (choice < 1 || choice > patientIDs.size()) {
+            System.out.println("Invalid choice. Exiting...");
+        }
+        else {
+            Patient.getPatient(patientIDs.get(choice - 1), new CsvHandler(Consts.Patient.FILE_NAME)).getMedicalRecord().displayPatientMedicalRecord();
+        }
 
     }
 
