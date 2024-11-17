@@ -4,11 +4,11 @@ import hmsystem.controllers.AORController;
 import hmsystem.controllers.AppointmentController;
 import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
+
 import hmsystem.io.*;
 
 import hmsystem.models.enums.AppointmentStatus;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -117,7 +117,7 @@ public class Doctor extends Staff {
             String appointmentID = "APPT-" + getUserID() + "-" + System.currentTimeMillis(); // generate a unique appointment ID
 
             Appointment newAppointment = new Appointment(appointmentID, null, getUserID(), date, time);
-            newAppointment.setStatus(AppointmentStatus.AVAILABLE);
+            newAppointment.setStatus(AppointmentStatus.PENDING);
 
             AppointmentController appointmentController = new AppointmentController();
             appointmentController.setDoctorAvailability(getUserID(), newAppointment);
@@ -199,7 +199,7 @@ public class Doctor extends Staff {
             String prescription = ac.inputString("Enter prescription details: ");
             String notes = ac.inputString("Enter consultation notes: ");
 
-            AORController aorController = new AORController(new CsvHandler(Consts.AOR.FILE_NAME), null, null);
+            AORController aorController = AORController.getInstance();
             aorController.recordAppointmentOutcome(appointmentID, prescription, notes);
 
             System.out.println("Appointment outcome recorded successfully.");

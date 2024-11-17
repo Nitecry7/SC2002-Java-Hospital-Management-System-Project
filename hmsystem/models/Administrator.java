@@ -9,7 +9,7 @@ import hmsystem.io.*;
 import java.io.IOException;
 import java.util.List;
 
-class Administrator extends Staff {
+public class Administrator extends Staff {
 
     private AttributeController getter = AttributeController.getInstance();
     

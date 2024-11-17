@@ -7,7 +7,7 @@ import hmsystem.data.Consts;
 import hmsystem.io.*;
 import java.util.List;
 
-class Pharmacist extends Staff {
+public class Pharmacist extends Staff {
 
 
     
