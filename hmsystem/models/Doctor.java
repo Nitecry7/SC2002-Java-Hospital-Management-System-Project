@@ -5,6 +5,7 @@ import hmsystem.controllers.AORController;
 import hmsystem.controllers.AppointmentController;
 import hmsystem.controllers.AttributeController;
 import hmsystem.data.Consts;
+import hmsystem.models.enums.*;
 
 import hmsystem.io.*;
 
@@ -157,7 +158,7 @@ public class Doctor extends Staff
         {
             AppointmentController appointmentController = new AppointmentController();
             List<Appointment> pendingAppointments = appointmentController.getDoctorAppointments(getUserID());
-            pendingAppointments.removeIf(appointment -> appointment.getStatus() != Appointment.AppointmentStatus.PENDING);
+            pendingAppointments.removeIf(appointment -> appointment.getStatus() != AppointmentStatus.PENDING);
 
             if (pendingAppointments.isEmpty()) 
             {
@@ -218,7 +219,7 @@ public class Doctor extends Staff
             System.out.println("Upcoming Appointments:");
             for (Appointment appointment : appointments) 
             {
-                if (appointment.getStatus() == Appointment.AppointmentStatus.CONFIRMED)
+                if (appointment.getStatus() == AppointmentStatus.CONFIRMED)
                 {
                     System.out.println(appointment.toString());
                 }
