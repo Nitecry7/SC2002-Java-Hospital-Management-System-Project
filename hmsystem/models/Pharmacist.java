@@ -1,4 +1,5 @@
 package hmsystem.models;
+import hmsystem.controllers.AttributeController;
 import hmsystem.controllers.InventoryController;
 import hmsystem.controllers.ReplenishmentController;
 import hmsystem.data.Consts;
@@ -31,6 +32,11 @@ class Pharmacist extends Staff {
 
 
     public void _View_Appointment_Outcome_Record(){
+
+        AttributeController ac = AttributeController.getInstance();
+        String patientID = ac.inputString("Input patient's ID to check for pending prescriptions");
+
+        
 
     }
 
