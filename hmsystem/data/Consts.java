@@ -43,24 +43,6 @@ public final class Consts {
         public static final int NAMES_COLUMN = 1;
         public static final int STATUS_COLUMN = 2;
     }
-    // public static final class AORList {
-    //     public static final String FILE_NAME = "hmsystem/data/AOR_List.csv";
-    //     public static final int ID_COLUMN = 0;
-    //     public static final int DATE_COLUMN = 1;
-    //     public static final int SERVICE_COLUMN = 2;
-    //     public static final int PRESCRIPTION_COLUMN = 3;
-    //     public static final int NOTES_COLUMN = 4;
-    // }
-
-    // public static final class AppointmentList {
-    //     public static final String FILE_NAME = "hmsystem/data/Appointment_List.csv";
-    //     public static final int ID_COLUMN = 0;
-    //     public static final int PATIENT_ID_COLUMN = 1;
-    //     public static final int DOCTOR_ID_COLUMN = 2;
-    //     public static final int DATE_COLUMN = 3;
-    //     public static final int TIME_COLUMN = 4;
-    //     public static final int APPOINTMENT_STATUS_COLUMN = 5;
-    // }
 
     public static final class AOR {
         public static final String FILE_NAME = "hmsystem/data/AppointmentAOR_List.csv";
