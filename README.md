@@ -3,11 +3,11 @@ A Command Line Interface based Hospital Management System that simulates almost 
 
 ## Project Folder Structure 📂
 
-|
-|- src: All the code are stored in here.
-|- doc: The javadoc for our codes.
-|- LabInstruction: Files given as the assignment releases. 
-|- hmsystem: Our launching script
+|\\
+|- src: All the code are stored in here.\\
+|- doc: The javadoc for our codes.\\
+|- LabInstruction: Files given as the assignment releases.\\ 
+|- hmsystem: Our launching script\\
 
 ## How To Run Our Project? 
 
