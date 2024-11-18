@@ -6,6 +6,10 @@ A Command Line Interface based Hospital Management System that simulates almost 
 
 ## How To Run Our Project? 
 
+```shell
+./hmsystem
+```
+
 ## Java Docs ♨️ 
 
 # Overview of Project 🔎
