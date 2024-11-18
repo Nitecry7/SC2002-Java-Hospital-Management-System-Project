@@ -1,69 +1,59 @@
+/**
+ * Handles user authentication and login process.
+ * Supports multiple user types and dynamically configures login controllers based on user type.
+ */
 public class LoginHandler implements ILoginHandler {
-
 
     private ILoginController loginController;
     private final AttributeController attributeController;
 
+    /**
+     * Default constructor initializes the AttributeController instance.
+     */
     public LoginHandler() {
         this.attributeController = AttributeController.getInstance();
     }
 
-    
+    /**
+     * Authenticates a user by prompting for user type, ID, and password.
+     * Dynamically loads the corresponding login controller for the user type.
+     *
+     * @return A {@link User} object if authentication is successful; {@code null} otherwise.
+     * @throws Exception If an error occurs during the authentication process.
+     */
     @Override
     public User authenticate() throws Exception {
-        
+
         String[] allUserTypes = Consts.USER_TYPES;
 
-        //Choose staff or patient or anything else that has its own table
+        // Prompt user to select a user type
         System.out.println("Choose user type:");
 
         for (int x = 0; x < allUserTypes.length; x++) {
-
-            System.out.println((x+1) + ". " + allUserTypes[x]);
+            System.out.println((x + 1) + ". " + allUserTypes[x]);
         }
 
         int input = attributeController.inputInt("Please enter user type:");
-        while (input < 1 || input > allUserTypes.length){
+        while (input < 1 || input > allUserTypes.length) {
             System.out.println("Invalid input");
             input = attributeController.inputInt("");
-
         }
+
         User user = null;
-        //Get the appropriate login controller for the related file
-        Class<?> constantClass = Class.forName("Consts$" + allUserTypes[input-1]);
+        // Dynamically load the corresponding login controller based on user type
+        Class<?> constantClass = Class.forName("Consts$" + allUserTypes[input - 1]);
         String fileName = (String) constantClass.getField("FILE_NAME").get(null);
 
-        /* 
-        if(userType.equals("Patient")){
-            loginController = PatientLoginController.getInstance(new CsvHandler(fileName));
-        }else{
-            loginController = StaffLoginController.getInstance(new CsvHandler(fileName));
-        }
-        */
-        loginController = (ILoginController) Class.forName(allUserTypes[input-1] + "LoginController").getMethod("getInstance", IOHandler.class).invoke(null, new CsvHandler(fileName));
-        
-        //Authenticate using that login controller until either the user gets in or gives up
-        String ID, pw;
-        //boolean tryAgain = false;
-        //do {
-            /*
-            if (tryAgain) {
-                if (attributeController.inputString("Quit?(y/n)").toUpperCase().equals("Y")) {
-                    System.exit(0);
-                }
-            }
-                */
-        ID = attributeController.inputString("Input ID");
-        pw = attributeController.inputString("Input password");
-            
-            //tryAgain = true;
-        //} while ((user = loginController.authenticate(ID,pw)) == null);
+        loginController = (ILoginController) Class.forName(allUserTypes[input - 1] + "LoginController")
+                .getMethod("getInstance", IOHandler.class)
+                .invoke(null, new CsvHandler(fileName));
 
-        user = loginController.authenticate(ID,pw);
+        // Authenticate using the selected login controller
+        String ID = attributeController.inputString("Input ID");
+        String pw = attributeController.inputString("Input password");
+
+        user = loginController.authenticate(ID, pw);
 
         return user;
-
-
     }
-
 }

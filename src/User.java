@@ -1,47 +1,64 @@
+/**
+ * Abstract class representing a generic user in the system.
+ * Provides common attributes and functionalities shared by all user types.
+ */
+public abstract class User {
 
-
-public abstract class User
-{
+    /**
+     * Unique identifier for the user.
+     */
     private final String userID;
+
+    /**
+     * Password associated with the user account.
+     */
     private String password;
 
-    public User(String userID)
-    {
+    /**
+     * Constructor to initialize a User with a unique identifier.
+     *
+     * @param userID The unique identifier for the user.
+     */
+    public User(String userID) {
         this.userID = userID;
     }
 
+    /**
+     * Logs out the user. This method can be extended to provide specific logout behavior.
+     */
     public void _Logout() {
-
-        /*
-        Scanner in = new Scanner(System.in);
-        System.out.println("Are you sure? Enter Y to Exit or any other button to Continue");
-        String e = in.nextLine();
-
-        e = e.toUpperCase();
-
-        if (e.equals("Y")) {
-            System.exit(0);
-        }
-        else{
-            System.out.println("Returning to menu...");
-        }
-            */
-
-    
+        // Placeholder for logout functionality.
     }
 
+    /**
+     * Retrieves the unique identifier for the user.
+     *
+     * @return The user's unique identifier.
+     */
     public String getUserID() {
         return userID;
     }
 
+    /**
+     * Retrieves the password associated with the user.
+     * This method is protected to restrict access to subclasses.
+     *
+     * @return The user's password.
+     */
     protected String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the password for the user.
+     * This method is protected to restrict access to subclasses.
+     *
+     * @param password The new password for the user.
+     */
     protected void setPassword(String password) {
         this.password = password;
     }
 
-    //public abstract void _Set_new_password();
-
+    // Abstract method for subclasses to implement their own password-setting behavior.
+    // public abstract void _Set_new_password();
 }

@@ -1,45 +1,78 @@
-
 import java.io.Serializable;
 
-public class MedicalDiagnosis implements Serializable//This Class represents each diagnosis entry in a patient's medical record
-{
-    private final String patientDiagnosis; //Diagnosis for the patient
-    private final String patientTreatment; //Treatment administered for the patient
-    private final String doctorNotes; //Additional Doctor notes
-    private final String diagnosedDate; //Date patient was diagnosed
+/**
+ * Represents a medical diagnosis entry in a patient's medical record.
+ * This class encapsulates details about the diagnosis, treatment, doctor notes, and the diagnosis date.
+ */
+public class MedicalDiagnosis implements Serializable {
 
-    public MedicalDiagnosis(String patientDiagnosis, String patientTreatment, String doctorNotes, String diagnosedDate)
-    {
+    private final String patientDiagnosis; // Diagnosis for the patient
+    private final String patientTreatment; // Treatment administered for the patient
+    private final String doctorNotes;     // Additional doctor notes
+    private final String diagnosedDate;   // Date the patient was diagnosed
+
+    /**
+     * Constructs a MedicalDiagnosis object with the specified details.
+     *
+     * @param patientDiagnosis The diagnosis for the patient.
+     * @param patientTreatment The treatment administered for the patient.
+     * @param doctorNotes      Additional notes from the doctor.
+     * @param diagnosedDate    The date the diagnosis was made.
+     */
+    public MedicalDiagnosis(String patientDiagnosis, String patientTreatment, String doctorNotes, String diagnosedDate) {
         this.patientDiagnosis = patientDiagnosis;
         this.patientTreatment = patientTreatment;
         this.doctorNotes = doctorNotes;
         this.diagnosedDate = diagnosedDate;
     }
 
-    public String getPatientDiagnosis()
-    {
+    /**
+     * Retrieves the patient's diagnosis.
+     *
+     * @return The diagnosis for the patient.
+     */
+    public String getPatientDiagnosis() {
         return patientDiagnosis;
     }
 
-    public String getPatientTreatement()
-    {
+    /**
+     * Retrieves the treatment administered to the patient.
+     *
+     * @return The treatment administered for the patient.
+     */
+    public String getPatientTreatment() {
         return patientTreatment;
     }
 
-    public String getDoctorNotes()
-    {
+    /**
+     * Retrieves the doctor's notes for the diagnosis.
+     *
+     * @return Additional notes from the doctor.
+     */
+    public String getDoctorNotes() {
         return doctorNotes;
     }
 
-    public String getDiagnosedDate()
-    {
+    /**
+     * Retrieves the date of the diagnosis.
+     *
+     * @return The date the diagnosis was made.
+     */
+    public String getDiagnosedDate() {
         return diagnosedDate;
     }
 
+    /**
+     * Provides a string representation of the medical diagnosis, including the
+     * diagnosis date, details, treatment, and doctor notes.
+     *
+     * @return A formatted string containing the medical diagnosis details.
+     */
     @Override
-    public String toString() //toString() encompasses all the details into one neat output format
-    {
-        return "Date: " + diagnosedDate + "\n" + "Diagnosis: " + patientDiagnosis + "\n" + "Treatment: " + patientTreatment + "\n" + "Doctor Notes: " + doctorNotes;
+    public String toString() {
+        return "Date: " + diagnosedDate + "\n" +
+               "Diagnosis: " + patientDiagnosis + "\n" +
+               "Treatment: " + patientTreatment + "\n" +
+               "Doctor Notes: " + doctorNotes;
     }
-
 }

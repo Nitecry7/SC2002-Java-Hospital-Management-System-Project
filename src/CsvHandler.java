@@ -1,48 +1,69 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * CsvHandler provides methods to handle CSV file operations, including reading,
+ * writing, updating, and managing data in memory.
+ */
 public class CsvHandler implements IOHandler {
 
-    public Map<String, String[]> data; // Stores data rows, keyed by staff ID
-    private String filePath; // Path to the CSV file
-    private String[] headers; // CSV headers
+    /**
+     * Stores data rows, keyed by a unique ID.
+     */
+    public Map<String, String[]> data;
 
-    // Constructor to initialize the IOHandler with the staff CSV file
+    /**
+     * Path to the CSV file.
+     */
+    private String filePath;
+
+    /**
+     * CSV headers.
+     */
+    private String[] headers;
+
+    /**
+     * Constructor to initialize the IOHandler with the CSV file.
+     *
+     * @param filePath The path to the CSV file.
+     * @throws IOException If an error occurs while loading the CSV.
+     */
     public CsvHandler(String filePath) throws IOException {
         this.filePath = filePath;
-        loadCsv(); // Load data from the CSV file into memory
+        loadCsv();
     }
 
-    // Load the CSV into memory
+    /**
+     * Loads the CSV file into memory.
+     *
+     * @throws IOException If an error occurs while reading the file.
+     */
     private void loadCsv() throws IOException {
         data = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            // Read and parse headers
-            String headerLine = reader.readLine();
-            headers = headerLine.split(",");
+            headers = reader.readLine().split(",");
 
-            // Read and parse data rows
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                
-                if( values == null) {
-                    System.out.println("values is null");
+                if (values != null) {
+                    data.put(values[0], values);
                 }
-                data.put(values[0], values); // Assuming the first column is the unique ID
             }
         }
     }
 
-    // Save the in-memory data back to the CSV file
+    /**
+     * Saves the in-memory data back to the CSV file.
+     *
+     * @throws IOException If an error occurs while writing to the file.
+     */
     private void saveCsv() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Write headers
             writer.write(String.join(",", headers));
             writer.newLine();
 
-            // Write data rows
             for (String[] row : data.values()) {
                 writer.write(String.join(",", row));
                 writer.newLine();
@@ -50,30 +71,49 @@ public class CsvHandler implements IOHandler {
         }
     }
 
-    // Get Headers
+    /**
+     * Gets the headers of the CSV file.
+     *
+     * @return An array of headers.
+     */
     public String[] getHeaders() {
-        return headers; // This assumes headers are loaded in the CsvHandler when the CSV is read
+        return headers;
     }
 
-    // Read CSV
+    /**
+     * Reads the entire CSV file into a map.
+     *
+     * @return A copy of the data map.
+     */
     public Map<String, String[]> readCsv() {
-        try{
-        loadCsv();
-        }catch(IOException e){
+        try {
+            loadCsv();
+        } catch (IOException e) {
+            // Handle the exception if needed
         }
-        return new HashMap<>(data); // Return a copy of the data to prevent external modification
+        return new HashMap<>(data);
     }
 
-    // Read CSV values (rows only, without headers)
+    /**
+     * Reads only the values (rows) from the CSV file.
+     *
+     * @return A collection of data rows.
+     */
     public Collection<String[]> readCsvValues() {
-        try{
-        loadCsv();
-        }catch(IOException e){
+        try {
+            loadCsv();
+        } catch (IOException e) {
+            // Handle the exception if needed
         }
-        return new ArrayList<>(data.values()); // Return only the rows (values), excluding headers
+        return new ArrayList<>(data.values());
     }
 
-    // Update CSV
+    /**
+     * Updates the entire CSV data.
+     *
+     * @param newData The new data to replace the existing data.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void updateCsv(Map<String, String[]> newData) throws IOException {
         for (String key : newData.keySet()) {
             String[] values = newData.get(key);
@@ -87,16 +127,21 @@ public class CsvHandler implements IOHandler {
         saveCsv();
     }
 
-    // Get all rows where a given column matches a specified value
+    /**
+     * Retrieves rows where a given column matches a specified value.
+     *
+     * @param columnToSearch The column index to search.
+     * @param valueToFind The value to search for.
+     * @return A list of matching rows.
+     */
     public List<String[]> getRows(int columnToSearch, String valueToFind) {
-
-        try{
-        loadCsv();
-        }catch(IOException e){
+        try {
+            loadCsv();
+        } catch (IOException e) {
+            // Handle the exception if needed
         }
         List<String[]> matchingRows = new ArrayList<>();
 
-        // Search through the rows to find the matching value in the specified column
         for (String[] row : data.values()) {
             if (row[columnToSearch].equals(valueToFind)) {
                 matchingRows.add(row);
@@ -106,14 +151,17 @@ public class CsvHandler implements IOHandler {
         return matchingRows;
     }
 
-    // Add a new row (no ID to automate)
+    /**
+     * Adds a new row to the CSV file.
+     *
+     * @param rowDetails The details of the new row.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void addRow(String[] rowDetails) throws IOException {
         if (rowDetails.length != headers.length) {
             throw new IllegalArgumentException("Row details must match the number of columns in the CSV.");
         }
 
-        // Add the new row to the data map. The first column is assumed to be the unique
-        // key.
         String uniqueKey = rowDetails[0];
         if (data.containsKey(uniqueKey)) {
             throw new IllegalArgumentException("A row with the given key already exists: " + uniqueKey);
@@ -123,34 +171,41 @@ public class CsvHandler implements IOHandler {
         saveCsv();
     }
 
-    // Update a row where a given column matches a specified value
+    /**
+     * Updates a row where a specific column matches a value.
+     *
+     * @param columnToSearch The column index to search.
+     * @param valueToFind The value to match.
+     * @param rowData The new row data.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void updateRow(int columnToSearch, String valueToFind, String[] rowData) throws IOException {
         boolean found = false;
 
-        // Iterate over all rows to find the matching row by column value
         for (Map.Entry<String, String[]> entry : data.entrySet()) {
             String[] row = entry.getValue();
 
-            // Check if the specified column matches the valueToFind
             if (row[columnToSearch].equals(valueToFind)) {
-                // If the row is found, replace the old row with the new data
                 data.put(entry.getKey(), rowData);
                 found = true;
                 break;
             }
         }
 
-        // If no matching row was found, throw an exception
         if (!found) {
-            throw new IllegalArgumentException(
-                    "No row found with " + headers[columnToSearch] + "='" + valueToFind + "'");
+            throw new IllegalArgumentException("No row found with value: " + valueToFind);
         }
 
-        // After updating the row, save the changes back to the CSV file
         saveCsv();
     }
 
-    // Remove rows where a given column matches a specified value
+    /**
+     * Removes rows where a specific column matches a value.
+     *
+     * @param columnToSearch The column index to search.
+     * @param valueToFind The value to match.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void removeRows(int columnToSearch, String valueToFind) throws IOException {
         Iterator<Map.Entry<String, String[]>> iterator = data.entrySet().iterator();
 
@@ -164,44 +219,59 @@ public class CsvHandler implements IOHandler {
         saveCsv();
     }
 
-    // Get a field value for a given column index (instead of column name), value to
-    // search for, and column to get
+    /**
+     * Retrieves a specific field value from a matching row.
+     *
+     * @param columnToSearch The column index to search.
+     * @param valueToFindRow The value to match.
+     * @param columnToGet The column index of the field to retrieve.
+     * @return The value in the specified field.
+     */
     public String getField(int columnToSearch, String valueToFindRow, int columnToGet) {
-
-        try{
+        try {
             loadCsv();
-        }catch(IOException e){
-            }
-        // Search through the rows to find the matching value
+        } catch (IOException e) {
+            // Handle the exception if needed
+        }
         for (String[] row : data.values()) {
             if (row[columnToSearch].equals(valueToFindRow)) {
-                return row[columnToGet]; // Return the value in the specified column
+                return row[columnToGet];
             }
         }
 
-        throw new IllegalArgumentException(
-                "No row found with column index " + columnToSearch + "='" + valueToFindRow + "'");
+        throw new IllegalArgumentException("No row found with value: " + valueToFindRow);
     }
 
-    // Set a field value for a given column index to search for, value to find,
-    // column to change, and new value
+    /**
+     * Updates a specific field value in a matching row.
+     *
+     * @param columnToSearch The column index to search.
+     * @param valueToFindRow The value to match.
+     * @param columnToChange The column index of the field to update.
+     * @param newValue The new value to set.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void setField(int columnToSearch, String valueToFindRow, int columnToChange, String newValue)
             throws IOException {
-        // Search through the rows to find the matching value
         for (Map.Entry<String, String[]> entry : data.entrySet()) {
             String[] row = entry.getValue();
             if (row[columnToSearch].equals(valueToFindRow)) {
-                row[columnToChange] = newValue; // Update the field value
-                saveCsv(); // Save changes back to the CSV
+                row[columnToChange] = newValue;
+                saveCsv();
                 return;
             }
         }
 
-        throw new IllegalArgumentException(
-                "No row found with column index " + columnToSearch + "='" + valueToFindRow + "'");
+        throw new IllegalArgumentException("No row found with value: " + valueToFindRow);
     }
 
-    // Get next bigger ID
+    /**
+     * Generates the next available unique ID based on a prefix.
+     *
+     * @param existingIds The set of existing IDs.
+     * @param prefix The prefix for the new ID.
+     * @return The generated unique ID.
+     */
     private static String getNextId(Set<String> existingIds, String prefix) {
         int maxId = 0;
 
@@ -219,21 +289,29 @@ public class CsvHandler implements IOHandler {
         return prefix + String.format("%04d", maxId + 1);
     }
 
-    // Add a new patient
+    /**
+     * Adds a new patient to the CSV file.
+     *
+     * @param patientDetails The details of the new patient.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void addPatient(String[] patientDetails) throws IOException {
-        // Generate the next Patient ID
         String nextPatientID = getNextId(data.keySet(), "P");
-        patientDetails[0] = nextPatientID; // Set the new Patient ID
+        patientDetails[0] = nextPatientID;
 
         data.put(nextPatientID, patientDetails);
         saveCsv();
     }
 
-    // Add a new staff
+    /**
+     * Adds a new staff member to the CSV file.
+     *
+     * @param staffDetails The details of the new staff member.
+     * @throws IOException If an error occurs while saving the file.
+     */
     public void addStaff(String[] staffDetails) throws IOException {
-        // Generate the next Staff ID
-        String nextStaffID = getNextId(data.keySet(), staffDetails[2].substring(0, 1)); // Prefix based on Role
-        staffDetails[0] = nextStaffID; // Set the new Staff ID
+        String nextStaffID = getNextId(data.keySet(), staffDetails[2].substring(0, 1));
+        staffDetails[0] = nextStaffID;
 
         data.put(nextStaffID, staffDetails);
         saveCsv();
