@@ -1,5 +1,5 @@
-cd ./src
-javac *.java
+javac ./src/*.java
 clear
 java Driver
 cd ..
+rm ./src/*.class
