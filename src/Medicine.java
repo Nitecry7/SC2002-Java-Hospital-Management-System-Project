@@ -112,7 +112,7 @@ public class Medicine {
     }
 
     
-    /*
+    /**
      * Getter for medicine name
      * 
      * @return name of medicine
@@ -120,23 +120,40 @@ public class Medicine {
     public String getName() {
         return name;
     }
-
+    /**
+     * Setter for medicine name
+     * @param name Name of medicine
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Getter for medicine alert line
+     * 
+     * @return alert line of medicine
+     */
     public int getAlertLine() {
         return alertLine;
     }
-
+    /**
+     * Setter for medicine alert line
+     * @param alertLine Alert line of medicine
+     */
     public void setAlertLine(int alertLine) {
         this.alertLine = alertLine;
     }
-
+    /**
+     * Getter for medicine stock
+     * 
+     * @return stock of medicine
+     */
     public int getStock() {
         return stock;
     }
-
+    /**
+     * Setter for medicine stock
+     * @param stock Stock of medicine
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }

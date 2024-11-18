@@ -138,52 +138,96 @@ public class MedicalRecord {
     }
 
     // Getters and setters for patient details
-
+    /**
+     * Getter for patient name
+     * 
+     * @return name of patient
+     */
     public String getPatientName() {
         return patientName;
     }
-
+    /**
+     * Setter for patient name
+     * @param patientName The name of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientName(String patientName) throws IOException {
         this.patientName = patientName;
         saveData();
     }
-
+    /**
+     * Getter for patient date of birth
+     * 
+     * @return date of birth of patient
+     */
     public String getPatientDateOfBirth() {
         return patientDateOfBirth;
     }
-
+    /**
+     * Setter for patient date of birth
+     * @param patientDateOfBirth The date of birth of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientDateOfBirth(String patientDateOfBirth) throws IOException {
         this.patientDateOfBirth = patientDateOfBirth;
         saveData();
     }
-
+    /**
+     * Getter for patient gender
+     * 
+     * @return gender of patient
+     */
     public String getPatientGender() {
         return patientGender;
     }
-
+    /**
+     * Setter for patient gender
+     * @param patientGender The gender of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientGender(String patientGender) throws IOException {
         this.patientGender = patientGender;
         saveData();
     }
-
+    /**
+     * Getter for patient email
+     * 
+     * @return email of patient
+     */
     public String getPatientEmail() {
         return patientEmail;
     }
-
+    /**
+     * Setter for patient email
+     * @param patientEmail The email of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientEmail(String patientEmail) throws IOException {
         this.patientEmail = patientEmail;
         saveData();
     }
-
+    /**
+     * Getter for patient phone number
+     * 
+     * @return phone number of patient
+     */
     public String getPatientPhone() {
         return patientPhone;
     }
-
+    /**
+     * Setter for patient phone number
+     * @param patientPhone The phone of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientPhone(String patientPhone) throws IOException {
         this.patientPhone = patientPhone;
         saveData();
     }
-
+    /**
+     * Getter for patient blood type
+     * 
+     * @return blood type of patient
+     */
     public BloodType getPatientBloodType() {
         if (patientBloodType == null) {
             return BloodType.NOT_SET;
@@ -191,30 +235,54 @@ public class MedicalRecord {
             return patientBloodType;
         }
     }
-
+    /**
+     * Setter for patient blood type
+     * @param patientBloodType The blood type of patient
+     * @throws IOException If saving to csv failed
+     */
     public void setPatientBloodType(BloodType patientBloodType) throws IOException {
         this.patientBloodType = patientBloodType;
         saveData();
     }
-
+    /**
+     * Getter for patient appointment outcome IDs
+     * 
+     * @return appointment outcome IDs of patient
+     */
     public List<String> getAORIDs() {
         return AORIDs;
     }
-
+    /**
+     * Adding an appointment outcome record into AORIDs
+     * @param AORID the ID of appointment outcome record
+     * @throws IOException If saving to csv failed
+     */
     public void addAORIDs(String AORID) throws IOException {
         this.AORIDs.add(AORID);
         saveData();
     }
-
+    /**
+     * Getter for patient medical history
+     * 
+     * @return medical history of patient
+     */
     public List<MedicalDiagnosis> getPatientMedicalHistory() {
         return patientMedicalHistory;
     }
-
+    /**
+     * Adding a medical history
+     * @param patientMedicalHistory the ID of medical history
+     * @throws IOException If saving to csv failed
+     */
     public void addMedicalHistory(MedicalDiagnosis patientMedicalHistory) throws IOException {
         this.patientMedicalHistory.add(patientMedicalHistory);
         saveData();
     }
-
+    /**
+     * Setting patient new password
+     * @param patientPassword New password for patient
+     * @throws IOException if not successful
+     */
     public void setPatientPassword(String patientPassword) throws IOException {
         this.patientPassword = patientPassword;
         saveData();

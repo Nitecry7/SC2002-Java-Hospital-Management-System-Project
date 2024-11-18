@@ -5,7 +5,11 @@ import java.util.Scanner;
  * It manages the login process and provides access to the user-specific menu.
  */
 public class Driver {
-
+    /**
+     * Driver constructor
+     */
+    public Driver(){
+    }
     /**
      * The main method initializes the application and handles user login.
      *

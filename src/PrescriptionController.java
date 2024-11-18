@@ -1,11 +1,11 @@
+
+import java.io.IOException;
+import java.util.*;
 /**
  * Singleton class for managing prescriptions, including dispensing medicines
  * and viewing prescription details. This class interacts with the inventory
  * and prescription data stored in CSV files.
  */
-import java.io.IOException;
-import java.util.*;
-
 public class PrescriptionController {
 
     /**

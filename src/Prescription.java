@@ -8,10 +8,25 @@ import java.util.*;
  */
  public class Prescription implements Serializable {
  
+    /**
+     * The ID of prescription
+     */
      private int prescriptionID;
+    /**
+     * The amount of medicine
+     */
      private int amount;
+    /**
+     * The frequency for this prescription
+     */
      private Frequency frequency;
+    /**
+     * The name of medicine for prescription
+     */
      private String medicineName;
+    /**
+     * The status of prescription, dispensed by pharmacist or not
+     */
      private boolean dispensed = false;
  
      /**

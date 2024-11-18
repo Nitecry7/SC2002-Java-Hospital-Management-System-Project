@@ -6,10 +6,22 @@ import java.io.Serializable;
  */
 public class MedicalDiagnosis implements Serializable {
 
-    private final String patientDiagnosis; // Diagnosis for the patient
-    private final String patientTreatment; // Treatment administered for the patient
-    private final String doctorNotes;     // Additional doctor notes
-    private final String diagnosedDate;   // Date the patient was diagnosed
+    /**
+     * Diagnosis for the patient
+     */
+    private final String patientDiagnosis;
+    /**
+     * Treatment administered for the patient
+     */
+    private final String patientTreatment; 
+    /**
+     * Additional doctor notes
+     */
+    private final String doctorNotes;     
+    /**
+     * Date the patient was diagnosed
+     */
+    private final String diagnosedDate;   
 
     /**
      * Constructs a MedicalDiagnosis object with the specified details.

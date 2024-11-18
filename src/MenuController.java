@@ -11,10 +11,22 @@ import java.util.Scanner;
  */
 public class MenuController implements IMenuController {
 
-    private User user;  // The user interacting with the menu
-    protected Method[] methods; // Methods dynamically initialized for the menu
-    protected String[] methodNames = {}; // Names of the methods for display and invocation
-    private int logout = -1; // Index of the logout option in the menu
+    /**
+     * The user interacting with the menu
+     */
+    private User user;
+    /**
+     * Methods dynamically initialized for the menu
+     */
+    protected Method[] methods;
+    /**
+     * Names of the methods for display and invocation
+     */
+    protected String[] methodNames = {};
+    /**
+     * Index of the logout option in the menu
+     */
+    private int logout = -1;
 
     /**
      * Constructs a MenuController for the specified user.
