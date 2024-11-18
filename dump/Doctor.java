@@ -152,6 +152,8 @@ public class Doctor extends Staff
             AppointmentController appointmentController = AppointmentController.getInstance();
             List<Appointment> pendingAppointments = appointmentController.getDoctorAppointments(getUserID());
 
+
+
             pendingAppointments.removeIf(appointment -> appointment.getStatus() != AppointmentStatus.PENDING);
 
             if (pendingAppointments.isEmpty()) 

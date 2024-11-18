@@ -1,3 +1,3 @@
 Appointment ID,Patient ID,Patient Name,Doctor ID,Doctor Name,Date,Time,Service,Prescription,Notes,Appointment Status
 A001,P1001,Alice Brown,D001,John Smith,2024-12-12,6,wff,,,PENDING
-A002,P1001,Alice Brown,D001,John Smith,2024-12-12,1,ddddd,,,CONFIRMED
+A002,P1001,Alice Brown,D001,John Smith,2024-12-12,1,ddddd,Peepo,lalal,Completed
