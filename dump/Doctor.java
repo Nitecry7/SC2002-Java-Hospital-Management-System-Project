@@ -44,6 +44,7 @@ public class Doctor extends Staff
             }while(choice < 1 || choice >= idx);
             String patientID = patientIDList.get(choice - 1);
             Patient patient = Patient.getPatient(patientID, new CsvHandler(Consts.Patient.FILE_NAME));
+            patient._View_Medical_Record();
             return patient.getMedicalRecord();
         } 
         catch (Exception e) 
@@ -65,7 +66,7 @@ public class Doctor extends Staff
 
             String diagnosis = ac.inputString("Input diagnosis, if any: ");
             String treatment = ac.inputString("Input patient treatment, if any: ");
-            String notes = ac.inputString("Input notes, if any. Press enter twice to escape: ");
+            String notes = ac.inputNote("Input notes, if any. Type END at the last line to finish: ");
             String today = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
             patientRecord.addMedicalHistory(new MedicalDiagnosis(diagnosis, treatment, notes, today));
