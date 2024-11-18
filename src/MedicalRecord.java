@@ -46,7 +46,7 @@ public class MedicalRecord {
             this.patientGender = details[Consts.Patient.GENDER_COLUMN];
             this.patientEmail = details[Consts.Patient.EMAIL_COLUMN];
             this.patientDateOfBirth = details[Consts.Patient.DOB_COLUMN];
-            this.patientPhone = details[Consts.Patient.CONTACTNUMBER_COUMN];
+            this.patientPhone = details[Consts.Patient.CONTACTNUMBER_COLUMN];
             this.patientBloodType = BloodType.NOT_SET;
 
             if (BloodType.valueOf(details[Consts.Patient.BLOODTYPE_COLUMN]) != null) {
@@ -94,7 +94,7 @@ public class MedicalRecord {
         details[Consts.Patient.NAME_COLUMN] = patientName;
         details[Consts.Patient.EMAIL_COLUMN] = patientEmail;
         details[Consts.Patient.GENDER_COLUMN] = patientGender;
-        details[Consts.Patient.CONTACTNUMBER_COUMN] = patientPhone;
+        details[Consts.Patient.CONTACTNUMBER_COLUMN] = patientPhone;
         details[Consts.Patient.DOB_COLUMN] = patientDateOfBirth;
 
         details[Consts.Patient.BLOODTYPE_COLUMN] = patientBloodType.name();

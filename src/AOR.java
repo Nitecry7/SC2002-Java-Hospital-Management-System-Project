@@ -11,6 +11,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.Exception;
 
 /**
  * The AOR (Appointment Outcome Record) class represents the details of an appointment

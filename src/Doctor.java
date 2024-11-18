@@ -58,7 +58,7 @@ public class Doctor extends Staff {
             } while (choice < 1 || choice >= idx);
             String patientID = patientIDList.get(choice - 1);
             Patient patient = Patient.getPatient(patientID, new CsvHandler(Consts.Patient.FILE_NAME));
-            patient.viewMedicalRecord();
+            patient._View_Medical_Record();
             return patient.getMedicalRecord();
         } catch (Exception e) {
             System.err.println("Error viewing patient medical records: " + e.getMessage());

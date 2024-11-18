@@ -1,3 +1,5 @@
+import java.util.*;
+import java.io.*;
 /**
  * Singleton class that manages the medication inventory.
  * Handles operations such as adding, editing, viewing, and deleting medications.

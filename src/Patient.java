@@ -182,7 +182,6 @@ public class Patient extends User {
             System.err.println("Error retrieving scheduled appointments: " + e.getMessage());
         }
     }
-
     /**
      * Views the outcomes of past appointments for the patient.
      */
