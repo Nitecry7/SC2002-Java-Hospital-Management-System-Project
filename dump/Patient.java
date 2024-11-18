@@ -240,13 +240,16 @@ public class Patient extends User {
     public void _View_Scheduled_Appointments() {
         String patientID = getUserID();
         try {
-            AORController aorController = AORController.getInstance();
-            List<String> appointments = aorController.viewScheduledAppointments(patientID);
+            AORController aorc = AORController.getInstance();
+            List<String> appointments = aorc.viewScheduledAppointments(patientID);
 
             if (appointments.isEmpty()) {
                 System.out.println("No scheduled appointments found for Patient ID: " + patientID);
             } else {
-                Utils.printView(appointments, "Scheduled Appointments for Patient " + patientID + ":");
+                System.out.println("Scheduled Appointments for Patient " + patientID + ":");
+                for(String line : appointments){
+                    System.out.println(line);
+                }
             }
         } catch (IOException e) {
             System.err.println("Error retrieving scheduled appointments: " + e.getMessage());
@@ -263,8 +266,12 @@ public class Patient extends User {
 
             if (pastAppointments.isEmpty()) {
                 System.out.println("No past appointments found for Patient ID: " + patientID);
+                
             } else {
-                Utils.printView(pastAppointments, "Past Appointments Outcome for Patient " + patientID + ":");
+                System.out.println("Past Appointments Outcome for Patient " + patientID + ":");
+                for(String line : pastAppointments){
+                    System.out.println(line);
+                }
             }
         } catch (IOException e) {
             System.err.println("Error retrieving past appointment outcomes: " + e.getMessage());

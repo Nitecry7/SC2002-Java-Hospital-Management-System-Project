@@ -57,7 +57,7 @@ public class MedicalRecord
         }
         
         if (details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN] != null) {
-            System.out.println(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
+        //    System.out.println(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
          byte[] diagnosisData = Base64.getDecoder().decode(details[Consts.Patient.DIAGNOSISTREATMENT_COLUMN]);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(diagnosisData));
 
