@@ -9,6 +9,15 @@ A Command Line Interface based Hospital Management System that simulates almost 
 ## Java Docs ♨️ 
 
 # Overview of Project 🔎
+## Roles
+User
+Staff
+Administrator 
+Patient 🤒
+Doctor 🩺
+Pharmacist ⚕
+
+
 Brief Outline illustrated by the UML Diagram 📊
 ![OOP Updated UML Diagram (As of 18 Nov 2024)](https://github.com/user-attachments/assets/a96bb4eb-e2e9-429d-accc-d545f5b8bf5e)
 
