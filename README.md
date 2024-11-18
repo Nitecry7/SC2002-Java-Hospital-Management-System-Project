@@ -53,7 +53,7 @@ Submit to admins, they either approve or reject it.<br>
 #### Administrator 🛡️
 - Can view and manage all staff/inventory
 - Also able to approve replenishments
-#### All users 
+#### All Users 👥
 - Able to change password anytime they want
 
 ## Upcoming Features ✨
