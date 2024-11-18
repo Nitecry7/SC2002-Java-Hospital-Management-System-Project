@@ -38,7 +38,7 @@ public class Doctor extends Staff {
      *
      * @return The patient's MedicalRecord object or null if no records are found.
      */
-    public MedicalRecord viewPatientMedicalRecords() {
+    public MedicalRecord _View_Patient_Medical_Records() {
         try {
             AttributeController ac = AttributeController.getInstance();
             AORController aorc = AORController.getInstance();
@@ -69,11 +69,11 @@ public class Doctor extends Staff {
     /**
      * Update a patient's medical records.
      */
-    public void updatePatientMedicalRecords() {
+    public void _Update_Patient_Medical_Records() {
         try {
             AttributeController ac = AttributeController.getInstance();
             System.out.println("Enter the patient ID whose record needs updating: ");
-            MedicalRecord patientRecord = viewPatientMedicalRecords();
+            MedicalRecord patientRecord = _View_Patient_Medical_Records();
 
             if (patientRecord == null) {
                 return;
@@ -94,7 +94,7 @@ public class Doctor extends Staff {
     /**
      * View the personal schedule of the doctor.
      */
-    public void viewPersonalSchedule() {
+    public void _View_Personal_Schedule() {
         try {
             AORController aorc = AORController.getInstance();
 
@@ -112,7 +112,7 @@ public class Doctor extends Staff {
     /**
      * Set availability for appointments.
      */
-    public void setAvailabilityForAppointments() {
+    public void _Set_Availability_For_Appointments() {
         try {
             System.out.println("1. Set unavailable");
             System.out.println("2. Set available");
@@ -143,7 +143,7 @@ public class Doctor extends Staff {
     /**
      * Accept or decline appointment requests.
      */
-    public void acceptOrDeclineAppointmentRequests() {
+    public void _Accept_Or_Decline_Appointment_Requests() {
         try {
             AttributeController ac = AttributeController.getInstance();
             AORController aorc = AORController.getInstance();
@@ -174,7 +174,7 @@ public class Doctor extends Staff {
     /**
      * View upcoming appointments.
      */
-    public void viewUpcomingAppointments() {
+    public void _View_Upcoming_Appointments() {
         try {
             AORController aorc = AORController.getInstance();
 
@@ -192,7 +192,7 @@ public class Doctor extends Staff {
     /**
      * Record the outcome of an appointment.
      */
-    public void recordAppointmentOutcome() {
+    public void _Record_Appointment_Outcome() {
         try {
             AttributeController ac = AttributeController.getInstance();
 

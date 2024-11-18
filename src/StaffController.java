@@ -49,14 +49,16 @@ public class StaffController {
 
         // Print the headers.
         for (String item : headers) {
-            System.out.printf("%s ", item);
+            if(item.equals("PW")) continue;
+            System.out.printf("%-30s |", item);
         }
         System.out.println();
 
         // Print each row of staff data.
         for (String[] row : data) {
-            for (String item : row) {
-                System.out.printf("%s ", item);
+            for(int i = 0; i < 8; ++i){
+                if(i == Consts.Staff.PW_COLUMN) continue;
+                System.out.printf("%-30s |", row[i]);
             }
             System.out.println();
         }

@@ -122,8 +122,8 @@ public class MenuController implements IMenuController {
                 methods[choice - 1].invoke(user);
             } catch (Exception e) {
                 System.out.println("That isn't a valid choice, or something went wrong.");
-                e.printStackTrace();
-            }
+                //e.printStackTrace();
+            } 
         }
     }
 }
