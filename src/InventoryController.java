@@ -11,7 +11,6 @@ public class InventoryController {
 
     
     protected InventoryController() {
-        System.out.println("Constructed one inventory controller. ");
         try {
             InventoryController.csvhandler = new CsvHandler(Consts.Medicine.FILE_NAME);
         } catch (IOException e) {
