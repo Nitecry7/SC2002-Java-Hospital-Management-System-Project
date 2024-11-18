@@ -77,16 +77,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 }
 
 
-    /**
-     * Schedule a new appointment.
-     *
-     * @param patientID The patient ID.
-     * @param doctorID  The doctor ID.
-     * @param time      The time of the appointment.
-     * @param date      The date of the appointment.
-     * @param service   The service to be provided.
-     * @throws IOException If there's an error updating the CSV.
-     */
+    
     public void scheduleAppointment(String patientID, String doctorID, String timeSlot, String date, String service)
             throws IOException {
         String appointmentID = generateNewAppointmentID();
@@ -107,15 +98,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         System.out.println("Appointment scheduled successfully: " + appointmentID);
     }
 
-    /**
-     * Reschedule an existing appointment.
-     *
-     * @param appointmentID The ID of the appointment to reschedule.
-     * @param doctorID      The doctor ID.
-     * @param time          The new time for the appointment.
-     * @param date          The new date for the appointment.
-     * @throws IOException If there's an error updating the CSV.
-     */
+   
     public void rescheduleAppointment(String appointmentID, String doctorID, int timeSlot, String date)
             throws IOException {
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.ID_COLUMN, appointmentID);
@@ -132,12 +115,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         System.out.println("Appointment rescheduled successfully: " + appointmentID);
     }
 
-    /**
-     * Cancel an existing appointment.
-     *
-     * @param appointmentID The ID of the appointment to cancel.
-     * @throws IOException If there's an error updating the CSV.
-     */
+   
     public void cancelAppointment(String appointmentID) throws IOException {
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.ID_COLUMN, appointmentID);
         if (rows.isEmpty()) {
@@ -153,12 +131,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         System.out.println("Appointment cancelled successfully: " + appointmentID);
     }
 
-    /**
-     * Accept an appointment and update its status to 'Confirmed'.
-     *
-     * @param appointmentID The ID of the appointment to accept.
-     * @throws IOException If there's an error updating the CSV.
-     */
+   
     public void acceptAppointment(String appointmentID) throws IOException {
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.ID_COLUMN, appointmentID);
         if (rows.isEmpty()) {
@@ -175,11 +148,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         System.out.println("Appointment accepted and status updated to Confirmed: " + appointmentID);
     }
 
-    /**
-     * Generate a new unique appointment ID.
-     *
-     * @return A unique appointment ID.
-     */
+    
     private String generateNewAppointmentID() {
         int maxId = 0;
         for (String appointmentID : appointmentHandler.readCsv().keySet()) {
@@ -188,16 +157,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         return "A" + String.format("%03d", maxId + 1);
     }
 
-    /**
-     * Retrieves all scheduled appointments for a given patient.
-     *
-     * @param patientID The ID of the patient for whom scheduled appointments need
-     *                  to be retrieved.
-     * @return A list of strings, each representing a scheduled appointment for the
-     *         given patient.
-     * @throws IOException If there's an error reading or updating the appointment
-     *                     data from the CSV.
-     */
+    
     public List<String> viewScheduledAppointments(String patientID) throws IOException {
         // Fetch rows for the given patientID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
@@ -265,14 +225,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 
         return scheduledAppointments; // Return the list of appointment details
     }
-    /**
-     * View completed appointments with their outcome details.
-     * 
-     * @param patientID The ID of the patient for whom completed appointments need
-     *                  to be retrieved.
-     * @throws IOException If there's an error reading or updating the appointment
-     *                     data from the CSV.
-     */
+
     public List<String> viewPastAppointmentsOutcome(String patientID) throws IOException {
         // Fetch rows for the given patientID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
@@ -338,14 +291,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         return appointments;
     }
 
-    /**
-     * View all pending appointments for a given doctor.
-     *
-     * @param doctorID The ID of the doctor for whom pending appointments need to be
-     *                 retrieved.
-     * @throws IOException If there's an error reading or updating the appointment
-     *                     data from the CSV.
-     */
+ 
     public List<String> viewPendingAppointments(String doctorID) throws IOException {
         // Fetch rows for the given doctorID from the AOR (Appointment Order Records)
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
@@ -461,15 +407,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         return patient;
     }
 
-    /**
-     * Record the outcome of an appointment by adding prescription and notes.
-     * 
-     * @param appointmentID The ID of the appointment to update.
-     * @param prescription  The prescription given during the appointment.
-     * @param notes         Additional notes regarding the outcome of the
-     *                      appointment.
-     * @throws IOException If there's an error updating the CSV.
-     */
+ 
     public void recordAppointmentOutcome(String appointmentID, String prescription, String notes) throws IOException {
         List<String[]> rows = appointmentHandler.getRows(Consts.AOR.ID_COLUMN, appointmentID);
         if (rows.isEmpty()) {
@@ -499,12 +437,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         return rows.get(0)[Consts.Patient.NAME_COLUMN]; // Assuming the patient's name is in the NAME_COLUMN
     }
 
-    /**
-     * Retrieve the doctor's name by their ID.
-     *
-     * @param doctorID The doctor ID.
-     * @return The doctor's name.
-     */
+  
     private String getDoctorName(String doctorID) {
         List<String[]> rows = doctorHandler.getRows(0, doctorID);
         if (rows.isEmpty()) {
