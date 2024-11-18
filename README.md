@@ -11,7 +11,7 @@ A Command Line Interface based Hospital Management System that simulates almost 
 
 ## How To Run Our Project? 
 
-** Only one simple command! **
+**Only one simple command!**
 
 ```shell
 ./hmsystem
