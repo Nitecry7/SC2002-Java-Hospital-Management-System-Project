@@ -35,6 +35,7 @@ public class MedicalRecord
       
         this.handler = handler;
         this.patientID = details[Consts.Patient.ID_COLUMN];
+        this.patientPassword = details[Consts.Patient.PW_COLUMN];
         this.patientName = details[Consts.Patient.NAME_COLUMN];
         this.patientGender = details[Consts.Patient.GENDER_COLUMN];
         this.patientEmail = details[Consts.Patient.EMAIL_COLUMN];
