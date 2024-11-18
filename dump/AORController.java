@@ -144,6 +144,10 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             throw new IllegalArgumentException("Appointment ID not found: " + appointmentID);
         }
         String[] updatedAppointment = rows.get(0);
+        if(!updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals("PENDING")){
+            System.out.println("You can only cancel pending appointments.");
+            return;
+        }
         updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = AppointmentStatus.CANCELED.name();
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment cancelled successfully: " + appointmentID);
@@ -161,6 +165,11 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
             throw new IllegalArgumentException("Appointment ID not found: " + appointmentID);
         }
         String[] updatedAppointment = rows.get(0);
+
+        if(!updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals("PENDING")){
+            System.out.println("You can only accept pending appointments.");
+            return;
+        }
         updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = AppointmentStatus.CONFIRMED.name(); // Set status to Confirmed
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
         System.out.println("Appointment accepted and status updated to Confirmed: " + appointmentID);
@@ -203,23 +212,59 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 
         // Format each appointment row into a string and add it to the list
         for (String[] row : rows) {
+            if(row[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals("CANCELED")) continue;
             String appointmentID = row[Consts.AOR.ID_COLUMN];
             String doctorName = row[Consts.AOR.DOCTOR_NAME_COLUMN];
             String date = row[Consts.AOR.DATE_COLUMN];
             String time = row[Consts.AOR.TIME_COLUMN];
+            String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
             String serviceType = row[Consts.AOR.SERVICE_COLUMN];
-
+            String note = row[Consts.AOR.NOTES_COLUMN];
+            if(status.equals("CANCELED") || status.equals("COMPLETED")) continue;
             // Format the appointment details
             String details = String.format(
-                    "Appointment ID: %s\nDoctor: %s\nDate: %s\nTime: %s\nService Type: %s",
-                    appointmentID, doctorName, date, time, serviceType);
-
+                    "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s\nNote: %s",
+                    appointmentID, doctorName, date, time, serviceType, status, note);
             scheduledAppointments.add(details); // Add the formatted string to the list
+            scheduledAppointments.add("----------------------");
         }
 
         return scheduledAppointments; // Return the list of appointment details
     }
 
+    public List<String> viewScheduledAppointmentsDoctor(String doctorID) throws IOException {
+        // Fetch rows for the given patientID from the AOR (Appointment Order Records)
+        List<String[]> rows = appointmentHandler.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
+
+        // If no appointments are found for the patient, return an empty list
+        if (rows.isEmpty()) {
+            return new ArrayList<>(); // Return an empty list
+        }
+
+        // Define the list to hold formatted appointment details
+        List<String> scheduledAppointments = new ArrayList<>();
+
+        // Format each appointment row into a string and add it to the list
+        for (String[] row : rows) {
+            String appointmentID = row[Consts.AOR.ID_COLUMN];
+            String patientName = row[Consts.AOR.PATIENT_NAME_COLUMN];
+            String date = row[Consts.AOR.DATE_COLUMN];
+            String time = row[Consts.AOR.TIME_COLUMN];
+            String serviceType = row[Consts.AOR.SERVICE_COLUMN];
+            String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
+            String note = row[Consts.AOR.NOTES_COLUMN];
+            if(status.equals("CANCELED") || status.equals("COMPLETED")) continue;
+            // Format the appointment details
+            String details = String.format(
+                    "Appointment ID: %s\nPatient: %s\nDate: %s\nTime: %s\nService Type: %s\nStatus: %s\nNote: %s",
+                    appointmentID, patientName, date, time, serviceType, status, note);
+
+            scheduledAppointments.add(details); // Add the formatted string to the list
+            scheduledAppointments.add("----------------------");
+        }
+
+        return scheduledAppointments; // Return the list of appointment details
+    }
     /**
      * View completed appointments with their outcome details.
      * 
@@ -318,7 +363,6 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         // Add header for pending appointments
         appointmentDetails.add("Pending appointments for Doctor ID: " + doctorID);
 
-        boolean foundPending = false;
         for (String[] row : rows) {
             String appointmentID = row[Consts.AOR.ID_COLUMN];
             String patientName = row[Consts.AOR.PATIENT_NAME_COLUMN];
@@ -328,7 +372,6 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 
             // Only include pending appointments
             if ("Pending".equalsIgnoreCase(status)) {
-                foundPending = true;
                 appointmentDetails.add("Appointment ID: " + appointmentID);
                 appointmentDetails.add("Patient: " + patientName);
                 appointmentDetails.add("Date: " + date);
@@ -337,14 +380,85 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
                 appointmentDetails.add("----------------------------");
             }
         }
+        return appointmentDetails;
+    }
+    public List<String> viewConfirmedAppointments(String doctorID) throws IOException {
+        // Fetch rows for the given doctorID from the AOR (Appointment Order Records)
+        List<String[]> rows = appointmentHandler.getRows(Consts.AOR.DOCTOR_ID_COLUMN, doctorID);
 
-        // If no pending appointments are found, add a message to the list
-        if (!foundPending) {
-            appointmentDetails.add("No pending appointments found for Doctor ID: " + doctorID);
+        // List to store the appointment details
+        List<String> appointmentDetails = new ArrayList<>();
+
+        // If no appointments are found for the doctor, return an empty list with a
+        // message
+        if (rows.isEmpty()) {
+            appointmentDetails.add("No appointments found for Doctor ID: " + doctorID);
+            return appointmentDetails;
         }
 
-        // Return the list of appointment details
+        // Add header for pending appointments
+        appointmentDetails.add("Pending appointments for Doctor ID: " + doctorID);
+
+        for (String[] row : rows) {
+            String appointmentID = row[Consts.AOR.ID_COLUMN];
+            String patientName = row[Consts.AOR.PATIENT_NAME_COLUMN];
+            String date = row[Consts.AOR.DATE_COLUMN];
+            String time = row[Consts.AOR.TIME_COLUMN];
+            String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
+
+            // Only include pending appointments
+            if ("Confirmed".equalsIgnoreCase(status)) {
+                appointmentDetails.add("Appointment ID: " + appointmentID);
+                appointmentDetails.add("Patient: " + patientName);
+                appointmentDetails.add("Date: " + date);
+                appointmentDetails.add("Time: " + time);
+                appointmentDetails.add("Status: " + status);
+                appointmentDetails.add("----------------------------");
+            }
+        }
         return appointmentDetails;
+    }
+    // public List<String> viewAllAppointments() throws IOException {
+    //     // Fetch rows for the given doctorID from the AOR (Appointment Order Records)
+    //     Collection<String[]> rows = appointmentHandler.readCsvValues();
+
+    //     // List to store the appointment details
+    //     List<String> appointmentDetails = new ArrayList<>();
+
+    //     // If no appointments are found for the doctor, return an empty list with a
+    //     // message
+    //     if (rows.isEmpty()) {
+    //         appointmentDetails.add("No appointments found.");
+    //         return appointmentDetails;
+    //     }
+
+    //     // Add header for pending appointments
+    //     for (String[] row : rows) {
+    //         String appointmentID = row[Consts.AOR.ID_COLUMN];
+    //         String patientName = row[Consts.AOR.PATIENT_NAME_COLUMN];
+    //         String date = row[Consts.AOR.DATE_COLUMN];
+    //         String time = row[Consts.AOR.TIME_COLUMN];
+    //         String status = row[Consts.AOR.APPOINTMENT_STATUS_COLUMN];
+    //         appointmentDetails.add("Appointment ID: " + appointmentID);
+    //         appointmentDetails.add("Patient: " + patientName);
+    //         appointmentDetails.add("Date: " + date);
+    //         appointmentDetails.add("Time: " + time);
+    //         appointmentDetails.add("Status: " + status);
+    //         appointmentDetails.add("----------------------------");
+            
+    //     }
+    //     return appointmentDetails;
+    // }
+    List<String> getPatientList(String DoctorID){
+        Collection<String[]> data = appointmentHandler.readCsvValues();
+        List<String> patient = new ArrayList<String>();
+        for(String[] row: data){
+            if(row[Consts.AOR.DOCTOR_ID_COLUMN].equals(DoctorID) &&
+                !patient.contains(row[Consts.AOR.PATIENT_ID_COLUMN])){
+                patient.add(row[Consts.AOR.PATIENT_ID_COLUMN]);
+            }
+        }
+        return patient;
     }
 
     /**
@@ -365,7 +479,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
         String[] updatedAppointment = rows.get(0);
         updatedAppointment[Consts.AOR.PRESCRIPTION_COLUMN] = prescription; // Set prescription
         updatedAppointment[Consts.AOR.NOTES_COLUMN] = notes; // Set outcome notes
-        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "Completed"; // Mark the appointment as completed
+        updatedAppointment[Consts.AOR.APPOINTMENT_STATUS_COLUMN] = "COMPLETED"; // Mark the appointment as completed
         appointmentHandler.updateRow(Consts.AOR.ID_COLUMN, appointmentID, updatedAppointment);
 
         System.out.println("Appointment outcome recorded successfully: " + appointmentID);

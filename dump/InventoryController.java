@@ -34,6 +34,10 @@ public class InventoryController {
     public boolean reduceStock(String medicineName, int amount) {
         
         Medicine medicine = Medicine.getMedicine(medicineName, csvhandler);
+        if(medicine == null){
+            System.out.println("Medicine Not Found.");
+            return false;
+        }
         return medicine.reduceStock(amount);
 
     }

@@ -1,10 +1,4 @@
-
-
-
-
-
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -32,37 +26,25 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = AppointmentController.getInstance();
-            List<Appointment> appointments = appointmentController.getDoctorAppointments(getUserID());
-            List<String> patientIDs = new ArrayList<>();
-
-            System.out.println("\nChoose a patient under your care to view medical history:\n");
-
-            for (Appointment appointment : appointments) 
-            {
-                System.out.println('0');
-                if (appointment.getDoctorID().equals(this.userID))
-                {
-                    patientIDs.add(appointment.getPatientID());
-                    System.out.println(patientIDs.size() + ". ID: " + appointment.getPatientID());
-                }
-            }
-
             AttributeController ac = AttributeController.getInstance();
-            int choice = ac.inputInt("Input choice of patient: ");
-
-            if (choice < 1 || choice > patientIDs.size()) 
-            {
-                System.out.println("Invalid choice. Exiting...");
+            AORController aorc = AORController.getInstance();
+            List<String> patientIDList = aorc.getPatientList(getUserID());
+            int idx = 1, choice = -1;
+            if(patientIDList.size() == 0){
+                System.out.println("Currently no patient");
                 return null;
-            } 
-            else 
-            {
-                String selectedPatientID = patientIDs.get(choice - 1);
-                MedicalRecord medicalRecord = new MedicalRecord(selectedPatientID, new CsvHandler(Consts.Patient.FILE_NAME));
-                medicalRecord.displayPatientMedicalRecord();
-                return medicalRecord;
             }
+            System.out.println("Here are your patients:");
+            for(String patientID:patientIDList){
+                System.out.printf("%d. %s\n", idx, patientID);
+                idx = idx + 1;
+            }
+            do{
+                choice = ac.inputInt("Enter choice of patient:");
+            }while(choice < 1 || choice >= idx);
+            String patientID = patientIDList.get(choice - 1);
+            Patient patient = Patient.getPatient(patientID, new CsvHandler(Consts.Patient.FILE_NAME));
+            return patient.getMedicalRecord();
         } 
         catch (Exception e) 
         {
@@ -98,13 +80,13 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = AppointmentController.getInstance();
-            List<Appointment> appointments = appointmentController.getDoctorSchedule(getUserID());
+            AORController aorc = AORController.getInstance();
 
             System.out.println("Personal Schedule:");
-            for (Appointment appointment : appointments) 
+            List<String> appointments = aorc.viewScheduledAppointmentsDoctor(getUserID());
+            for (String appointmentInfo : appointments) 
             {
-                System.out.println(appointment.toString());
+                System.out.println(appointmentInfo);
             }
 
         } catch (Exception e) 
@@ -148,58 +130,27 @@ public class Doctor extends Staff
     public void _Accept_or_Decline_Appointment_Requests() 
     {
         try 
-        {
-            AppointmentController appointmentController = AppointmentController.getInstance();
-            List<Appointment> pendingAppointments = appointmentController.getDoctorAppointments(getUserID());
-
-
-
-            pendingAppointments.removeIf(appointment -> appointment.getStatus() != AppointmentStatus.PENDING);
-
-            if (pendingAppointments.isEmpty()) 
-            {
-                System.out.println("No pending appointments to review.");
-                return;
-            }
-
-            System.out.println("Pending Appointments:");
-            for (int i = 0; i < pendingAppointments.size(); i++) 
-            {
-                System.out.println("\n" + (i + 1) + ". " + pendingAppointments.get(i).toString());
-            }
-
+        {   
             AttributeController ac = AttributeController.getInstance();
-            int choice = ac.inputInt("Select an appointment to accept/decline: ");
-
-            if (choice < 1 || choice > pendingAppointments.size()) 
-            {
-                System.out.println("Invalid choice. Exiting...");
-                return;
-            }
-
-            Appointment selectedAppointment = pendingAppointments.get(choice - 1);
+            AORController aorc = AORController.getInstance();
+            String appID = ac.inputString("Enter appointment ID: ");
             System.out.println("1. Accept");
             System.out.println("2. Decline");
-
-            int action = ac.inputInt("Enter your choice: ");
-
-            if (action == 1) 
-            {
-                AORController aorController = AORController.getInstance();
-                aorController.acceptAppointment(selectedAppointment.getAppointmentID());
-                //appointmentController.acceptAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
-                System.out.println("Appointment accepted.");
-            } 
-            else if (action == 2) 
-            {
-                AORController aorController = AORController.getInstance();
-                aorController.cancelAppointment(selectedAppointment.getAppointmentID());
-                //appointmentController.declineAppointmentRequest(getUserID(), selectedAppointment.getAppointmentID());
-                System.out.println("Appointment declined.");
+            System.out.println("3. Go Back");
+            int operation = ac.inputInt("Enter your choice(1-3): ");
+            while(operation > 3 || operation < 1){
+                System.out.println("Please enter a valid choice.");
+                operation = ac.inputInt("Enter your choice(1-3): ");
             }
-            else 
-            {
-                System.out.println("Invalid choice. Exiting...");
+            switch(operation){
+                case 1:
+                    aorc.acceptAppointment(appID);
+                    break;
+                case 2:
+                    aorc.cancelAppointment(appID);
+                    break;
+                case 3:
+                    return;
             }
         } 
         catch (Exception e) 
@@ -213,21 +164,18 @@ public class Doctor extends Staff
     {
         try 
         {
-            AppointmentController appointmentController = AppointmentController.getInstance();
-            List<Appointment> appointments = appointmentController.getDoctorAppointments(getUserID());
+            AORController aorc = AORController.getInstance();
 
-            System.out.println("Upcoming Appointments:");
-            for (Appointment appointment : appointments) 
+            System.out.println("Personal Schedule:");
+            List<String> appointments = aorc.viewConfirmedAppointments(getUserID());
+            for (String appointmentInfo : appointments) 
             {
-                if (appointment.getStatus() == AppointmentStatus.CONFIRMED)
-                {
-                    System.out.println(appointment.toString());
-                }
+                System.out.println(appointmentInfo);
             }
-        } 
-        catch (Exception e) 
+
+        } catch (Exception e) 
         {
-            System.err.println("Error viewing upcoming appointments: " + e.getMessage());
+            System.err.println("Error viewing personal schedule: " + e.getMessage());
         }
     }
 
@@ -239,8 +187,14 @@ public class Doctor extends Staff
             AttributeController ac = AttributeController.getInstance();
 
             String appointmentID = ac.inputString("Enter Appointment ID: ");
-            String prescription = ac.inputString("Enter prescription details: ");
-            String notes = ac.inputString("Enter consultation notes: ");
+            String prescription = "";
+            while(true){
+                String choice = ac.inputString("Add prescription?(y/n)");
+                if(choice.equalsIgnoreCase("n")) break;
+                Prescription p = new Prescription();
+                prescription += p.getMedicineName() + " ";
+            }
+            String notes = ac.inputNote("Enter consultation notes, type END in a new line to finish: ");
 
             AORController aorController = AORController.getInstance();
             aorController.recordAppointmentOutcome(appointmentID, prescription, notes);
