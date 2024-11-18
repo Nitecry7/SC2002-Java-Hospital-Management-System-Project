@@ -1,10 +1,10 @@
+
+import java.io.IOException;
+import java.util.Collection;
 /**
  * Singleton class responsible for managing staff data operations.
  * Provides methods to view, add, remove, and update staff information stored in a CSV file.
  */
-import java.io.IOException;
-import java.util.Collection;
-
 public class StaffController {
 
     /**

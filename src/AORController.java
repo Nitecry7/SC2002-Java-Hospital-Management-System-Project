@@ -311,24 +311,7 @@ public class AORController {
         // Return the list of appointment details
         return appointmentDetails;
     }
-    /**
-     * view past appointment outcome for patient (as appointment outcome)
-     *
-     * @param patientID The ID of patient.
-     * @return the list of appointment outcome
-     * @throws Exception If an error occurs while getting the appointment data.
-     */
-    public List<AOR> returnPastAppointmentsOutcome(String patientID) throws Exception {
     
-        List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
-        List<AOR> appointments= new ArrayList<>();
-        for (String[] s : rows) {
-            if (s[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals(AppointmentStatus.COMPLETED.name())) {
-                appointments.add(AOR.findAOR(s[Consts.AOR.ID_COLUMN]));
-            }
-        }
-        return appointments;
-    }
     /**
      * view pending appointment for doctor 
      *
@@ -468,5 +451,22 @@ public class AORController {
             throw new IllegalArgumentException("Doctor ID not found: " + doctorID);
         }
         return rows.get(0)[Consts.Staff.NAME_COLUMN];
+    }
+    /**
+     * view past appointment outcome for patient (as appointment outcome)
+     *
+     * @param patientID The ID of patient.
+     * @return the list of appointment outcome
+     * @throws Exception If an error occurs while getting the appointment data.
+     */
+    public List<AORs> returnPastAppointmentsOutcome(String patientID) throws Exception {
+        List<String[]> rows = appointmentHandler.getRows(Consts.AOR.PATIENT_ID_COLUMN, patientID);
+        List<AORs> appointments= new ArrayList<>();
+        for (String[] s : rows) {
+            if (s[Consts.AOR.APPOINTMENT_STATUS_COLUMN].equals(AppointmentStatus.COMPLETED.name())) {
+                appointments.add(AORs.findAOR(s[Consts.AOR.ID_COLUMN]));
+            }
+        }
+        return appointments;
     }
 }

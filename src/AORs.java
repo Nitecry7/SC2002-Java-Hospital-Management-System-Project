@@ -18,7 +18,7 @@ import java.lang.Exception;
  * and its outcome, including patient and doctor information, service type, prescriptions,
  * notes, and date.
  */
-public class AOR {
+public class AORs {
 
     private final String appointmentID;
     private final String patientName;
@@ -33,7 +33,7 @@ public class AOR {
      *
      * @param appointment The completed appointment details.
      */
-    public AOR(Appointment appointment) {
+    public AORs(Appointment appointment) {
         this.appointmentID = appointment.getAppointmentID();
         this.patientName = appointment.getPatientID();
         this.doctorName = appointment.getDoctorID();
@@ -46,7 +46,7 @@ public class AOR {
      * @param s The array of data representing the AOR.
      * @throws Exception If there is an error during deserialization.
      */
-    private AOR(String[] s) throws Exception {
+    private AORs(String[] s) throws Exception {
         appointmentID = s[Consts.AOR.ID_COLUMN];
         patientName = s[Consts.AOR.PATIENT_NAME_COLUMN];
         doctorName = s[Consts.AOR.DOCTOR_NAME_COLUMN];
@@ -71,7 +71,7 @@ public class AOR {
      * @return The AOR object if found, otherwise null.
      * @throws Exception If there is an error during file reading or deserialization.
      */
-    public static AOR findAOR(String appointmentID) throws Exception {
+    public static AORs findAOR(String appointmentID) throws Exception {
         BufferedReader br = new BufferedReader(new FileReader("AOR.csv"));
         String details;
 
@@ -80,11 +80,12 @@ public class AOR {
                 break;
             }
         }
+        br.close();
 
         if (details == null) {
             return null;
         } else {
-            return new AOR(details.split(","));
+            return new AORs(details.split(","));
         }
     }
 
@@ -112,6 +113,7 @@ public class AOR {
                 case "N":
                     prescriptions = prescriptionList.toArray(Prescription[]::new);
                     System.out.println("AOR completed for patient: " + getPatientName());
+                    in.close();
                     return;
                 default:
                     System.out.println("Invalid input, try again");

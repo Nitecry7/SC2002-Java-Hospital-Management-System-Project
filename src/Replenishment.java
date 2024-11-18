@@ -1,12 +1,11 @@
+import java.io.IOException;
+import java.util.*;
 /**
  * Represents a Replenishment request for medicines. This class is responsible
  * for creating, submitting, and managing replenishment requests, including their
  * approval or rejection. It interacts with the inventory and replenishment
  * CSV files to track and update replenishment data.
  */
-import java.io.IOException;
-import java.util.*;
-
 public class Replenishment {
     /**
      * IOHandler for managing medicine data.

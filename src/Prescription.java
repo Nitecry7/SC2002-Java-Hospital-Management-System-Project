@@ -1,13 +1,11 @@
-/**
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.*;
+ /**
  * Represents a Prescription with details such as prescription ID, amount, frequency,
  * medicine name, and dispensed status.
  * This class provides mechanisms to create, manage, and display prescription information.
  */
-
- import java.io.IOException;
- import java.io.Serializable;
- import java.util.*;
- 
  public class Prescription implements Serializable {
  
      private int prescriptionID;

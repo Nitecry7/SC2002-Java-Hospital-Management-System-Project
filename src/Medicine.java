@@ -111,8 +111,12 @@ public class Medicine {
         csvHandler.updateRow(Consts.Medicine.NAME_COLUMN, name, updatedRow);
     }
 
-    // Getters and Setters for the medicine properties
-
+    
+    /*
+     * Getter for medicine name
+     * 
+     * @return name of medicine
+     */
     public String getName() {
         return name;
     }

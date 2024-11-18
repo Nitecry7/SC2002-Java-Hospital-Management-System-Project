@@ -1,10 +1,10 @@
+
+import java.util.List;
 /**
  * Represents a Pharmacist, inheriting from the Staff class.
  * This class provides functionalities such as viewing appointment outcomes,
  * updating prescription statuses, viewing medication inventory, and submitting replenishment requests.
  */
-import java.util.List;
-
 public class Pharmacist extends Staff {
 
     /**

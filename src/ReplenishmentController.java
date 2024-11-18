@@ -1,12 +1,11 @@
+import java.io.IOException;
+import java.util.*;
 /**
  * Controller class for managing replenishment requests. 
  * This class is responsible for submitting, viewing, approving, and rejecting 
  * replenishment requests for medicines. It interacts with the replenishment
  * and medicine CSV files to track and update replenishment data.
  */
-import java.io.IOException;
-import java.util.*;
-
 public class ReplenishmentController {
 
     /**

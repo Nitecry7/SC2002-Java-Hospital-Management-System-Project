@@ -59,6 +59,7 @@ public class Patient extends User {
 
     /**
      * Updates the patient's personal information such as email or phone number.
+     * @throws IOException If an error occurs during updating.
      */
     public void _Update_Personal_Information() throws IOException {
         AttributeController ac = AttributeController.getInstance();
@@ -104,6 +105,7 @@ public class Patient extends User {
 
     /**
      * Schedules a new appointment for the patient.
+     * @throws IOException If an error occurs during scheduling.
      */
     public void _Schedule_an_Appointment() throws IOException {
         AttributeController ac = AttributeController.getInstance();
@@ -141,6 +143,7 @@ public class Patient extends User {
 
     /**
      * Allows the patient to reschedule an existing appointment.
+     * @throws IOException If an error occurs during cancelling.
      */
     public void _Reschedule_an_Appointment() throws IOException {
         AttributeController ac = AttributeController.getInstance();
