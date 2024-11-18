@@ -66,7 +66,7 @@ In the future, we wish to improve it by
 ## UML Diagram
 
 Brief Outline illustrated by the UML Diagram 📊
-![OOP Updated UML Diagram (As of 18 Nov 2024)](https://github.com/user-attachments/assets/a96bb4eb-e2e9-429d-accc-d545f5b8bf5e)
+![OOP Updated UML Diagram (As of 18 Nov 2024)](https://github.com/Nitecry7/SC2002-Java-Hospital-Management-System-Project/blob/main/UML-Class-Diagram.png?raw=true)
 
 
 ## All Contributors w/ contributions 👨‍💻
