@@ -15,14 +15,14 @@ public class LoginHandler implements ILoginHandler {
         String[] allUserTypes = Consts.USER_TYPES;
 
         //Choose staff or patient or anything else that has its own table
-        System.out.println("Choose user type:\n");
+        System.out.println("Choose user type:");
 
         for (int x = 0; x < allUserTypes.length; x++) {
 
             System.out.println((x+1) + ". " + allUserTypes[x]);
         }
 
-        int input = attributeController.inputInt("");
+        int input = attributeController.inputInt("Please enter user type:");
         while (input < 1 || input > allUserTypes.length){
             System.out.println("Invalid input");
             input = attributeController.inputInt("");
