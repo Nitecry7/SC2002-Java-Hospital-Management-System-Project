@@ -1,4 +1,4 @@
-package src;
+
 public abstract class Staff extends User{
 
     String userID, name, userRole, gender;

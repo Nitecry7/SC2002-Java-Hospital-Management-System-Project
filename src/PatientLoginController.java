@@ -1,4 +1,4 @@
-package src;
+
 //Singleton
 public class PatientLoginController implements ILoginController {
 

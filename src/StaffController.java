@@ -1,4 +1,4 @@
-package src;
+
 // Singleton
 
 import java.io.IOException;

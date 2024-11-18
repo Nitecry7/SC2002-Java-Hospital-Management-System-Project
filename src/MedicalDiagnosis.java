@@ -1,4 +1,4 @@
-package src;
+
 import java.io.Serializable;
 
 public class MedicalDiagnosis implements Serializable//This Class represents each diagnosis entry in a patient's medical record

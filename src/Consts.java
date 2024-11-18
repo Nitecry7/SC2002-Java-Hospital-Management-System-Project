@@ -1,4 +1,3 @@
-package src;
 public final class Consts {
 
     public static final String[] USER_TYPES = new String[] { "Patient", "Staff" };
