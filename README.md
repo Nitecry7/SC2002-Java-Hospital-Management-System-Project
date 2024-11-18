@@ -1,34 +1,77 @@
 # SC2002 Java Hospital Management System Project 🏥
 A Command Line Interface based Hospital Management System that simulates almost all processes that occur at a real Hospital 💊🌡️🩹💉🩺
 
-# SetUp Instructions 🛠️
 ## Project Folder Structure 📂
 
+|
+|- src: All the code are stored in here.
+|- doc: The javadoc for our codes.
+|- LabInstruction: Files given as the assignment releases. 
+|- hmsystem: Our launching script
+
 ## How To Run Our Project? 
+
+Only one simple command!
 
 ```shell
 ./hmsystem
 ```
 
-## Java Docs ♨️ 
+## Overview of Project 🔎
 
-# Overview of Project 🔎
-## Roles
-User
-Staff
-Administrator 
-Patient 🤒
-Doctor 🩺
-Pharmacist ⚕
+### Entities
 
+#### Appointments
+
+The appointment between doctors and patients. 
+Both doctor and patient can leave notes for more efficient communication.
+
+#### Inventory
+
+All the medicine are here.
+When the amount is low, it would show a message to alert user.
+
+#### Replenishment
+
+You can create a replenishment request.
+System will ask if you want to request the medication under alert line.
+Submit to admins, they either approve or reject it.
+
+### Roles
+#### Patient 
+- Able to schedule/reschedule/cancel appointments with doctors
+- View their own medical record and appointment results
+- Update their info
+#### Doctor 
+- Able to view their appointments 
+- View their patient's past medical records
+- Set availability so that you can have your own times
+- Prescribe medications
+#### Pharmacist 
+- Dispense medication prescriptions
+- Submit replenishment requests
+#### Administrator 
+- Can view and manage all staff/inventory
+- Also able to approve replenishments
+All users
+- Able to change password anytime they want
+
+## Upcoming Features
+
+In the future, we wish to improve it by
+- Adding hashing passwords to be more secured
+- Allow Staff to manage their personal info
+- Make more user friendly UI
+
+## UML Diagram
 
 Brief Outline illustrated by the UML Diagram 📊
 ![OOP Updated UML Diagram (As of 18 Nov 2024)](https://github.com/user-attachments/assets/a96bb4eb-e2e9-429d-accc-d545f5b8bf5e)
 
 
-## All Contributors 👨‍💻
-* Faheem (Nitecry7)
-* Mario (PresidentDoggo)
-* Juber (AstraytLUL)
-* Qing Rong (CobaltConcrete)
-* Lex (lpqtan)
+## All Contributors w/ contributions 👨‍💻
+* Faheem (Nitecry7) - javadoc
+* Mario (PresidentDoggo) - Controllers
+* Juber (AstraytLUL) - Models
+* Qing Rong (CobaltConcrete) - IO Handlers
+* Lex (lpqtan) - UML Diagram
