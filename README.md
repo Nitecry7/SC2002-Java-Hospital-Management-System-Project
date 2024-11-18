@@ -23,19 +23,19 @@ A Command Line Interface based Hospital Management System that simulates almost 
 
 #### Appointments
 
-The appointment between doctors and patients.<br> 
-Both doctor and patient can leave notes for more efficient communication.<br>
+- The appointment between doctors and patients.
+- Both doctor and patient can leave notes for more efficient communication.
 
 #### Inventory
 
-All the medicine are here.<br>
-When the amount is low, it would show a message to alert user.<br>
+- All the medicine are here.
+- When the amount is low, it would show a message to alert user.
 
 #### Replenishment
 
-You can create a replenishment request.<br>
-System will ask if you want to request the medication under alert line.<br>
-Submit to admins, they either approve or reject it.<br>
+- You can create a replenishment request.
+- System will ask if you want to request the medication under alert line.
+- Submit to admins, they either approve or reject it.
 
 ### Roles
 #### Patient 
