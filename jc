@@ -1,1 +1,0 @@
-javac ./hmsystem/controllers/*.java ./hmsystem/models/*.java ./hmsystem/io/*Handler.java ./hmsystem/data/*.java ./hmsystem/models/enums/*.java ./hmsystem/controllers/login/*.java ./hmsystem/utils/*.java

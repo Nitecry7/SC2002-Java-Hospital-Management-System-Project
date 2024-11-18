@@ -1,0 +1,5 @@
+cd ./src
+javac *.java
+clear
+java Driver
+cd ..
