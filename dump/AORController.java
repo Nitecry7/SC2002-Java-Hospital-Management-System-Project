@@ -70,6 +70,7 @@ public List<String> viewAllAppointmentsDetails() throws IOException {
 
         // Add the formatted string to the list
         appointmentDetails.add(formattedDetails);
+        appointmentDetails.add("----------------------------");
     }
 
     // Return the list of formatted appointment details

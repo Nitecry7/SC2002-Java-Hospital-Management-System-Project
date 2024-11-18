@@ -38,7 +38,7 @@ public class Driver{
         AttributeController ac = AttributeController.getInstance();
         while (login == 1) {
             
-            login = ac.inputInt("\nWhat would you like to do?:\n1. Log in\n2. Leave\n\n");
+            login = ac.inputInt("\nWhat would you like to do?:\n1. Log in\n2. Leave\nEnter your choice: ");
 
             
             if (login == 1) {
