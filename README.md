@@ -23,19 +23,19 @@ Only one simple command!
 
 #### Appointments
 
-The appointment between doctors and patients. 
-Both doctor and patient can leave notes for more efficient communication.
+The appointment between doctors and patients.<br> 
+Both doctor and patient can leave notes for more efficient communication.<br>
 
 #### Inventory
 
-All the medicine are here.
-When the amount is low, it would show a message to alert user.
+All the medicine are here.<br>
+When the amount is low, it would show a message to alert user.<br>
 
 #### Replenishment
 
-You can create a replenishment request.
-System will ask if you want to request the medication under alert line.
-Submit to admins, they either approve or reject it.
+You can create a replenishment request.<br>
+System will ask if you want to request the medication under alert line.<br>
+Submit to admins, they either approve or reject it.<br>
 
 ### Roles
 #### Patient 
@@ -53,7 +53,7 @@ Submit to admins, they either approve or reject it.
 #### Administrator 
 - Can view and manage all staff/inventory
 - Also able to approve replenishments
-All users
+#### All users
 - Able to change password anytime they want
 
 ## Upcoming Features
