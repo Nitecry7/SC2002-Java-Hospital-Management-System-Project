@@ -122,6 +122,9 @@ public class Patient extends User {
             timeSlotList.add(dateFormat.format(date.getTime()));
             date.add(Calendar.MINUTE, 30);
         }
+        for(int i = 0; i < timeSlotList.size(); ++i){
+            System.out.printf("%d. %s\n", i + 1, timeSlotList.get(i));
+        }
 
         int timeSlot;
         do {

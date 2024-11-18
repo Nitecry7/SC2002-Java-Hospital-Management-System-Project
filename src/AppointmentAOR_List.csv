@@ -1,5 +1,7 @@
 Appointment ID,Patient ID,Patient Name,Doctor ID,Doctor Name,Date,Time,Service,Prescription,Notes,Appointment Status
+A009,P1007,Charlie White,D001,John Smith,0001-09-20,10:00,a,,,PENDING
 A007,P1001,Alice Brown,D003,James Bond,2024-12-20,11:00,pp,,,CANCELED
+A008,P1007,Charlie White,D002,Emily Clarke,2026-01-01,10:00,abc,,,CANCELED
 A005,P1001,Alice Brown,D002,Emily Clarke,2024-01-02,09:30,aa,,,CANCELED
 A006,P1001,Alice Brown,D002,Emily Clarke,2024-12-20,10:30,pp,,,CANCELED
 A003,P1001,Alice Brown,D001,John Smith,2024-11-13,09:00,abc,,,CONFIRMED
