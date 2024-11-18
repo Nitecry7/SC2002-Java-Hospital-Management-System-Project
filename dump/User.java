@@ -10,8 +10,9 @@ public abstract class User
         this.userID = userID;
     }
 
-    public void _logout() {
+    public void _Logout() {
 
+        /*
         Scanner in = new Scanner(System.in);
         System.out.println("Are you sure? Enter Y to Exit or any other button to Continue");
         String e = in.nextLine();
@@ -24,6 +25,7 @@ public abstract class User
         else{
             System.out.println("Returning to menu...");
         }
+            */
 
     
     }

@@ -1,10 +1,13 @@
 
+
 public class Driver{
 
     public static void main(String[] args) throws Exception {
 
         //Default login handler and attribute controller
         ILoginHandler loginHandler =  new LoginHandler();
+        
+        
         switch (args.length) {
             case 0 -> {
                 System.out.println("Default config chosen");
@@ -31,13 +34,29 @@ public class Driver{
         }
 
         //Authetnicate using chosen handler
-        User user = loginHandler.authenticate();
-        IMenuController menuController = new MenuController(user);
-        
-        while (true) { 
-            menuController.takeInput();
-        }
+        int login = 1;
+        AttributeController ac = AttributeController.getInstance();
+        while (login == 1) {
+            
+            login = ac.inputInt("\nWhat would you like to do?:\n1. Log in\n2. Leave\n\n");
 
+            
+            if (login == 1) {
+                User user = loginHandler.authenticate();
+                if (user != null) {
+                    IMenuController menuController = new MenuController(user);
+                    
+                    
+                    menuController.takeInput();
+                
+                }
+                else {
+                    System.out.println("\nWrong ID or password\n");
+                }
+            }
+            
+        }
+        System.out.println("Have a good day");
     
     }
 

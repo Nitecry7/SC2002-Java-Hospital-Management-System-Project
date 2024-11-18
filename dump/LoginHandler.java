@@ -45,19 +45,22 @@ public class LoginHandler implements ILoginHandler {
         
         //Authenticate using that login controller until either the user gets in or gives up
         String ID, pw;
-        boolean tryAgain = false;
-        do {
+        //boolean tryAgain = false;
+        //do {
+            /*
             if (tryAgain) {
                 if (attributeController.inputString("Quit?(y/n)").toUpperCase().equals("Y")) {
                     System.exit(0);
                 }
             }
-            ID = attributeController.inputString("Input ID");
-            pw = attributeController.inputString("Input password");
+                */
+        ID = attributeController.inputString("Input ID");
+        pw = attributeController.inputString("Input password");
             
-            tryAgain = true;
-        } while ((user = loginController.authenticate(ID,pw)) == null);
+            //tryAgain = true;
+        //} while ((user = loginController.authenticate(ID,pw)) == null);
 
+        user = loginController.authenticate(ID,pw);
 
         return user;
 

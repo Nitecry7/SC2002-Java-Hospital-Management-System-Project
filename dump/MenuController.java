@@ -12,6 +12,8 @@ public class MenuController implements  IMenuController {
     protected  Method[] methods;
   // vvv Later, if we want, we can initialize this to a string list declared in the User (sub)class to display the menu items in a specific order
     protected String[] methodNames = {};
+    private int logout = -1;
+    
 
     public MenuController(User user) throws NoSuchMethodException {
         this.user = user;
@@ -57,6 +59,7 @@ public class MenuController implements  IMenuController {
         else {
             methods = tempMethods.toArray(Method[]::new);
             this.methodNames = declaredMethods.toArray(String[]::new);
+            logout = declaredMethods.indexOf("_Logout") + 1;
         }
 
     }
@@ -79,21 +82,33 @@ public class MenuController implements  IMenuController {
 
     @Override
     public final void takeInput() {
-
         Scanner in = new Scanner(System.in);
 
-        try {
-            displayMenu();
-            //invoke the chosen method
-            int choice = in.nextInt();
-            in.nextLine();
-            methods[choice-1].invoke(user);
-        } 
+        int choice = -2;
+        while (choice != logout) {
+            try {
+                displayMenu();
+                //invoke the chosen method
+                choice = in.nextInt();
+                in.nextLine();
+                if (choice == logout) {
+                    
+                    System.out.println("Are you sure you want to logout? Enter Y to logout or any other key to continue");
+                    if (!in.nextLine().toUpperCase().equals("Y")) {
+                        System.out.println(choice + "" + logout);
+                        choice = -2;
+                        continue;
+                    }
+                }
+                
+                methods[choice-1].invoke(user);
+            } 
 
-        catch (Exception e) {
-            System.out.println("That isn't a valid choice, or something went wrong.");
-            e.printStackTrace();
-           
+            catch (Exception e) {
+                System.out.println("That isn't a valid choice, or something went wrong.");
+                e.printStackTrace();
+            
+            }
         }
     }
 
